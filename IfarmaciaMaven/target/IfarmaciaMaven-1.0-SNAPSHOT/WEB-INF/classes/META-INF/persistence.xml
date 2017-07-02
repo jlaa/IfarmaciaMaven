@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.mycompany_IfarmaciaMaven_war_1.0-SNAPSHOTPU" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/__ifarm</jta-data-source>
+    <class>com.mycompany.model.CartaoDeCredito</class>
+    <class>com.mycompany.model.Cliente</class>
+    <class>com.mycompany.model.Farmacia</class>
+    <class>com.mycompany.model.FormaDePagamento</class>
+    <class>com.mycompany.model.CompraItem</class>
+    <class>com.mycompany.model.CompraTotal</class>
+    <class>com.mycompany.model.Entrega</class>
+    <class>com.mycompany.model.Remedio</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default"/>
+      <property name="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default"/>
+      <property name="javax.persistence.validation.group.pre-remove" value="javax.validation.groups.Default"/>
+      <property name="eclipselink.jdbc.native-sql" value="true"/>
+      <property name="eclipselink.target-database" value="MySQL"/>
+      <property name="eclipselink.weaving" value="false"/>
+      <property name="eclipselink.logging.level" value="FINE"/>
+    </properties>
+  </persistence-unit>
+</persistence>

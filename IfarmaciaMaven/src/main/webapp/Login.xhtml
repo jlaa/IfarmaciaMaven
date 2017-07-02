@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            <title>iFarm</title>
+            <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+            <style>
+                #geral {
+                    position:absolute;
+                    top:50%;
+                    left:50%;
+                    margin-left:-150px;
+                    margin-top:-50px;
+                    text-align:center;
+                }
+            </style>
+        </f:facet>
+    </h:head>
+
+    <h:body>
+
+        <p:layout fullPage="true">
+
+
+            <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <h:outputText value="#{login.retornaValidacao()}"/>
+                    <p:link href="AlterarUsuario.xhtml" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
+                    <p:link href="Login.xhtml" value="Logar " style="font-size: smaller; text-decoration: none; " rendered="#{login.retornaValidacao() == 'Convidado'}"/>
+                    <p:link href="Register.xhtml" value="Não tem uma conta? Cadastre-se" style="font-size: smaller; text-decoration: none" rendered="#{login.retornaValidacao() == 'Convidado'}"/>
+                    <p:menubar style="border-style: none;">
+                    <p:menuitem value="R$ 0,00" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
+                </p:menubar>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                <p:menu>
+                    <p:submenu label="Resources">
+                        <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
+
+                        <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml"/>
+
+                        <p:menuitem value="Contato" url="Contato.xhtml" icon="fa fa-phone"/>
+
+                        <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" />
+                    </p:submenu>
+
+                </p:menu>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                Footer
+            </p:layoutUnit>
+
+            <p:layoutUnit id="principal" position="center">
+
+                <h:form id="geral">
+                    <h:outputText value="Email "/><br />
+                    <p:inputText id="email" value="#{login.email}" placeholder = "Email" /><br/>
+                    <h:message for="email"/>   
+                    <br/>
+                    <br/>
+                    <h:outputText value="Senha: "/><br />
+                    <p:password id="senha" value="#{login.senha}" placeholder = "Senha" />
+                    <br/>
+                    <h:message for="senha"/>    
+                    <br/>
+                    <br/>
+                    <p:commandButton action="#{login.validarUsuario()}" update="geral" value="Submit" id="botao"/>
+
+                </h:form>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+
+</html>
+
