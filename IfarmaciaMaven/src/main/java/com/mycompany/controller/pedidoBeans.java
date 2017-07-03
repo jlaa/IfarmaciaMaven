@@ -90,7 +90,7 @@ public class pedidoBeans {
             String nomeRemedio = remedios.get(i).getNome();
             if(!nomesRemedios.isEmpty()){
             for (int j = 0; j < nomesRemedios.size(); j++) {
-                if (!nomesRemedios.get(i).equals(nomeRemedio)) {
+                if (!nomesRemedios.get(j).equals(nomeRemedio)) {
                     nomesRemedios.add(nomeRemedio);
                     break;
                 }
