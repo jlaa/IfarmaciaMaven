@@ -6,14 +6,14 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-06-29T11:17:45")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2017-07-02T21:19:59")
 @StaticMetamodel(CartaoDeCredito.class)
 public class CartaoDeCredito_ { 
 
     public static volatile SingularAttribute<CartaoDeCredito, Calendar> dataExpiracao;
-    public static volatile SingularAttribute<CartaoDeCredito, Cliente> cliente;
     public static volatile SingularAttribute<CartaoDeCredito, Long> id_cartao;
-    public static volatile SingularAttribute<CartaoDeCredito, String> numero_cartao;
+    public static volatile SingularAttribute<CartaoDeCredito, Cliente> cliente;
     public static volatile SingularAttribute<CartaoDeCredito, String> bandeira;
+    public static volatile SingularAttribute<CartaoDeCredito, String> numero_cartao;
 
 }

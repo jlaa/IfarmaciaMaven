@@ -22,7 +22,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = ValidadorEstados.class)
 @Documented
 public @interface ValidaEstados {
-    String message() default "{exemplo.jpa.Endereco.estado}";
+    String message() default "{Estado inexistente}";
 
     Class<?>[] groups() default {};
 
