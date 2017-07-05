@@ -56,7 +56,7 @@ public class pedidoBeans {
     public void setNomeDoRemedio(String nomeDoRemedio) {
         this.nomeDoRemedio = nomeDoRemedio;
     }
-
+    
     public List<String> getCidades() {
 
         Aplicacao aplicacao = new Aplicacao();

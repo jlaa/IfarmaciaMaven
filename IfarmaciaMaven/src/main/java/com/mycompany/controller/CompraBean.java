@@ -15,12 +15,12 @@ import javax.enterprise.context.RequestScoped;
  */
 @Named(value = "compraBean")
 @RequestScoped
-public class CompraBean {
+public class compraBean {
 
     /**
      * Creates a new instance of CompraBean
      */
-    public CompraBean() {
+    public compraBean() {
     }
     
 }

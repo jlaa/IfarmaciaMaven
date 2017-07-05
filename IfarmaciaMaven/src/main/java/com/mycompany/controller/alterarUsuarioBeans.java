@@ -11,6 +11,7 @@ import com.mycompany.model.ValidaEstados;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Size;
@@ -64,33 +65,26 @@ public class alterarUsuarioBeans implements Serializable {
     private String ocupacao;
     private String nome = "";
 
-    FacesContext facesContext = FacesContext.getCurrentInstance();
-    HttpSession session = singletonSession.getInstance();
-
     /**
      * Creates a new instance of loginBeans
      */
-     public alterarUsuarioBeans() 
-    {
-       
+    public alterarUsuarioBeans() {
+
     }
-        
-    public String alterarUsuario()
-    {
+
+    public String alterarUsuario() {
         Aplicacao aplicacao = new Aplicacao();
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         nome = primeiroNome + " " + segundoNome;
         aplicacao.AlterarCliente(bairo, cidade, estado, numero, rua, nome, ocupacao, telefone, cliente);
-        
+
         return "Index";
     }
 
     public String getLogin() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getLogin();
         }
@@ -104,9 +98,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getSenha() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getSenha();
         }
@@ -118,9 +111,7 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getPrimeiroNome() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         String[] string1 = cliente.getNome().split(" ");
         if (cliente != null) {
             return string1[0];
@@ -133,9 +124,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getSegundoNome() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         String[] string1 = cliente.getNome().split(" ");
         if (cliente != null) {
             return string1[1];
@@ -148,9 +138,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getEmail() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
 
         if (cliente != null) {
             return cliente.getEmail();
@@ -163,9 +152,7 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getTelefone() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getTelefone();
         }
@@ -177,9 +164,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getEstado() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getEndereco().getEstado();
         }
@@ -191,9 +177,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getRua() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getEndereco().getRua();
         }
@@ -205,9 +190,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getNumero() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getEndereco().getNumero();
         }
@@ -219,9 +203,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getCidade() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getEndereco().getCidade();
         }
@@ -233,9 +216,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getBairo() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getEndereco().getBairro();
         }
@@ -247,9 +229,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getOcupacao() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getOcupacao();
         }
@@ -261,9 +242,8 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String getConfirmarSenha() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             return cliente.getSenha();
         }
@@ -273,9 +253,5 @@ public class alterarUsuarioBeans implements Serializable {
     public void setConfirmarSenha(String confirmarSenha) {
         this.confirmarSenha = confirmarSenha;
     }
-    
-    
-
-   
 
 }

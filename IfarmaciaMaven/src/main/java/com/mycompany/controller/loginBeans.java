@@ -35,19 +35,12 @@ public class loginBeans implements Serializable {
     @Email(message = "o email nao é válido")
     private String email;
 
-    FacesContext facesContext = FacesContext.getCurrentInstance();
-    HttpSession session = singletonSession.getInstance() ;
-
     private String validacao;
 
     /**
      * Creates a new instance of loginBeans
      */
     public loginBeans() {
-        
-        if (session.isNew()) {
-            session = (HttpSession) facesContext.getExternalContext().getSession(true);
-        }
 
     }
 
@@ -57,11 +50,10 @@ public class loginBeans implements Serializable {
         boolean logar = aplicacao.validarCliente(email, senha);
         if (logar == true) {
             Cliente cliente = aplicacao.getCliente(email, senha);
-            session.setAttribute("cliente", cliente);
-            session.setAttribute("loginName", cliente.getLogin());
-            return "Index";
+            SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
+            return "Index?faces-redirect=true";
         }
-        return "LoginError";
+        return "LoginError?faces-redirect=true";
     }
 
     public String getEmail() {
@@ -81,11 +73,15 @@ public class loginBeans implements Serializable {
     }
 
     public String retornaValidacao() {
-        facesContext = FacesContext.getCurrentInstance();
-        session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        String valida = (String) session.getAttribute("loginName");
-        if (valida != null) {
-            return valida;
+        if (email != null) {
+            Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+            if (cliente != null) {
+                String valida = cliente.getLogin();
+
+                if (valida != null) {
+                    return valida;
+                }
+            }
         }
         return "Convidado";
     }
@@ -94,10 +90,10 @@ public class loginBeans implements Serializable {
         this.validacao = validacao;
     }
 
-    public String Sair() {
-        
-        
-        return "Sair";
+    public String logout() {
+
+        SingletonSession.getInstance().encerrarSessao();
+        return "Index.xhtml";
     }
 
 }
