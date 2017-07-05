@@ -21,8 +21,7 @@ public class FormaDePagamento implements Serializable {
     @Column(name = "ID_FORMA_PAGAMENTO", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
-    @ValidaFormaPagamento
+
     @Column(name = "NOME_FORMA", nullable = false)
     private String nomeForma;
 

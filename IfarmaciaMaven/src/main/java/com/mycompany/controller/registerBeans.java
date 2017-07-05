@@ -88,14 +88,18 @@ public class registerBeans implements Serializable {
             cliente.AdicionarEndereco(rua, numero, bairo, cidade, estado);
             this.nome = primeiroNome+ " " + segundoNome;
             cliente.adicionarInformaçõesCliente(nome, telefone, ocupacao);
-            boolean register=aplicacao.CadastrarCliente(cliente);
-            if(register==true)
+            boolean cadastro=aplicacao.CadastrarCliente(cliente);
+            if(cadastro==true)
             {
-                 return "RegisterOK";
-            }            
+                return "RegisterOK";
+            }
         }
-        return "Register";//falta colocar o register ERRO
-       
+        return "Register";
+    }
+    
+    public String redirecionarIndex()
+    {
+        return "Index";
     }
 
     public String getLogin() {

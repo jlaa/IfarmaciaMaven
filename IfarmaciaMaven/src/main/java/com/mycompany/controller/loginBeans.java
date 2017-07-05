@@ -35,12 +35,19 @@ public class loginBeans implements Serializable {
     @Email(message = "o email nao é válido")
     private String email;
 
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    HttpSession session = singletonSession.getInstance() ;
+
     private String validacao;
 
     /**
      * Creates a new instance of loginBeans
      */
     public loginBeans() {
+        
+        if (session.isNew()) {
+            session = (HttpSession) facesContext.getExternalContext().getSession(true);
+        }
 
     }
 
@@ -50,7 +57,8 @@ public class loginBeans implements Serializable {
         boolean logar = aplicacao.validarCliente(email, senha);
         if (logar == true) {
             Cliente cliente = aplicacao.getCliente(email, senha);
-            SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
+            session.setAttribute("cliente", cliente);
+            session.setAttribute("loginName", cliente.getLogin());
             return "Index";
         }
         return "LoginError";
@@ -73,12 +81,11 @@ public class loginBeans implements Serializable {
     }
 
     public String retornaValidacao() {
-        if (email != null) {
-            Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
-            String valida = cliente.getLogin();
-            if (valida != null) {
-                return valida;
-            }
+        facesContext = FacesContext.getCurrentInstance();
+        session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        String valida = (String) session.getAttribute("loginName");
+        if (valida != null) {
+            return valida;
         }
         return "Convidado";
     }
@@ -87,10 +94,10 @@ public class loginBeans implements Serializable {
         this.validacao = validacao;
     }
 
-    public String logout() {
-
-        SingletonSession.getInstance().encerrarSessao();
-        return "Index.xhtml";
+    public String Sair() {
+        
+        
+        return "Sair";
     }
 
 }

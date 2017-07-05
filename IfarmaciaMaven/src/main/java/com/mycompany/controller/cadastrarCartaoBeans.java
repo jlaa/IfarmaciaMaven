@@ -51,7 +51,8 @@ public class cadastrarCartaoBeans {
     @Column(name = "DT_EXPIRACAO", nullable = false)
     private String dataExpiracao;
 
- 
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    HttpSession session = singletonSession.getInstance();
 
     public Long getId_cartao() {
         return id_cartao;
@@ -92,7 +93,8 @@ public class cadastrarCartaoBeans {
     }
 
     public String cadastrarCartao() {
-      
+        facesContext = FacesContext.getCurrentInstance();
+        session = (HttpSession) facesContext.getExternalContext().getSession(false);
         Aplicacao aplicacao = new Aplicacao();
         CartaoDeCredito cartao = new CartaoDeCredito();
 
@@ -106,7 +108,7 @@ public class cadastrarCartaoBeans {
         }
         cartao.setDataExpiracao(cal);
         cartao.setNumero_cartao(numero_cartao);
-        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        Cliente cliente = (Cliente) session.getAttribute("cliente");
         cartao.setCliente(cliente);
         cliente.setCartao(cartao);
         aplicacao.inserirCartao(cliente);
