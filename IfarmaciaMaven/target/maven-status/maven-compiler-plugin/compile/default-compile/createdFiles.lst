@@ -19,7 +19,6 @@ com\mycompany\model\Farmacia.class
 com\mycompany\model\ValidadorFormaPagamento.class
 com\mycompany\model\Aplicacao.class
 com\mycompany\controller\searchBean.class
-.netbeans_automatic_build
 com\mycompany\controller\remedioBeans.class
 com\mycompany\model\CompraTotal.class
 com\mycompany\model\FormaDePagamento_.class

@@ -1,0 +1,22 @@
+
+[  
+    {  
+        "codigo":"1025",        
+        "data_validade": "2018-09-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "multigrip",
+        "preco": "2.5",
+        "quantidade":"99",
+        "tipo":"comprimido"
+    },
+    {  
+       "codigo":"1010",        
+        "data_validade": "2018-08-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "amoxilina",
+        "preco": "10.0",
+        "quantidade":"12",
+        "tipo":"liquido"
+    }
+]
+

@@ -15,7 +15,7 @@
             </f:facet>
         </h:head>
 
-        <h:body>
+        <h:body style="background-image: url('images/643965142.jpg');">
 
             <p:layout fullPage="true">
 
@@ -56,19 +56,26 @@
 
                 <p:layoutUnit id="principal" position="center">
 
-                    <p:dataTable var="rem" style="border-style: none;" value="#{searchBean.remedios}">
-                        <p:column>
+                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;" value="#{searchBean.remedios}">  
+
+                        <p:column headerText="Remédio">
                             <h:outputText value="#{rem.nome}" />
                         </p:column>
 
-                        <p:column>
-                            <h:outputText value="#{rem.preco}" />
+                        <p:column headerText="Preço">
+                            <h:outputText value="#{rem.preco}R$" />
+                        </p:column>
+                        <p:column headerText="Farmacia">
+                            <h:outputText value="#{searchBean.farmacias.get(index).nome}" />
                         </p:column>
 
-                        <p:column>
-                            <p:commandButton value="Adicionar ao carrinho"/>
+                        <p:column >
+                            <h:form>
+                                <h:commandButton value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho([rem.id])}" />
+                            </h:form>
                         </p:column>
                     </p:dataTable>
+
 
                 </p:layoutUnit>
 

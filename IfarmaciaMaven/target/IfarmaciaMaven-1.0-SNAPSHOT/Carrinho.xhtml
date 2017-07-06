@@ -15,7 +15,7 @@
             </f:facet>
         </h:head>
 
-        <h:body>
+        <h:body style="background-image: url('images/643965142.jpg');">
 
             <p:layout fullPage="true">
 
@@ -57,13 +57,17 @@
 
                 <p:layoutUnit id="principal" position="center">
 
-                    <p:dataTable var="rem" style="border-style: none;" >
+                    <p:dataTable var="rem" style="border-style: none;" value="#{carrinhoBeans.remedios}">
                         <p:column>
-                            <h:outputText value="Nome do remedio" />
+                            <h:outputText value="#{rem.nome}" />
                         </p:column>
 
                         <p:column>
-                            <h:outputText value="Preco" />
+                            <h:outputText value="#{rem.preco}" />
+                        </p:column>
+
+                        <p:column>
+                            <h:commandButton value="Comprar Itens" action=""/>
                         </p:column>
                     </p:dataTable>
 

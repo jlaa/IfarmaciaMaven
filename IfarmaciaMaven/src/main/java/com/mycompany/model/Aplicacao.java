@@ -6,7 +6,6 @@
 package com.mycompany.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -14,7 +13,6 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -292,20 +290,28 @@ public class Aplicacao {
         return farmacia;
     }
 
-    public List<Remedio> pesquisaRemedio(String cidade, String nomeRemedio) {
+    public List<Farmacia> pesquisaRemedio(String cidade, String nomeRemedio) {
         EntityManager em = null;
         EntityTransaction et = null;
-        List<Remedio> remedio = null;
+        List<Farmacia> farmacias = new ArrayList();
+        List<Farmacia> temp;
 
         try {
 
             em = emf.createEntityManager();
             et = em.getTransaction();
             et.begin();
-            TypedQuery<Remedio> query = em.createQuery("SELECT r from Remedio r, Farmacia f where f.endereco.cidade  like ?1 and  r.nome like ?2", Remedio.class);
+            TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f where f.endereco.cidade like ?1", Farmacia.class);
             query.setParameter(1, cidade);
-            query.setParameter(2, nomeRemedio);
-            remedio = query.getResultList();
+            temp = query.getResultList();
+            for (int i = 0; i < temp.size(); i++) {
+
+                for (int j = 0; j < temp.get(i).getRemedios().size(); j++) {
+                    if (temp.get(i).getRemedios().get(j).getNome().equals(nomeRemedio)) {
+                        farmacias.add(temp.get(i));
+                    }
+                }
+            }
             et.commit();
         } catch (Exception ex) {
             if (et != null) {
@@ -316,7 +322,7 @@ public class Aplicacao {
                 em.close();
             }
         }
-        return remedio;
+        return farmacias;
     }
 
     public List<Remedio> listaRemedio() {
@@ -343,9 +349,8 @@ public class Aplicacao {
         }
         return remedio;
     }
-    
-    public List<String> listaFileName()
-    {
+
+    public List<String> listaFileName() {
         EntityManager em = null;
         EntityTransaction et = null;
         List<String> string = null;
@@ -368,8 +373,29 @@ public class Aplicacao {
             }
         }
         return string;
-    } 
+    }
 
+    public Remedio getRemedio(Long id) {
+        EntityManager em = null;
+        EntityTransaction et = null;
+        Remedio remedio = null;
+        try {
 
+            em = emf.createEntityManager();
+            et = em.getTransaction();
+            et.begin();            
+            remedio = em.find(Remedio.class,id);
+            et.commit();
+        } catch (Exception ex) {
+            if (et != null) {
+                et.rollback();
+            }
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return remedio;
+    }
 
 }

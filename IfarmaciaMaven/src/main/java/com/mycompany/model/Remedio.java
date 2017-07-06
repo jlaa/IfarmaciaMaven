@@ -144,6 +144,23 @@ public class Remedio implements Serializable
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+    public List<Farmacia> getFarmacia() {
+        return farmacia;
+    }
+
+    public void setFarmacia(List<Farmacia> farmacia) {
+        this.farmacia = farmacia;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    
+    
+    
+    
     
     
 }
