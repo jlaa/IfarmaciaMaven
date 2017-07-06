@@ -9,8 +9,8 @@ import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.ValidaEstados;
 import java.io.Serializable;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -20,55 +20,56 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Named(value = "farmRegisterBean")
 @RequestScoped
-public class farmRegisterBean implements Serializable{
-    
+public class farmRegisterBean implements Serializable {
+
     @NotEmpty(message = "O nome não pode ser vazio")
     @Length(message = "O nome não pode ter mais de 30 caracteres", max = 30)
     private String nome;
-    
+
     @ValidaEstados(message = "Esse estado não existe")
     private String estado;
-    
+
     @NotEmpty(message = "O bairro não pode ser vazio")
     @Length(message = "O nome não pode ter mais de 150 caracteres", max = 150)
     private String bairro;
-    
+
     @NotEmpty(message = "O numero não pode ser vazio")
     @Length(message = "O numero não pode ter mais de 9999 caracteres e"
             + " menos de 1 caracteres", max = 9999, min = 1)
     private String numero;
-    
+
     @NotEmpty(message = "A cidade não pode ser vazio")
     @Length(message = "A cidade não pode ter mais de 50 caracteres", max = 50)
     private String cidade;
-    
+
     @NotEmpty(message = "A rua não pode ser vazio")
     @Length(message = "A rua não pode ter mais de 150 caracteres", max = 150)
     private String rua;
-    
+
     private String site;
+
     /**
      * Creates a new instance of farmRegisterBean
      */
     public farmRegisterBean() {
-        
+
     }
-    
+
     public String cadastrarFarmacia() {
         Aplicacao aplicacao = new Aplicacao();
         Farmacia farmacia = new Farmacia();
-            
-            farmacia.CadastrarFarmacia(nome);
-            farmacia.InserirEndereco(rua, numero, bairro, cidade, estado);
-            aplicacao.CadastrarFarmacia(farmacia);
-            
-            return "CadastroFarmaciaOK";
+
+        farmacia.CadastrarFarmacia(nome);
+        farmacia.InserirEndereco(rua, numero, bairro, cidade, estado);
         
+        SingletonSession.getInstance().setAttribute("farmacia", farmacia);
+
+        return "CadastrarRemedios.xhtml?faces-redirect=true";
+
     }
-    
-    public String mudarIndex()
-    {
-        return "Index";
+
+    public String mudarIndex() {
+        return "Index.xhtmlfaces-redirect=true";
     }
 
     public String getNome() {
@@ -126,5 +127,5 @@ public class farmRegisterBean implements Serializable{
     public void setSite(String site) {
         this.site = site;
     }
-    
+
 }

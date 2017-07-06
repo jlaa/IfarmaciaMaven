@@ -1,0 +1,22 @@
+
+[  
+    {  
+        "codigo":"1025",        
+        "data_validade": "2018-05-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "dipirona",
+        "preco": "3.4",
+        "quantidade":"15",
+        "tipo":"comprimido"
+    },
+    {  
+       "codigo":"1010",        
+        "data_validade": "2018-08-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "multigrip",
+        "preco": "3.4",
+        "quantidade":"10",
+        "tipo":"comprimido"
+    }
+]
+

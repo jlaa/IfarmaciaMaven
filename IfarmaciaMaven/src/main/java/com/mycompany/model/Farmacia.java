@@ -29,7 +29,8 @@ public class Farmacia implements Serializable{
     @Column(name = "TXT_NOME_FARMACIA", nullable = false)
     private String nome;
     
-   
+    @JoinColumn(name="TXT_FILENAME")
+    private String filename;
     
     @Valid
     @Embedded
@@ -39,6 +40,8 @@ public class Farmacia implements Serializable{
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_FORMA",referencedColumnName="ID_FORMA_PAGAMENTO")
     private FormaDePagamento forma_de_pagamento;
+    
+    
     
     @Valid 
     @ManyToMany(mappedBy = "farmacia")
@@ -52,6 +55,8 @@ public class Farmacia implements Serializable{
                 @JoinColumn(name = "ID_REMEDIO")
     })
     private List<Remedio> remedios;
+    
+    
     
     public Farmacia()
     {
@@ -93,34 +98,6 @@ public class Farmacia implements Serializable{
         InserirEndereco(rua, numero, bairro,cidade,estado);
     }
     
-//    public Remedio BuscaRemedio(String nomeRemedio, EntityManager em)
-//    {
-//        TypedQuery<Remedio> query =  em.createQuery("SELECT r from Remedio r where r.nome like ?1",Remedio.class);
-//        query.setParameter(1, nomeRemedio);
-//        Remedio remedio = query.getSingleResult();
-//        
-//        return remedio;   
-//    }  
-//        
-//    public void alterarRemedio(String nome, EntityManager em, String novoNome, double preco, long quantidade, String faixa, String tipo)
-//    {
-//        Remedio remedioAlterar = BuscaRemedio(nome, em);
-//        remedioAlterar.setFaixaEtaria(faixa);
-//        remedioAlterar.setNome(novoNome);
-//        remedioAlterar.setPreco(preco);
-//        remedioAlterar.setQuantidade(quantidade);
-//        remedioAlterar.setTipoRemedio(tipo);
-//        
-//    }
-//    
-//        public void excluirRemedio(String nome, EntityManager em)
-//    {           
-//        TypedQuery<Remedio> query = em.createQuery("SELECT f from Remedio f where f.nome like ?1",Remedio.class);
-//        query.setParameter(1, nome);
-//        Remedio remedio = query.getSingleResult();
-//        em.remove(remedio);        
-//    }
-    
     public void setRemedios(List<Remedio> remedios)
     {
         this.remedios = remedios;
@@ -148,6 +125,14 @@ public class Farmacia implements Serializable{
     public void setNome(String nome)
     {
         this.nome=nome;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
   
     

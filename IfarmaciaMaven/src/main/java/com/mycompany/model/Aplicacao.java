@@ -42,7 +42,7 @@ public class Aplicacao {
             try {
                 em.persist(cliente);
             } catch (ConstraintViolationException e) {
-                
+
                 Logger.getGlobal().info(e.getMessage());
 
                 Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
@@ -55,9 +55,9 @@ public class Aplicacao {
             }
             et.commit();
         } catch (Exception ex) {
-            
+
             ex.printStackTrace();
-            
+
             if (et != null) {
                 et.rollback();
                 return false;
@@ -253,7 +253,7 @@ public class Aplicacao {
         }
         return farmacia;
     }
-    
+
     public List<Farmacia> listaFarmacia() {
         EntityManager em = null;
         EntityTransaction et = null;
@@ -265,21 +265,20 @@ public class Aplicacao {
             et = em.getTransaction();
             et.begin();
             TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f", Farmacia.class);
-            farmacia = query.getResultList(); 
+            farmacia = query.getResultList();
             try {
-            et.commit();
-            }catch(ConstraintViolationException ex)
-            {
-                
+                et.commit();
+            } catch (ConstraintViolationException ex) {
+
                 Logger.getGlobal().info(ex.getMessage());
-                
+
                 Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
                 if (logger.isLoggable(Level.INFO)) {
                     for (ConstraintViolation violation : constraintViolations) {
                         Logger.getGlobal().log(Level.INFO, "{0}.{1}: {2}", new Object[]{violation.getRootBeanClass(), violation.getPropertyPath(), violation.getMessage()});
                     }
                 }
-            
+
             }
         } catch (Exception ex) {
             if (et != null) {
@@ -319,8 +318,8 @@ public class Aplicacao {
         }
         return remedio;
     }
-    
-        public List<Remedio> listaRemedio() {
+
+    public List<Remedio> listaRemedio() {
         EntityManager em = null;
         EntityTransaction et = null;
         List<Remedio> remedio = null;
@@ -330,7 +329,7 @@ public class Aplicacao {
             em = emf.createEntityManager();
             et = em.getTransaction();
             et.begin();
-            TypedQuery<Remedio> query = em.createQuery("SELECT r from Remedio r", Remedio.class);          
+            TypedQuery<Remedio> query = em.createQuery("SELECT r from Remedio r", Remedio.class);
             remedio = query.getResultList();
             et.commit();
         } catch (Exception ex) {
@@ -344,6 +343,33 @@ public class Aplicacao {
         }
         return remedio;
     }
-
     
+    public List<String> listaFileName()
+    {
+        EntityManager em = null;
+        EntityTransaction et = null;
+        List<String> string = null;
+
+        try {
+
+            em = emf.createEntityManager();
+            et = em.getTransaction();
+            et.begin();
+            TypedQuery<String> query = em.createQuery("SELECT f.filename from Farmacia f", String.class);
+            string = query.getResultList();
+            et.commit();
+        } catch (Exception ex) {
+            if (et != null) {
+                et.rollback();
+            }
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return string;
+    } 
+
+
+
 }

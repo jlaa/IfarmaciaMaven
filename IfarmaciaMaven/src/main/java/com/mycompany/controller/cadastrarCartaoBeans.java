@@ -49,9 +49,7 @@ public class cadastrarCartaoBeans {
 
     //PROCURAR DEPOIS
     @Column(name = "DT_EXPIRACAO", nullable = false)
-    private String dataExpiracao;
-
- 
+    private String dataExpiracao; 
 
     public Long getId_cartao() {
         return id_cartao;

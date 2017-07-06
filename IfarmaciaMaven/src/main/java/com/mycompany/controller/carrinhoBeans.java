@@ -16,12 +16,16 @@ import java.io.Serializable;
 @Named(value = "carrinhoBeans")
 @SessionScoped
 public class carrinhoBeans implements Serializable {
-
+    
+    private String nomeDoItem;
+    private String nomeDaFarmacia;
+    
     /**
      * Creates a new instance of carrinhoBeans
      */
     public carrinhoBeans() 
     {
+        
     }
     
 }

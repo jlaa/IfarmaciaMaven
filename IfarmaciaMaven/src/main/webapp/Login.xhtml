@@ -36,19 +36,19 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
-                <p:menu>
-                    <p:submenu label="Resources">
-                        <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
+                    <p:menu>
+                        <p:submenu label="Resources">
+                            <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
 
-                        <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml"/>
+                            <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
 
-                        <p:menuitem value="Contato" url="Contato.xhtml" icon="fa fa-phone"/>
+                            <p:menuitem value="Contato" url="Contato.xhtml" icon="fa fa-phone"/>
 
-                        <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" />
-                    </p:submenu>
+                            <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" icon="fa fa-save"/>
+                        </p:submenu>
 
-                </p:menu>
-            </p:layoutUnit>
+                    </p:menu>
+                </p:layoutUnit>
 
             <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                 Footer
@@ -68,7 +68,7 @@
                     <h:message for="senha"/>    
                     <br/>
                     <br/>
-                    <p:commandButton action="#{login.validarUsuario()}" update="geral" value="Submit" id="botao"/>
+                    <p:commandButton action="#{login.validarUsuario()}" update="geral" value="Logar" id="botao"/>
 
                 </h:form>
             </p:layoutUnit>

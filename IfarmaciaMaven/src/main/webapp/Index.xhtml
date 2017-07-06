@@ -10,7 +10,7 @@
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>iFarm</title>
-                <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+                
                 <style>
                     #geral {
                         position:absolute;
@@ -24,7 +24,7 @@
             </f:facet>
         </h:head>
 
-        <h:body>
+        <h:body style="background-image: url('images/643965142.jpg');">
 
             <p:layout fullPage="true" >
 
@@ -49,11 +49,11 @@
                         <p:submenu label="Resources">
                             <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
 
-                            <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml"/>
+                            <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
 
                             <p:menuitem value="Contato" url="Contato.xhtml" icon="fa fa-phone"/>
 
-                            <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" />
+                            <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" icon="fa fa-save"/>
                         </p:submenu>
 
                     </p:menu>
@@ -66,6 +66,8 @@
                 <p:layoutUnit id="principal" position="center">
 
                     <h:form id="geral">
+                        
+                        <h:outputText value="Encontre as farmacias com os melhores preços"/><br/><br/>
 
                         <h:outputText value="Nome da cidade: "/><br />
                         <p:inputText value="#{searchBean.cidade}" placeholder = "Cidade"/><br />
@@ -73,7 +75,7 @@
                         <h:outputText value="Nome do remedio: "/><br />
                         <p:inputText value="#{searchBean.nomeRemedio}" placeholder = "Remedio"/><br></br>
 
-                        <p:commandButton action="#{searchBean.pesquisaRemedio()}" value="Submit" id="botao" icon="fa fa-search"/>
+                        <p:commandButton action="#{searchBean.pesquisaRemedio()}" value="Pesquisar" id="botao" icon="fa fa-search"/>
 
                     </h:form>
 

@@ -1,6 +1,7 @@
 package com.mycompany.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -35,7 +36,7 @@ public class Remedio implements Serializable
         
     @Column(name="DT_VALIDADE", nullable= false)
     @Temporal(TemporalType.DATE)
-    private Date dataValidade;    
+    private Calendar dataValidade;    
     
     @Column(name="TXT_TIPO", nullable= false)
     private String tipo;
@@ -47,13 +48,14 @@ public class Remedio implements Serializable
         
     }
     //Cadastro e modificação de remedios
-    public Remedio(String nome, double preco, String faixaEtaria, long quantidade, String tipo, Date dataValidade){
+    public Remedio(String nome, double preco, String faixaEtaria, long quantidade, String tipo, Calendar dataValidade,String codigo){
         this.nome= nome;
         this.preco= preco;
         this.faixaEtaria= faixaEtaria;
         this.quantidade= quantidade;
         this.tipo = tipo;
         this.dataValidade= dataValidade;
+        this.codigo=codigo;
     }
     
     public Remedio(String nome, double preco, String faixaEtaria, long quantidade, String tipo){
@@ -123,8 +125,25 @@ public class Remedio implements Serializable
        return this.tipo;
     }
     
-    public Date getDataValidade(){
+    public Calendar getDataValidade(){
        return this.dataValidade;
     }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
     
 }

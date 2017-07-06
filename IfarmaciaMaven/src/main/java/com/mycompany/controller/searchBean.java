@@ -6,6 +6,7 @@
 package com.mycompany.controller;
 
 import com.mycompany.model.Aplicacao;
+import com.mycompany.model.Farmacia;
 import com.mycompany.model.Remedio;
 import java.util.List;
 import javax.inject.Named;

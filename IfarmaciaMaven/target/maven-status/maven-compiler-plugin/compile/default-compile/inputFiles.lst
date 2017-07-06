@@ -2,10 +2,11 @@ C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\controller\cadastrarCartaoBeans.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\CompraTotal.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\Endereco.java
-C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\controller\CompraBean.java
+C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\controller\compraBean.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\ValidaFormaPagamento.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\Entrega.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\CartaoDeCredito.java
+C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\controller\carrinhoBeans.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\Aplicacao.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\FormaDePagamento.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\ValidadorEstados.java
@@ -15,6 +16,7 @@ C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\ValidaBandeiraCartao.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\ValidadorFormaPagamento.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\controller\loginBeans.java
+C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\controller\remedioBeans.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\ValidadorBandeiraCartao.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\controller\SingletonSession.java
 C:\Users\LucasPC\Documents\NetBeansProjects\backup\IfarmaciaMaven\src\main\java\com\mycompany\model\ValidaEstados.java
