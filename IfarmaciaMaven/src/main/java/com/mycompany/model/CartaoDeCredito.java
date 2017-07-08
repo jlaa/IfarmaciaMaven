@@ -6,6 +6,7 @@
 package com.mycompany.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,15 +30,14 @@ public class CartaoDeCredito implements Serializable {
     @Column(name = "ID_CARTAO", nullable = false)
     private Long id_cartao;
 
-    
     @ValidaBandeiraCartao
     @Column(name = "TXT_BANDEIRA", nullable = false)
     private String bandeira;
-    
-    @CreditCardNumber   
+
+    @CreditCardNumber
     @Column(name = "TXT_NUMERO", nullable = false)
     private String numero_cartao;
-    
+
     //PROCURAR DEPOIS
     @Future
     @Temporal(TemporalType.DATE)
@@ -47,9 +47,10 @@ public class CartaoDeCredito implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CARTAO_CLIENTE", referencedColumnName = "ID_USUARIO")
     private Cliente cliente;
+    //valores estão no validador bandeira cartao
 
     public CartaoDeCredito() {
-
+        
     }
 
     public String getBandeira() {
@@ -83,6 +84,7 @@ public class CartaoDeCredito implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
     public Long getId_cartao() {
         return id_cartao;
     }
@@ -90,6 +92,7 @@ public class CartaoDeCredito implements Serializable {
     public void setId_cartao(Long id_cartao) {
         this.id_cartao = id_cartao;
     }
-        
+
+    
 
 }

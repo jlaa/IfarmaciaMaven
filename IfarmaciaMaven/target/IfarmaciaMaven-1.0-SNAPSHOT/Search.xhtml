@@ -68,10 +68,11 @@
                         <p:column headerText="Farmacia">
                             <h:outputText value="#{searchBean.farmacias.get(index).nome}" />
                         </p:column>
+                   
 
                         <p:column >
                             <h:form>
-                                <h:commandButton value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho([rem.id])}" />
+                                <h:commandButton value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho(rem.id)}" />
                             </h:form>
                         </p:column>
                     </p:dataTable>

@@ -9,9 +9,13 @@ import com.mycompany.model.Aplicacao;
 import com.mycompany.model.CartaoDeCredito;
 import com.mycompany.model.Cliente;
 import com.mycompany.model.ValidaBandeiraCartao;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
@@ -25,6 +29,7 @@ import javax.persistence.TemporalType;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Future;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -36,20 +41,21 @@ public class cadastrarCartaoBeans {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_CARTAO", nullable = false)
     private Long id_cartao;
 
     @ValidaBandeiraCartao(message = "Não é uma bandeira válida")
-    @Column(name = "TXT_BANDEIRA", nullable = false)
+    @NotBlank(message = "Favor escolha um cartão")
     private String bandeira;
 
     @CreditCardNumber(message = "Não é um cartão válido")
-    @Column(name = "TXT_NUMERO", nullable = false)
-    private String numero_cartao;
+    @NotBlank(message = "Favor digite um número válido de cartão")
+    private String numeroCartao;
 
-    //PROCURAR DEPOIS
-    @Column(name = "DT_EXPIRACAO", nullable = false)
-    private String dataExpiracao; 
+    @Future(message = "Digite uma data válida")
+    @Temporal(TemporalType.DATE)
+    private Date dataExpiracao;
+
+    private List<String> cartao;
 
     public Long getId_cartao() {
         return id_cartao;
@@ -67,19 +73,19 @@ public class cadastrarCartaoBeans {
         this.bandeira = bandeira;
     }
 
-    public String getNumero_cartao() {
-        return numero_cartao;
+    public String getNumeroCartao() {
+        return numeroCartao;
     }
 
-    public void setNumero_cartao(String numero_cartao) {
-        this.numero_cartao = numero_cartao;
+    public void setNumeroCartao(String numeroCartao) {
+        this.numeroCartao = numeroCartao;
     }
 
-    public String getDataExpiracao() {
+    public Date getDataExpiracao() {
         return dataExpiracao;
     }
 
-    public void setDataExpiracao(String dataExpiracao) {
+    public void setDataExpiracao(Date dataExpiracao) {
         this.dataExpiracao = dataExpiracao;
     }
 
@@ -87,28 +93,49 @@ public class cadastrarCartaoBeans {
      * Creates a new instance of cadastrarCartaoBeans
      */
     public cadastrarCartaoBeans() {
+        this.cartao = new ArrayList<>();
+        this.cartao.add("Visa");
+        this.cartao.add("MasterCard");
+        this.cartao.add("DinersClub");
+        this.cartao.add("AmericanExpress");
+        this.cartao.add("HiperCard");
+        this.cartao.add("Aura");
+        this.cartao.add("Elo");
+        this.cartao.add("Amex");
     }
 
     public String cadastrarCartao() {
-      
+
         Aplicacao aplicacao = new Aplicacao();
         CartaoDeCredito cartao = new CartaoDeCredito();
 
         cartao.setBandeira(bandeira);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar cal = Calendar.getInstance();
-        try {
-            cal.setTime(sdf.parse(dataExpiracao));
-        } catch (ParseException pe) {
 
+        Calendar cal = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String dataCerta = formatter.format(dataExpiracao);
+            dataExpiracao = (Date) formatter.parse(dataCerta);
+            cal = Calendar.getInstance();
+            cal.setTime(dataExpiracao);
+        } catch (ParseException e) {
+            System.out.println("Exception :" + e);
         }
         cartao.setDataExpiracao(cal);
-        cartao.setNumero_cartao(numero_cartao);
+        cartao.setNumero_cartao(numeroCartao);
         Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         cartao.setCliente(cliente);
         cliente.setCartao(cartao);
         aplicacao.inserirCartao(cliente);
         return "Index";
+    }
+
+    public List<String> listaBandeiraCartao() {
+        return this.cartao;
+    }
+
+    public Date getToday() {
+        return new Date();
     }
 
 }
