@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -34,7 +35,8 @@ import org.json.simple.parser.JSONParser;
 @Named(value = "remedioBeans")
 @RequestScoped
 public class remedioBeans {
-
+    @EJB
+    private Aplicacao aplicacao;
     private String nome_remedio;
     private String codigo;
     private String data_validade;
@@ -124,7 +126,6 @@ public class remedioBeans {
                 filename=filename.substring(8);
                 Object obj = parser.parse(new FileReader(filename));        
                 JSONArray jsonArray = (JSONArray) obj;
-                Aplicacao aplicacao = new Aplicacao();
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 

@@ -9,11 +9,9 @@ import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Cliente;
 import com.mycompany.model.ValidaEstados;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -26,7 +24,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Named(value = "alterarUsuario")
 @RequestScoped
 public class alterarUsuarioBeans implements Serializable {
-
+    @EJB
+    private Aplicacao aplicacao;
     @NotEmpty(message = "O username não pode ser vazio")
     @Length(message = "O login não pode ter mais de 20 caracteres", max = 20)
     private String login;
@@ -73,11 +72,14 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String alterarUsuario() {
-        Aplicacao aplicacao = new Aplicacao();
-
+        
         Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         nome = primeiroNome + " " + segundoNome;
-        aplicacao.AlterarCliente(bairo, cidade, estado, numero, rua, nome, ocupacao, telefone, cliente);
+        cliente.AdicionarEndereco(rua, numero, bairo, cidade, estado);
+        cliente.setNome(nome);
+        cliente.setOcupacao(ocupacao);
+        cliente.setTelefone(telefone);
+        aplicacao.AlterarCliente(cliente);
 
         return "Index";
     }

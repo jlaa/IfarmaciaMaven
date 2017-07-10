@@ -73,6 +73,8 @@ public class Cliente implements Serializable
     @OneToMany(mappedBy="cliente",fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)   
     private List<CartaoDeCredito> cartaos;
     
+    
+    
     public Cliente()
     {
         

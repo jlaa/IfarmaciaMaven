@@ -69,7 +69,7 @@
                                 <h:message for="bandeira" />
                                 <br/>
                                 <h:outputText value="Data de expiração: "/><br />
-                                <p:calendar id="data" value="#{cadastrarCartaoBeans.dataExpiracao}" mindate="#{cadastrarCartaoBeans.today}">
+                                <p:calendar mask="99/99/99" id="data" value="#{cadastrarCartaoBeans.dataExpiracao}" mindate="#{cadastrarCartaoBeans.today}">
                                 </p:calendar>
                                 <br/>
                                 <br/>
@@ -78,7 +78,7 @@
 
                             <p:column>
                                 <h:outputText value="Número do cartão: "/><br />
-                                <p:inputText id="cartao" value="#{cadastrarCartaoBeans.numeroCartao}"/>
+                                <p:inputMask mask="9999 9999 9999 9999" id="cartao" value="#{cadastrarCartaoBeans.numeroCartao}"/>
                                 <br />
                                 <h:message for="cartao" />
                                 <br />

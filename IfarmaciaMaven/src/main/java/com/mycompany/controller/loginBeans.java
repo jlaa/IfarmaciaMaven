@@ -8,6 +8,7 @@ package com.mycompany.controller;
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Cliente;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
@@ -26,7 +27,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @ManagedBean(name = "login")
 @SessionScoped
 public class loginBeans implements Serializable {
-
+    @EJB
+    private Aplicacao aplicacao;
     @NotEmpty(message = "O password não pode ser vazio")
     @Length(message = "O password não pode ter mais de 20 caracteres e"
             + " menos de 6 caracteres", max = 20, min = 6)
@@ -45,7 +47,6 @@ public class loginBeans implements Serializable {
     }
 
     public String validarUsuario() {
-        Aplicacao aplicacao = new Aplicacao();
 
         boolean logar = aplicacao.validarCliente(email, senha);
         if (logar == true) {

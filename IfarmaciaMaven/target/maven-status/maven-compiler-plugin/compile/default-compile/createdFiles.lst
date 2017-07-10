@@ -26,6 +26,7 @@ com\mycompany\controller\SingletonSession.class
 com\mycompany\model\CartaoDeCredito_.class
 com\mycompany\model\Farmacia_.class
 com\mycompany\controller\alterarUsuarioBeans.class
+com\mycompany\controller\usuarioBeans.class
 com\mycompany\controller\farmRegisterBean.class
 com\mycompany\model\SingletonEntityManagerFactory.class
 com\mycompany\controller\loginBeans.class

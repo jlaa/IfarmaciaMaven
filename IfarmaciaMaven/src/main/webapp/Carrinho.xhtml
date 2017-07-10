@@ -58,18 +58,24 @@
                 <p:layoutUnit id="principal" position="center">
 
                     <p:dataTable var="rem" style="border-style: none;" value="#{carrinhoBeans.remedios}">
-                        <p:column>
+                        <p:column headerText="Nome do Remédio">
                             <h:outputText value="#{rem.nome}" />
                         </p:column>
 
-                        <p:column>
-                            <h:outputText value="#{rem.preco}" />
+                        <p:column headerText="Preço">
+                            <h:outputText value="#{rem.preco}R$" />
                         </p:column>
 
                         <p:column>
-                            <h:commandButton value="Comprar Itens" action=""/>
+                            <h:form>
+                                <h:commandButton value="Excluir" action="#{carrinhoBeans.retirarDoCarrinho(rem.id)}"/>
+                            </h:form>
                         </p:column>
                     </p:dataTable>
+                    <h:form>
+                        <p:commandButton value="Comprar Remédios" action="#{carrinhoBeans.comprarRemedio()}" ajax="false"/>
+                    </h:form>
+
 
                 </p:layoutUnit>
 

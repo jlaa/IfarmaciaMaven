@@ -9,6 +9,7 @@ import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.ValidaEstados;
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import org.hibernate.validator.constraints.Length;
@@ -21,7 +22,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Named(value = "farmRegisterBean")
 @RequestScoped
 public class farmRegisterBean implements Serializable {
-
+    @EJB
+    private Aplicacao aplicacao;
     @NotEmpty(message = "O nome não pode ser vazio")
     @Length(message = "O nome não pode ter mais de 30 caracteres", max = 30)
     private String nome;
@@ -56,7 +58,6 @@ public class farmRegisterBean implements Serializable {
     }
 
     public String cadastrarFarmacia() {
-        Aplicacao aplicacao = new Aplicacao();
         Farmacia farmacia = new Farmacia();
 
         farmacia.CadastrarFarmacia(nome);

@@ -6,6 +6,8 @@ package com.mycompany.controller;
  * and open the template in the editor.
  */
 
+import com.mycompany.model.Aplicacao;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 
@@ -16,7 +18,8 @@ import javax.enterprise.context.RequestScoped;
 @Named(value = "compraBean")
 @RequestScoped
 public class compraBean {
-
+    @EJB
+    private Aplicacao aplicacao;
     /**
      * Creates a new instance of CompraBean
      */

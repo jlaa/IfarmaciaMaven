@@ -11,6 +11,7 @@ import com.mycompany.model.Farmacia;
 import com.mycompany.model.Remedio;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
@@ -22,7 +23,8 @@ import javax.enterprise.context.RequestScoped;
 @Named(value = "pedido")
 @RequestScoped
 public class pedidoBeans {
-
+    @EJB
+    private Aplicacao aplicacao;
     private String formaDePagamento;
     private String cidade;
     private String nomeDoRemedio;
@@ -59,7 +61,6 @@ public class pedidoBeans {
     
     public List<String> getCidades() {
 
-        Aplicacao aplicacao = new Aplicacao();
         List<Farmacia> farmacias = aplicacao.listaFarmacia();
         List<String> nomeCidades = new ArrayList();
         if (farmacias != null) {
@@ -83,7 +84,6 @@ public class pedidoBeans {
     }
 
     public List<String> getRemedios() {
-        Aplicacao aplicacao = new Aplicacao();
         List<Remedio> remedios = aplicacao.listaRemedio();
         List<String> nomesRemedios = new ArrayList();
         for (int i = 0; i < remedios.size(); i++) {

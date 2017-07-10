@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
@@ -38,7 +39,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Named(value = "cadastrarCartaoBeans")
 @RequestScoped
 public class cadastrarCartaoBeans {
-
+    @EJB
+    private Aplicacao aplicacao;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_cartao;
@@ -106,7 +108,6 @@ public class cadastrarCartaoBeans {
 
     public String cadastrarCartao() {
 
-        Aplicacao aplicacao = new Aplicacao();
         CartaoDeCredito cartao = new CartaoDeCredito();
 
         cartao.setBandeira(bandeira);

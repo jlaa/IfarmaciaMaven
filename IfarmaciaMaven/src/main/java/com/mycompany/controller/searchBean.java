@@ -8,10 +8,14 @@ package com.mycompany.controller;
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.Remedio;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -21,8 +25,10 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Named(value = "searchBean")
 @RequestScoped
-public class searchBean {
+public class searchBean implements Serializable {
 
+    @EJB
+    private Aplicacao aplicacao;
     @NotEmpty(message = "O Nome do Remedio não pode ser vazio")
     @Length(message = "Não pode ter mais de 20 caracteres", max = 20)
     private String nomeRemedio;
@@ -35,9 +41,9 @@ public class searchBean {
 
     private String preco;
 
-    private List<Farmacia> farmacias = null;
+    private List<Farmacia> farmacias;
 
-    private List<Remedio> remedios = new ArrayList();
+    private List<Remedio> remedios;
 
     /**
      * Creates a new instance of searchBean
@@ -47,18 +53,21 @@ public class searchBean {
     }
 
     public String pesquisaRemedio() {
-        Aplicacao aplicacao = new Aplicacao();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("remedios");
         farmacias = aplicacao.pesquisaRemedio(cidade, nomeRemedio);
+        remedios = new ArrayList();
         for (int i = 0; i < farmacias.size(); i++) {
             for (int j = 0; j < farmacias.get(i).getRemedios().size(); j++) {
-                 if(farmacias.get(i).getRemedios().get(j).getNome().equals(nomeRemedio))
-                    {
-                        remedios.add(farmacias.get(i).getRemedios().get(j));
-                    }
-               
+                if (farmacias.get(i).getRemedios().get(j).getNome().equals(nomeRemedio)) {
+                    remedios.add(farmacias.get(i).getRemedios().get(j));
+                    SingletonSession.getInstance().setAttribute("remedios", remedios);
+                    SingletonSession.getInstance().setAttribute("farmacias", farmacias);
+                }
+
             }
+
         }
-        return "Search";
+        return "Search?faces-redirect=true";
     }
 
     public String getNomeRemedio() {
@@ -94,7 +103,8 @@ public class searchBean {
     }
 
     public List<Remedio> getRemedios() {
-        return remedios;
+        return (List<Remedio>) SingletonSession.getInstance().getAttribute("remedios");
+
     }
 
     public void setRemedios(List<Remedio> remedios) {
@@ -102,7 +112,7 @@ public class searchBean {
     }
 
     public List<Farmacia> getFarmacias() {
-        return farmacias;
+        return (List<Farmacia>) SingletonSession.getInstance().getAttribute("farmacias");
     }
 
     public void setFarmacias(List<Farmacia> farmacias) {

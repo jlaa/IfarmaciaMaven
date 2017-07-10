@@ -15,6 +15,7 @@ import com.mycompany.model.Endereco;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.ValidaEstados;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -35,6 +36,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @RequestScoped
 public class registerBeans implements Serializable {
     
+    @EJB
+    private Aplicacao aplicacao;
     @NotEmpty(message = "O username não pode ser vazio")
     @Length(message = "O login não pode ter mais de 20 caracteres", max = 20)
     private String login;
@@ -81,7 +84,6 @@ public class registerBeans implements Serializable {
     }
 
     public String cadastrarCliente() {
-        Aplicacao aplicacao = new Aplicacao();
         Cliente cliente = new Cliente();
         if (senha.equals(confirmarSenha)) {
             cliente.CadastrarCliente(email, senha, login);
