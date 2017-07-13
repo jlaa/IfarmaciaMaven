@@ -79,10 +79,10 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Farmacia> listaFarmacia() {
-        List<Farmacia> farmacia;
+    public List<String> listaFarmacia() {
+        List<String> farmacia;
         try {
-            TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f", Farmacia.class);
+            TypedQuery<String> query = em.createQuery("SELECT distinct f.endereco.cidade from Farmacia f", String.class);
             farmacia = query.getResultList();
         } catch (Exception ex) {
             return null;
@@ -91,10 +91,10 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Remedio> listaRemedio() {
-        List<Remedio> remedio;
+    public List<String> listaRemedio() {
+        List<String> remedio;
         try {
-            TypedQuery<Remedio> query = em.createQuery("SELECT r from Remedio r", Remedio.class);
+            TypedQuery<String> query = em.createQuery("SELECT distinct r.nome from Remedio r", String.class);
             remedio = query.getResultList();
         } catch (Exception ex) {
             return null;

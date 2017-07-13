@@ -198,4 +198,9 @@ public class Cliente implements Serializable
         //se senha for maior ou igual a 6 é igual a true
         return senha.length() >= 6;
     }   
+
+    public List<CartaoDeCredito> getCartaos() {
+        return cartaos;
+    }
+    
 }

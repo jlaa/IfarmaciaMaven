@@ -12,10 +12,11 @@
                 <title>iFarm</title>
                 <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
 
+                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
             </f:facet>
         </h:head>
 
-        <h:body style="background-image: url('images/643965142.jpg');">
+        <h:body style="background-image: url('images/wp1931605.jpg');">
 
             <p:layout fullPage="true">
 
@@ -26,7 +27,7 @@
                         <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
                     </h:form>
                     <p:menubar style="border-style: none;">
-                        <p:menuitem value="R$ 0,00" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
+                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
                     </p:menubar>
                 </p:layoutUnit>
 
@@ -52,18 +53,36 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
+                    
                 </p:layoutUnit>
 
                 <p:layoutUnit id="principal" position="center">
 
-                    <p:dataTable var="rem" style="border-style: none;" value="#{carrinhoBeans.remedios}">
+                    <p:dataTable sortBy="#{rem.id}" var="rem" style="border-style: none;" rowIndexVar="indice" value="#{carrinhoBeans.remedios}">
+                        
+                        <p:column headerText="Indice">
+                            <h:outputText value="#{indice + 1}"/>
+                        </p:column>>
+                        
                         <p:column headerText="Nome do Remédio">
                             <h:outputText value="#{rem.nome}" />
                         </p:column>
 
                         <p:column headerText="Preço">
                             <h:outputText value="#{rem.preco}R$" />
+                        </p:column>
+
+
+                        <p:column headerText="Quantidade">
+                            <h:form>
+                                <p:commandButton value="-" action="#{carrinhoBeans.diminuirQuantidade(indice)}">
+                                    <f:ajax render="quantidade total" execute="@form"/>
+                                </p:commandButton>
+                                <p:outputLabel id="quantidade" value="#{rem.quantidade}" />
+                                <p:commandButton value="+" action="#{carrinhoBeans.adicionarQuantidade(indice)}">
+                                    <f:ajax render="quantidade total" execute="@form"/>
+                                </p:commandButton>
+                            </h:form>
                         </p:column>
 
                         <p:column>
@@ -75,8 +94,9 @@
                     <h:form>
                         <p:commandButton value="Comprar Remédios" action="#{carrinhoBeans.comprarRemedio()}" ajax="false"/>
                     </h:form>
-
-
+                    <p:outputLabel value="Preço Total:"/>
+                    <br/>
+                    <p:outputLabel id="total" value="#{carrinhoBeans.pegaPrecos}R$" />
                 </p:layoutUnit>
 
             </p:layout>

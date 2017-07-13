@@ -12,10 +12,11 @@
                 <title>iFarm</title>
                 <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
 
+                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
             </f:facet>
         </h:head>
 
-        <h:body style="background-image: url('images/643965142.jpg');">
+        <h:body style="background-image: url('images/wp1931605.jpg');">
 
             <p:layout fullPage="true">
 
@@ -25,7 +26,7 @@
                     <h:form>
                         <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
                     </h:form>                    <p:menubar style="border-style: none;">
-                        <p:menuitem value="R$ 0,00" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
+                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
                     </p:menubar>
                 </p:layoutUnit>
 
@@ -51,7 +52,7 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    Footer
+                    
                 </p:layoutUnit>
 
                 <p:layoutUnit id="principal" position="center">

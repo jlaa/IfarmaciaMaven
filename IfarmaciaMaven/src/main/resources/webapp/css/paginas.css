@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 12, 2017, 4:58:35 PM
+    Author     : joao_dev
+*/
+.ui-layout-south{
+    background-color: #191970 !important;
+}
+.ui-layout-south .ui-layout-unit-content{
+    background-image: url("../images/wp1931605.jpg") !important;
+}
+
+.ui-layout-west .ui-layout-unit-content{
+    background-image: url("../images/Banner-west.jpg") !important;
+}
+.ui-layout-center .ui-layout-unit-content{
+    background-image: url("../images/wp1931605.jpg") !important;
+    color: white;
+}
+.ui-layout-north .ui-layout-unit-content{
+    background-image: url("../images/pharmacy-banner1.jpg") !important;
+}

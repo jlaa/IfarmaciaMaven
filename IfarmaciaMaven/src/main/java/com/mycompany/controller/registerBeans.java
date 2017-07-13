@@ -9,20 +9,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import com.mycompany.model.Aplicacao;
-import com.mycompany.model.CartaoDeCredito;
 import com.mycompany.model.Cliente;
-import com.mycompany.model.Endereco;
-import com.mycompany.model.Farmacia;
 import com.mycompany.model.ValidaEstados;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.SessionContext;
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -64,15 +53,19 @@ public class registerBeans implements Serializable {
     private String telefone;
     @ValidaEstados(message = "Esse estado não existe")
     private String estado;
-
+    @NotEmpty(message = "A Rua não pode ser vazia")
+    @Size(max = 100, message = "o tamanho maximo é 100 para a Rua")
     private String rua;
-
+    @NotEmpty(message = "O número não pode ser vazio")
     private String numero;
-
+    @NotEmpty(message = "A Cidade não pode ser vazia")
+    @Size(max = 100, message = "o tamanho maximo é 100 para a cidade")
     private String cidade;
-
+    @NotEmpty(message = "O bairro não pode ser vazio")
+    @Size(max = 100, message = "o tamanho maximo é 100 para o bairro")
     private String bairo;
-
+    @NotEmpty(message = "A ocupação não pode ser vazia")
+    @Size(max = 25, message = "o tamanho maximo é 25 para a ocupação")
     private String ocupacao;
     private String nome = "";
 

@@ -80,7 +80,7 @@ public class Remedio implements Serializable
     }
     
     public void diminuiEstoque(long decremento){
-        this.quantidade= quantidade+decremento;
+        this.quantidade= quantidade-decremento;
     }
     
 //    public void excluirRemedio(String nome, String tipo){
@@ -102,7 +102,7 @@ public class Remedio implements Serializable
 //    }
     
     public void setQuantidade(long quantidade) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       this.quantidade=quantidade;
     }
     //Resgate de valores referentes ao remedio;
     public double getPreco(){

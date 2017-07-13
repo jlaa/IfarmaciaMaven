@@ -13,7 +13,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 
 /**
  *
@@ -29,6 +28,7 @@ public class carrinhoBeans implements Serializable {
     private double preco;
     private String nomeDaFarmacia;
     private List<Remedio> remedioComprado = new ArrayList();
+    private double total;
 
     /**
      * Creates a new instance of carrinhoBeans
@@ -38,6 +38,7 @@ public class carrinhoBeans implements Serializable {
         if (remedioComprado == null) {
             remedioComprado = new ArrayList();
         }
+
     }
 
     public String getNomeDoRemedio() {
@@ -71,6 +72,8 @@ public class carrinhoBeans implements Serializable {
         Remedio remedio = aplicacao.getRemedio(id);
         for (int i = 0; i < remedioComprado.size(); i++) {
             if (!remedioComprado.get(i).getId().equals(remedio.getId())) {
+                //só existe um item no carrinho
+                remedio.setQuantidade(1);
                 remedioComprado.add(remedio);
                 SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
                 break;
@@ -80,6 +83,7 @@ public class carrinhoBeans implements Serializable {
             }
         }
         if (remedioComprado.isEmpty()) {
+            remedio.setQuantidade(1);
             remedioComprado.add(remedio);
             SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
 
@@ -100,12 +104,48 @@ public class carrinhoBeans implements Serializable {
         return " ";
     }
 
+    public void adicionarQuantidade(int indice) {
+        remedioComprado = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
+        Remedio remedio = remedioComprado.get(indice);
+        Remedio temp = aplicacao.getRemedio(remedio.getId());
+        if (temp.getQuantidade() >= remedio.getQuantidade()) {
+            remedioComprado.remove(indice);
+            remedio.aumentaEstoque(1);
+            remedioComprado.add(remedio);
+            SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
+        }
+
+    }
+
+    public void diminuirQuantidade(int indice) {
+        remedioComprado = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
+        Remedio remedio = remedioComprado.get(indice);
+        if (remedio.getQuantidade() > 1) {
+            remedioComprado.remove(indice);
+
+            remedio.diminuiEstoque(1);
+            remedioComprado.add(remedio);
+            SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
+        }
+    }
+
     public String comprarRemedio() {
         return " ";
     }
 
     public List<Remedio> getRemedios() {
         return remedioComprado;
+    }
+
+    public double getPegaPrecos() {
+        total = 0;
+        List<Remedio> remediosTemp = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
+        if (remediosTemp != null) {
+            for (int i = 0; i < remediosTemp.size(); i++) {
+                total = total + (remediosTemp.get(i).getQuantidade() * remediosTemp.get(i).getPreco());
+            }
+        }
+        return total;
     }
 
 }

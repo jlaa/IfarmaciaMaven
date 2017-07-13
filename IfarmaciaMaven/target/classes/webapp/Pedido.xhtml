@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>iFarm</title>
+                <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+
+                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
+            </f:facet>
+        </h:head>
+
+        <h:body style="background-image: url('images/wp1931605.jpg');">
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit rendered="#{login.retornaValidacao() != 'Convidado'}" position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <h:outputText value="#{login.retornaValidacao()}"/>
+                    <p:link href="AlterarUsuario.xhtml" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
+                    <h:form>
+                        <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
+                    </h:form>                    <p:menubar style="border-style: none;">
+                        <p:menuitem value="#{carrinhoBeans.pegaPrecos()}" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
+                    </p:menubar>
+                </p:layoutUnit>
+
+                <p:layoutUnit rendered="#{login.retornaValidacao() == 'Convidado'}" position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <h:outputText value="#{login.retornaValidacao()}"/>
+                    <p:link href="Login.xhtml" value=" Logar " style="font-size: smaller; text-decoration: none; " />
+                    <p:link href="Register.xhtml" value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                    <p:menu>
+                        <p:submenu label="Resources">
+                            <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
+
+                            <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
+
+                            <p:menuitem value="Contato" url="Contato.xhtml" icon="fa fa-phone"/>
+
+                            <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" icon="fa fa-save"/>
+                        </p:submenu>
+
+                    </p:menu>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+
+                <p:layoutUnit id="principal" position="center">
+                    <div style="text-align: center;">
+                        <h:outputText value="Formulário de Pedido de Remédio" style="font-size: x-large;"/><br />
+                    </div>
+                    <h:outputText value="Informações do pedido" style="font-size: larger;"/><br />
+
+                    <h:form>
+                        <h:outputText value="Forma de pagamento" /><br />
+                        <p:selectOneMenu id="pagamento" value="#" style="width:150px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Presencialmente" itemValue="presencialmente" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Cartão de Credito" itemValue="cartao" noSelectionOption="true" />
+                            <f:selectItems value="#" />
+                        </p:selectOneMenu>
+                        <br />
+                        <br />
+                        <h:outputText value="Sua cidade" /><br />                      
+
+                        <p:selectOneMenu id="cidade" value="#" style="width:150px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{pedido.cidades}" />
+                        </p:selectOneMenu>
+                        <br />
+                        <br />
+
+                        <h:outputText value="Nome do remédio" /><br />
+                        <p:selectOneMenu id="remedio" value="#" style="width:150px">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{pedido.remedios}" />
+                        </p:selectOneMenu>
+                        <br />
+                        <br />
+                        <p:commandButton  value="Pedir agora"/>
+                    </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
