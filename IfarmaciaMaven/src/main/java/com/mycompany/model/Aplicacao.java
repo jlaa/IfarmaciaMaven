@@ -72,10 +72,15 @@ public class Aplicacao {
     public void AlterarCliente(Cliente cliente) {
         em.merge(cliente);
     }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void AlterarRemedio(Remedio remedio) {
+        em.merge(remedio);
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void remover(Cliente cliente) {
-        em.remove(cliente);
+    public void excluirRemedio(Remedio remedio) {
+        em.remove(em.merge(remedio));
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)

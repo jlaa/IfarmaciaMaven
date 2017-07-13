@@ -7,6 +7,7 @@ package com.mycompany.controller;
 
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Remedio;
+import com.mycompany.model.Cliente;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -108,10 +109,8 @@ public class carrinhoBeans implements Serializable {
         remedioComprado = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
         Remedio remedio = remedioComprado.get(indice);
         Remedio temp = aplicacao.getRemedio(remedio.getId());
-        if (temp.getQuantidade() >= remedio.getQuantidade()) {
-            remedioComprado.remove(indice);
-            remedio.aumentaEstoque(1);
-            remedioComprado.add(remedio);
+        if (temp.getQuantidade() > remedio.getQuantidade()) {
+            remedioComprado.get(indice).aumentaEstoque(1);
             SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
         }
 
@@ -121,16 +120,23 @@ public class carrinhoBeans implements Serializable {
         remedioComprado = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
         Remedio remedio = remedioComprado.get(indice);
         if (remedio.getQuantidade() > 1) {
-            remedioComprado.remove(indice);
-
-            remedio.diminuiEstoque(1);
-            remedioComprado.add(remedio);
+            remedioComprado.get(indice).diminuiEstoque(1);
             SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
         }
     }
 
     public String comprarRemedio() {
-        return " ";
+        Cliente cliente = (Cliente) (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        String retorno ;
+        if(cliente.getCartaos().isEmpty())
+        {
+            retorno = "CadastrarCartao?faces-redirect=true";
+            return retorno;
+        }else
+        {
+            retorno = "ComprarRemedio?faces-redirect=true";
+        }
+        return retorno;
     }
 
     public List<Remedio> getRemedios() {

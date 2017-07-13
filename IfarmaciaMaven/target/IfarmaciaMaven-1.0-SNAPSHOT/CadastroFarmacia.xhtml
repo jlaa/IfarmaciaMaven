@@ -12,7 +12,7 @@
                 <title>iFarm</title>
                 <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
 
-                
+
                 <link href="css/paginas.css" rel="stylesheet" type="text/css" />
             </f:facet>
         </h:head>
@@ -26,8 +26,11 @@
                     <p:link href="AlterarUsuario.xhtml" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
                     <h:form>
                         <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
-                    </h:form>                    <p:menubar style="border-style: none;">
-                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
+                    </h:form>            
+                    <p:menubar style="border-style: none;">
+                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" id="carrinhoMenu" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
+                            <f:convertNumber pattern=".99" />
+                        </p:menuitem>     
                     </p:menubar>
                 </p:layoutUnit>
 
@@ -37,9 +40,9 @@
                     <p:link href="Register.xhtml" value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
                     <p:menu>
-                        <p:submenu label="Resources">
+                        <p:submenu label="Menu">
                             <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
 
                             <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
@@ -53,7 +56,7 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    
+
                 </p:layoutUnit>
 
                 <p:layoutUnit id="principal" position="center">
@@ -62,19 +65,27 @@
                         <p:panelGrid columns="2" layout="grid" style="border-style: none;">
                             <p:column>
                                 <h:outputText value="Nome: "/><br />
-                                <p:inputText value="#{farmRegisterBean.nome}" required="true"/>
+                                <p:inputText id="nome" value="#{farmRegisterBean.nome}" />
+                                <br/>
+                                <p:messages for="nome"/>
                                 <br />
                                 <br />
                                 <h:outputText value="Estado: "/><br />
-                                <p:inputText value="#{farmRegisterBean.estado}" required="true"/>
+                                <p:inputText id="estado" value="#{farmRegisterBean.estado}" />
+                                <br/>
+                                <p:messages for="estado"/>
                                 <br />
                                 <br />
                                 <h:outputText value="Bairro: "/><br />
-                                <p:inputText  value="#{farmRegisterBean.bairro}" required="true"/>
+                                <p:inputText id="bairro" value="#{farmRegisterBean.bairro}" />
+                                <br/>
+                                <p:messages for="bairro"/>
                                 <br />
                                 <br />
                                 <h:outputText value="Número: "/><br />
-                                <p:inputText  value="#{farmRegisterBean.numero}" required="true"/>
+                                <p:inputText id="numero" value="#{farmRegisterBean.numero}" />
+                                <br/>
+                                <p:messages for="numero"/>
                                 <br />
                                 <br />
                                 <p:commandButton action="#{farmRegisterBean.cadastrarFarmacia()}" value="Enviar" update="geral" />
@@ -83,18 +94,17 @@
                             <p:column>
 
                                 <h:outputText value="Cidade: "/><br />
-                                <p:inputText value="#{farmRegisterBean.cidade}" required="true"/>
+                                <p:inputText id="cidade" value="#{farmRegisterBean.cidade}" />
+                                <br/>
+                                <p:messages for="cidade"/>
                                 <br />
                                 <br />
                                 <h:outputText value="Rua: "/><br />
-                                <p:inputText value="#{farmRegisterBean.rua}" required="true"/>
+                                <p:inputText id="rua" value="#{farmRegisterBean.rua}" />
+                                <br/>
+                                <p:messages for="rua"/>
                                 <br />
                                 <br />
-                                <!--<h:outputText value="Aceita que formas de pagamento: "/><br />
-                                <p:selectManyCheckbox id="basic">
-                                    <f:selectItem itemLabel="Cartão" itemValue="Cartão" />
-                                    <f:selectItem itemLabel="Presencialmente" itemValue="Presencialmente" />
-                                </p:selectManyCheckbox>-->
                             </p:column>
                         </p:panelGrid>
                     </h:form>

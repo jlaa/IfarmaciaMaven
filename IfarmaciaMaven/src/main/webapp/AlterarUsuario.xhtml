@@ -24,10 +24,12 @@
                     <h:outputText value="#{login.retornaValidacao()}"/>
                     <p:link href="AlterarUsuario.xhtml" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
                     <h:form>
-                    <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
+                        <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
                     </h:form>
                     <p:menubar style="border-style: none;">
-                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
+                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" id="carrinhoMenu" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
+                            <f:convertNumber pattern=".99" />
+                        </p:menuitem>    
                     </p:menubar>
                 </p:layoutUnit>
 
@@ -37,9 +39,9 @@
                     <p:link href="Register.xhtml" value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
                     <p:menu>
-                        <p:submenu label="Resources">
+                        <p:submenu label="Menu">
                             <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
 
                             <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
@@ -91,7 +93,7 @@
                                 <br />
                                 <br />                                                       
                                 <p:commandButton  update="geral" value="Alterar" action="#{alterarUsuario.alterarUsuario()}"/>
-                                
+
                                 <p:commandButton  value="Cadastrar Cartão" action="CadastrarCartao" />
                             </p:column>
 
@@ -110,6 +112,7 @@
                                 <br />
                                 <h:outputText value="Cidade: "/><br />
                                 <p:inputText id="cidade" value="#{alterarUsuario.cidade}"/>
+                                <br />
                                 <h:message for="cidade" />
                                 <br />
                                 <br />
@@ -118,6 +121,13 @@
                                 <br />
                                 <h:message for="bairro" />
                                 <br />
+                                <br />
+                                <h:outputText value="Cartões" rendered="#{alterarUsuario.nomeCartoes != null}"/>
+                                <br/>
+                                <p:selectOneMenu id="cartoes" value="#" style="width:150px">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{alterarUsuario.nomeCartoes}" />
+                                </p:selectOneMenu>
                             </p:column>
                         </p:panelGrid>
                     </h:form>

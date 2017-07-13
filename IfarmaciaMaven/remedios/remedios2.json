@@ -1,0 +1,49 @@
+
+[  
+    {  
+        "codigo":"1045",        
+        "data_validade": "2018-09-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "benegripe",
+        "preco": "2.5",
+        "quantidade":"99",
+        "tipo":"comprimido"
+    },
+    {  
+       "codigo":"1010",        
+        "data_validade": "2018-08-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "amoxilina",
+        "preco": "10.0",
+        "quantidade":"12",
+        "tipo":"liquido"
+    },
+    {  
+       "codigo":"1050",        
+        "data_validade": "2018-08-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "acebrofilina",
+        "preco": "15.0",
+        "quantidade":"45",
+        "tipo":"liquido"
+    },
+    {  
+       "codigo":"1090",        
+        "data_validade": "2018-08-10",
+        "faixa_etaria": "adulto",
+        "nome_remedio": "multisoro",
+        "preco": "4.0",
+        "quantidade":"50",
+        "tipo":"liquido"
+    },
+    {  
+       "codigo":"1090",        
+        "data_validade": "2018-08-10",
+        "faixa_etaria": "infantil",
+        "nome_remedio": "sorine",
+        "preco": "5.0",
+        "quantidade":"50",
+        "tipo":"liquido"
+    }
+]
+

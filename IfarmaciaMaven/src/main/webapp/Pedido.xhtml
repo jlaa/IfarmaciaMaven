@@ -25,9 +25,9 @@
                     <p:link href="AlterarUsuario.xhtml" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
                     <h:form>
                         <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
-                    </h:form>                    <p:menubar style="border-style: none;">
-                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
-                    </p:menubar>
+                    </h:form>  
+                    <p:menuitem value="#{carrinhoBeans.pegaPrecos}" id="carrinhoMenu" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
+                    </p:menuitem>
                 </p:layoutUnit>
 
                 <p:layoutUnit rendered="#{login.retornaValidacao() == 'Convidado'}" position="north" size="100" resizable="true" closable="true" collapsible="true">
@@ -36,9 +36,9 @@
                     <p:link href="Register.xhtml" value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
                     <p:menu>
-                        <p:submenu label="Resources">
+                        <p:submenu label="Menu">
                             <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
 
                             <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
@@ -60,19 +60,9 @@
                     </div>
                     <h:outputText value="Informações do pedido" style="font-size: larger;"/><br />
 
-                    <h:form>
-                        <h:outputText value="Forma de pagamento" /><br />
-                        <p:selectOneMenu id="pagamento" value="#" style="width:150px">
-                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItem itemLabel="Presencialmente" itemValue="presencialmente" noSelectionOption="true" />
-                            <f:selectItem itemLabel="Cartão de Credito" itemValue="cartao" noSelectionOption="true" />
-                            <f:selectItems value="#" />
-                        </p:selectOneMenu>
-                        <br />
-                        <br />
-                        <h:outputText value="Sua cidade" /><br />                      
-
-                        <p:selectOneMenu id="cidade" value="#" style="width:150px">
+                    <h:form>                                       
+                        <h:outputText value="Cidades" /><br />
+                        <p:selectOneMenu id="cidade" value="#{searchBean.cidade}" style="width:150px">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{pedido.cidades}" />
                         </p:selectOneMenu>
@@ -80,13 +70,13 @@
                         <br />
 
                         <h:outputText value="Nome do remédio" /><br />
-                        <p:selectOneMenu id="remedio" value="#" style="width:150px">
+                        <p:selectOneMenu id="remedio" value="#{searchBean.nomeRemedio}" style="width:150px">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{pedido.remedios}" />
                         </p:selectOneMenu>
                         <br />
                         <br />
-                        <p:commandButton  value="Pedir agora"/>
+                        <p:commandButton  value="Pedir agora" action="#{searchBean.pesquisaRemedio()}" />
                     </h:form>
                 </p:layoutUnit>
 

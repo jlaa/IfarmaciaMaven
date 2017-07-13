@@ -25,10 +25,7 @@
                     <p:link href="AlterarUsuario.xhtml" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
                     <h:form>
                         <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
-                    </h:form>
-                    <p:menubar style="border-style: none;">
-                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" url="Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;"/>
-                    </p:menubar>
+                    </h:form>                   
                 </p:layoutUnit>
 
                 <p:layoutUnit rendered="#{login.retornaValidacao() == 'Convidado'}" position="north" size="100" resizable="true" closable="true" collapsible="true">
@@ -37,9 +34,9 @@
                     <p:link href="Register.xhtml" value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
                 </p:layoutUnit>
 
-                <p:layoutUnit position="west" size="175" header="Left" collapsible="true">
+                <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
                     <p:menu>
-                        <p:submenu label="Resources">
+                        <p:submenu label="Menu">
                             <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
 
                             <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
@@ -53,17 +50,17 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                    
+
                 </p:layoutUnit>
 
                 <p:layoutUnit id="principal" position="center">
 
                     <p:dataTable sortBy="#{rem.id}" var="rem" style="border-style: none;" rowIndexVar="indice" value="#{carrinhoBeans.remedios}">
-                        
+
                         <p:column headerText="Indice">
                             <h:outputText value="#{indice + 1}"/>
                         </p:column>>
-                        
+
                         <p:column headerText="Nome do Remédio">
                             <h:outputText value="#{rem.nome}" />
                         </p:column>
@@ -75,12 +72,10 @@
 
                         <p:column headerText="Quantidade">
                             <h:form>
-                                <p:commandButton value="-" action="#{carrinhoBeans.diminuirQuantidade(indice)}">
-                                    <f:ajax render="quantidade total" execute="@form"/>
+                                <p:commandButton value="-" action="#{carrinhoBeans.diminuirQuantidade(indice)}" update="quantidade total">
                                 </p:commandButton>
                                 <p:outputLabel id="quantidade" value="#{rem.quantidade}" />
-                                <p:commandButton value="+" action="#{carrinhoBeans.adicionarQuantidade(indice)}">
-                                    <f:ajax render="quantidade total" execute="@form"/>
+                                <p:commandButton value="+" action="#{carrinhoBeans.adicionarQuantidade(indice)}" update="quantidade total">
                                 </p:commandButton>
                             </h:form>
                         </p:column>
@@ -96,7 +91,9 @@
                     </h:form>
                     <p:outputLabel value="Preço Total:"/>
                     <br/>
-                    <p:outputLabel id="total" value="#{carrinhoBeans.pegaPrecos}R$" />
+                    <p:outputLabel id="total" value="#{carrinhoBeans.pegaPrecos}R$">
+                        <f:convertNumber pattern=".99" />
+                    </p:outputLabel>
                 </p:layoutUnit>
 
             </p:layout>

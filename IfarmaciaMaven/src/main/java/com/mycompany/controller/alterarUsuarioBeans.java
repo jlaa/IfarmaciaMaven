@@ -6,9 +6,12 @@
 package com.mycompany.controller;
 
 import com.mycompany.model.Aplicacao;
+import com.mycompany.model.CartaoDeCredito;
 import com.mycompany.model.Cliente;
 import com.mycompany.model.ValidaEstados;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -67,6 +70,10 @@ public class alterarUsuarioBeans implements Serializable {
     @Size(max = 25, message = "o tamanho maximo é 25 para a ocupação")
     private String ocupacao;
     private String nome = "";
+    
+    List<CartaoDeCredito> cartoes;
+    
+    List<String> nomecartoes;
 
     /**
      * Creates a new instance of loginBeans
@@ -82,7 +89,7 @@ public class alterarUsuarioBeans implements Serializable {
         cliente.AdicionarEndereco(rua, numero, bairo, cidade, estado);
         cliente.setNome(nome);
         cliente.setOcupacao(ocupacao);
-        cliente.setTelefone(telefone);
+        cliente.setTelefone(telefone);        
         aplicacao.AlterarCliente(cliente);
 
         return "Index";
@@ -258,6 +265,17 @@ public class alterarUsuarioBeans implements Serializable {
 
     public void setConfirmarSenha(String confirmarSenha) {
         this.confirmarSenha = confirmarSenha;
+    }
+    
+    public List<String> getNomeCartoes(){
+        
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        cartoes = cliente.getCartaos();
+        nomecartoes= new ArrayList();
+        for(int i = 0; i<cartoes.size(); i++){
+            nomecartoes.add(cartoes.get(i).getBandeira());
+        }
+        return nomecartoes;
     }
 
 }

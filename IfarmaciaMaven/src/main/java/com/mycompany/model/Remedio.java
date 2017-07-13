@@ -79,8 +79,14 @@ public class Remedio implements Serializable
         this.quantidade= quantidade+incremento;
     }
     
-    public void diminuiEstoque(long decremento){
+    public boolean diminuiEstoque(long decremento){
+        if((quantidade - decremento) <= 0)
+        {
+            return false;
+        }
+        
         this.quantidade= quantidade-decremento;
+        return true;
     }
     
 //    public void excluirRemedio(String nome, String tipo){
@@ -101,6 +107,9 @@ public class Remedio implements Serializable
 //            }
 //    }
     
+    public long getQuantidade(){
+       return this.quantidade;
+    }
     public void setQuantidade(long quantidade) {
        this.quantidade=quantidade;
     }
@@ -113,9 +122,7 @@ public class Remedio implements Serializable
        return this.nome;
     }
     
-    public long getQuantidade(){
-       return this.quantidade;
-    }
+    
     
     public String getFaixaEtaria(){
        return this.faixaEtaria;
