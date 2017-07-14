@@ -48,8 +48,9 @@ public class searchBean implements Serializable {
     /**
      * Creates a new instance of searchBean
      */
-    public searchBean() {
-
+    public searchBean()
+    {
+       
     }
 
     public String pesquisaRemedio() {
@@ -67,7 +68,7 @@ public class searchBean implements Serializable {
             }
 
         }
-        return "Search?faces-redirect=true";
+        return "procurar";
     }
 
     public String getNomeRemedio() {

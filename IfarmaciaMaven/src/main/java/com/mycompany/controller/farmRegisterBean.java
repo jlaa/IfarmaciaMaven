@@ -8,7 +8,10 @@ package com.mycompany.controller;
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.ValidaEstados;
+import com.mycompany.model.Cliente;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -22,6 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Named(value = "farmRegisterBean")
 @RequestScoped
 public class farmRegisterBean implements Serializable {
+
     @EJB
     private Aplicacao aplicacao;
     @NotEmpty(message = "O nome não pode ser vazio")
@@ -50,28 +54,56 @@ public class farmRegisterBean implements Serializable {
 
     private String site;
 
+    private List<String> estados = new ArrayList();
+
     /**
      * Creates a new instance of farmRegisterBean
      */
     public farmRegisterBean() {
-
+        this.estados.add("AC");
+        this.estados.add("AL");
+        this.estados.add("AM");
+        this.estados.add("AP");
+        this.estados.add("BA");
+        this.estados.add("CE");
+        this.estados.add("DF");
+        this.estados.add("ES");
+        this.estados.add("GO");
+        this.estados.add("MA");
+        this.estados.add("MG");
+        this.estados.add("MS");
+        this.estados.add("MT");
+        this.estados.add("PA");
+        this.estados.add("PB");
+        this.estados.add("PE");
+        this.estados.add("PI");
+        this.estados.add("PR");
+        this.estados.add("RJ");
+        this.estados.add("RN");
+        this.estados.add("RO");
+        this.estados.add("RR");
+        this.estados.add("RS");
+        this.estados.add("SC");
+        this.estados.add("SE");
+        this.estados.add("SP");
+        this.estados.add("TO");
     }
 
     public String cadastrarFarmacia() {
-        Farmacia farmacia = new Farmacia();
+        List<Cliente> clientes = new ArrayList();
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        if (cliente != null) {
+            clientes.add(cliente);
+            Farmacia farmacia = new Farmacia();
+            farmacia.CadastrarFarmacia(nome);
+            farmacia.InserirEndereco(rua, numero, bairro, cidade, estado);
+            farmacia.setClientes(clientes);
+            SingletonSession.getInstance().setAttribute("farmacia", farmacia);
 
-        farmacia.CadastrarFarmacia(nome);
-        farmacia.InserirEndereco(rua, numero, bairro, cidade, estado);
-        
-        SingletonSession.getInstance().setAttribute("farmacia", farmacia);
-
-        return "CadastrarRemedios.xhtml?faces-redirect=true";
-
+        }
+        return "sucessoFarmacia";
     }
-
-    public String mudarIndex() {
-        return "Index.xhtmlfaces-redirect=true";
-    }
+ 
 
     public String getNome() {
         return nome;
@@ -127,6 +159,14 @@ public class farmRegisterBean implements Serializable {
 
     public void setSite(String site) {
         this.site = site;
+    }
+
+    public List<String> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(List<String> estados) {
+        this.estados = estados;
     }
 
 }

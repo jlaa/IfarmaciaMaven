@@ -89,7 +89,7 @@ public class carrinhoBeans implements Serializable {
             SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
 
         }
-        return "Carrinho?faces-redirect=true";
+        return "sucessoCarrinho";
     }
 
     public String retirarDoCarrinho(Long id) {
@@ -130,11 +130,11 @@ public class carrinhoBeans implements Serializable {
         String retorno ;
         if(cliente.getCartaos().isEmpty())
         {
-            retorno = "CadastrarCartao?faces-redirect=true";
+            retorno = "cartao";
             return retorno;
         }else
         {
-            retorno = "ComprarRemedio?faces-redirect=true";
+            retorno = "comprarRemedio";
         }
         return retorno;
     }

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>iFarm</title>
+                <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+
+                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
+            </f:facet>
+        </h:head>
+
+        <h:body style="background-image: url('images/wp1931605.jpg');">
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit rendered="#{login.retornaValidacao() != 'Convidado'}" position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <h:form>
+                        <p:commandLink action="alterarUsuario" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
+                        <p:menubar style="border-style: none;">
+                            <p:menuitem value="#{carrinhoBeans.pegaPrecos}" id="carrinhoMenu" action="carrinho" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
+                            </p:menuitem>
+                        </p:menubar>
+                    </h:form>
+                </p:layoutUnit>             
+
+                <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
+                    <h:form>
+                        <p:menu>
+                            <p:submenu label="Menu">
+                                <p:menuitem value="Home" icon="fa fa-home" action="indexLogado"/>
+
+                                <p:menuitem value="Solicitar Pedido" action="pedido" icon="fa fa-envelope-o"/>
+
+                                <p:menuitem value="Cadastrar Farmacia" action="cadastrarFarmacia" icon="fa fa-save"/>
+                            </p:submenu>
+
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+
+                </p:layoutUnit>
+
+                <p:layoutUnit id="principal" position="center">
+
+                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;" value="#{searchBean.remedios}">  
+
+                        <p:column headerText="Remédio">
+                            <h:outputText value="#{rem.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Preço">
+                            <h:outputText value="#{rem.preco}R$" />
+                        </p:column>
+                        <p:column headerText="Farmacia">
+                            <h:outputText value="#{searchBean.farmacias.get(index).nome}" />
+                        </p:column>
+
+
+                        <p:column >
+                            <h:form>
+                                <p:commandButton value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho(rem.id)}" ajax="false"/>
+                            </h:form>
+                        </p:column>
+                    </p:dataTable>
+
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

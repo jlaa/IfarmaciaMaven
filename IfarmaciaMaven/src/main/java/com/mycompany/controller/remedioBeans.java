@@ -167,7 +167,7 @@ public class remedioBeans {
                 e.printStackTrace();
             }
         }
-        return "Index?faces-redirect=true";
+        return "sucessoRemedio";
     }
 
 }

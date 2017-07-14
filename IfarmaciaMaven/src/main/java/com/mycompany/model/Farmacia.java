@@ -134,6 +134,16 @@ public class Farmacia implements Serializable{
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+    
+    
   
     
 }

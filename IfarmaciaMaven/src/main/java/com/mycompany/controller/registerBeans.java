@@ -11,6 +11,8 @@ import javax.faces.bean.RequestScoped;
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Cliente;
 import com.mycompany.model.ValidaEstados;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -24,21 +26,21 @@ import org.hibernate.validator.constraints.NotEmpty;
 @ManagedBean(name = "register")
 @RequestScoped
 public class registerBeans implements Serializable {
-    
+
     @EJB
     private Aplicacao aplicacao;
     @NotEmpty(message = "O username não pode ser vazio")
     @Length(message = "O login não pode ter mais de 20 caracteres", max = 20)
     private String login;
-    
+
     @NotEmpty(message = "O password não pode ser vazio")
     @Length(message = "A senha não pode ter mais de 20 caracteres e"
             + " menos de 6 caracteres", max = 20, min = 6)
     private String senha;
-    
+
     @NotEmpty(message = "O password não pode ser vazio")
     @Length(message = "A senha não pode ter mais de 20 caracteres e"
-            + " menos de 6 caracteres", max = 20, min = 6)    
+            + " menos de 6 caracteres", max = 20, min = 6)
     private String confirmarSenha;
 
     @NotEmpty(message = "O primeiro nome não pode ser vazio")
@@ -67,12 +69,41 @@ public class registerBeans implements Serializable {
     @NotEmpty(message = "A ocupação não pode ser vazia")
     @Size(max = 25, message = "o tamanho maximo é 25 para a ocupação")
     private String ocupacao;
+
+    private List<String> estados = new ArrayList();
     private String nome = "";
 
     /**
      * Creates a new instance of loginBeans
      */
     public registerBeans() {
+        this.estados.add("AC");
+        this.estados.add("AL");
+        this.estados.add("AM");
+        this.estados.add("AP");
+        this.estados.add("BA");
+        this.estados.add("CE");
+        this.estados.add("DF");
+        this.estados.add("ES");
+        this.estados.add("GO");
+        this.estados.add("MA");
+        this.estados.add("MG");
+        this.estados.add("MS");
+        this.estados.add("MT");
+        this.estados.add("PA");
+        this.estados.add("PB");
+        this.estados.add("PE");
+        this.estados.add("PI");
+        this.estados.add("PR");
+        this.estados.add("RJ");
+        this.estados.add("RN");
+        this.estados.add("RO");
+        this.estados.add("RR");
+        this.estados.add("RS");
+        this.estados.add("SC");
+        this.estados.add("SE");
+        this.estados.add("SP");
+        this.estados.add("TO");
 
     }
 
@@ -81,16 +112,15 @@ public class registerBeans implements Serializable {
         if (senha.equals(confirmarSenha)) {
             cliente.CadastrarCliente(email, senha, login);
             cliente.AdicionarEndereco(rua, numero, bairo, cidade, estado);
-            this.nome = primeiroNome+ " " + segundoNome;
+            this.nome = primeiroNome + " " + segundoNome;
             cliente.adicionarInformaçõesCliente(nome, telefone, ocupacao);
-            boolean register=aplicacao.CadastrarCliente(cliente);
-            if(register==true)
-            {
-                 return "RegisterOK";
-            }            
+            boolean register = aplicacao.CadastrarCliente(cliente);
+            if (register == true) {
+                return "sucessoRegister";
+            }
         }
-        return "Register";//falta colocar o register ERRO
-       
+        return "falhaRegister";//falta colocar o register ERRO
+
     }
 
     public String getLogin() {
@@ -195,6 +225,14 @@ public class registerBeans implements Serializable {
 
     public void setConfirmarSenha(String confirmarSenha) {
         this.confirmarSenha = confirmarSenha;
+    }
+
+    public List<String> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(List<String> estados) {
+        this.estados = estados;
     }
 
 }

@@ -52,9 +52,9 @@ public class loginBeans implements Serializable {
         if (logar == true) {
             Cliente cliente = aplicacao.getCliente(email, senha);
             SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
-            return "Index?faces-redirect=true";
+            return "sucessoLogin";
         }
-        return "LoginError?faces-redirect=true";
+        return "falhaLogin";
     }
 
     public String getEmail() {
@@ -94,7 +94,7 @@ public class loginBeans implements Serializable {
     public String logout() {
 
         SingletonSession.getInstance().encerrarSessao();
-        return "Index.xhtml";
+        return "sair";
     }
 
 }

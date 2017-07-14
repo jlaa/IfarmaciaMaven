@@ -92,7 +92,7 @@ public class alterarUsuarioBeans implements Serializable {
         cliente.setTelefone(telefone);        
         aplicacao.AlterarCliente(cliente);
 
-        return "Index";
+        return "sucessoAlterar";
     }
 
     public String getLogin() {

@@ -22,7 +22,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = ValidadorFormaPagamento.class)
 @Documented
 public @interface ValidaFormaPagamento {
-    String message() default "{Forma de Pagamento nãoa ceita}";
+    String message() default "{Forma de Pagamento não aceita}";
 
     Class<?>[] groups() default {};
 
