@@ -45,7 +45,7 @@ public class Farmacia implements Serializable{
     
     @Valid 
     @ManyToMany(mappedBy = "farmacia")
-    private List<Cliente> clientes;
+    private List<Cliente> cliente;
     
     @Valid
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -136,11 +136,11 @@ public class Farmacia implements Serializable{
     }
 
     public List<Cliente> getClientes() {
-        return clientes;
+        return cliente;
     }
 
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
+    public void setClientes(List<Cliente> cliente) {
+        this.cliente = cliente;
     }
     
     

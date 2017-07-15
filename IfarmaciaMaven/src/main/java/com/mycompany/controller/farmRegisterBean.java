@@ -9,6 +9,7 @@ import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.ValidaEstados;
 import com.mycompany.model.Cliente;
+import com.mycompany.model.Owner;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +92,7 @@ public class farmRegisterBean implements Serializable {
 
     public String cadastrarFarmacia() {
         List<Cliente> clientes = new ArrayList();
-        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");       
         if (cliente != null) {
             clientes.add(cliente);
             Farmacia farmacia = new Farmacia();
@@ -99,7 +100,6 @@ public class farmRegisterBean implements Serializable {
             farmacia.InserirEndereco(rua, numero, bairro, cidade, estado);
             farmacia.setClientes(clientes);
             SingletonSession.getInstance().setAttribute("farmacia", farmacia);
-
         }
         return "sucessoFarmacia";
     }

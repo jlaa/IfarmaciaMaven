@@ -74,6 +74,8 @@ public class alterarUsuarioBeans implements Serializable {
     List<CartaoDeCredito> cartoes;
     
     List<String> nomecartoes;
+    
+   
 
     /**
      * Creates a new instance of loginBeans

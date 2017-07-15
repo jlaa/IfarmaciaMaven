@@ -67,9 +67,6 @@ public class carrinhoBeans implements Serializable {
     }
 
     public String adicionarAoCarrinho(Long id) {
-        if (SingletonSession.getInstance().getAttribute("clienteLogado") == null) {
-            return "Login?faces-redirect=true";
-        }
         Remedio remedio = aplicacao.getRemedio(id);
         for (int i = 0; i < remedioComprado.size(); i++) {
             if (!remedioComprado.get(i).getId().equals(remedio.getId())) {

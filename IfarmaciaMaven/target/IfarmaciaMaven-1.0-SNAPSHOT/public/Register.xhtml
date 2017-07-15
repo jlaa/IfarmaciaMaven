@@ -117,10 +117,11 @@
                                 <h:message for="login" />
                                 <br />
                                 <br />
-                                <h:outputText  value="Ocupacao: "/><br />
-                                <p:inputText id="ocupacao" value="#{register.ocupacao}" />
-                                <br />
-                                <h:message for="ocupacao" />
+                                <h:outputText  value="Ocupacação: "/><br />
+                                <p:selectOneMenu id="ocupacao" value="#{register.ocupacao}">
+                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"/>
+                                    <f:selectItems value="#{register.ocupacaoes}" />    
+                                </p:selectOneMenu>
                                 <br />
                                 <br />
                                 <h:outputText value="Cidade: "/><br />

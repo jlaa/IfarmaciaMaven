@@ -33,8 +33,12 @@
     <navigation-rule>
         <from-view-id>/public/Login.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>sucessoLogin</from-outcome>
+            <from-outcome>sucessoLoginCliente</from-outcome>
             <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>sucessoLoginDono</from-outcome>
+            <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
         </navigation-case>        
         <navigation-case>
             <from-outcome>falhaLogin</from-outcome>
@@ -45,13 +49,17 @@
     <navigation-rule>
         <from-view-id>/public/LoginError.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>sucessoLogin</from-outcome>
+            <from-outcome>sucessoLoginCliente</from-outcome>
             <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>sucessoLoginDono</from-outcome>
+            <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
         </navigation-case>        
         <navigation-case>
             <from-outcome>falhaLogin</from-outcome>
             <to-view-id>/public/LoginError.xhtml</to-view-id>
-        </navigation-case>                      
+        </navigation-case>                       
     </navigation-rule>
  
     <navigation-rule>
@@ -79,11 +87,7 @@
         <navigation-case>
             <from-outcome>indexLogado</from-outcome>
             <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
-        </navigation-case>                      
-        <navigation-case>
-            <from-outcome>cadastrarFarmacia</from-outcome>
-            <to-view-id>/cliente/CadastroFarmacia.xhtml</to-view-id>
-        </navigation-case>                      
+        </navigation-case>                        
         <navigation-case>
             <from-outcome>alterarUsuario</from-outcome>
             <to-view-id>/cliente/AlterarUsuario.xhtml</to-view-id>
@@ -112,7 +116,7 @@
             <to-view-id>/cliente/CadastrarCartao.xhtml</to-view-id>
         </navigation-case>                            
         <navigation-case>
-                <from-outcome>sucessoAlterar</from-outcome>
+            <from-outcome>sucessoAlterar</from-outcome>
             <to-view-id>/cliente/IndexLogadox.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>                   
@@ -123,21 +127,33 @@
             <from-outcome>sucessoCartao</from-outcome>
             <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
         </navigation-case>                               
-    </navigation-rule>                   
+    </navigation-rule>     
+    
+    <navigation-rule>
+        <from-view-id>/owner/*</from-view-id>
+        <navigation-case>
+            <from-outcome>sair</from-outcome>
+            <to-view-id>/public/Index.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>cadastrarFarmacia</from-outcome>
+            <to-view-id>/owner/CadastroFarmacia.xhtml</to-view-id>
+        </navigation-case>                              
+    </navigation-rule>                            
 
     <navigation-rule>
-        <from-view-id>/cliente/CadastrarRemedios.xhtml</from-view-id>
+        <from-view-id>/owner/CadastrarRemedios.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>sucessoRemedio</from-outcome>
-            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
+            <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>                   
 
     <navigation-rule>
-        <from-view-id>/cliente/CadastrarFarmacia.xhtml</from-view-id>
+        <from-view-id>/owner/CadastroFarmacia.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>sucessoFarmacia</from-outcome>
-            <to-view-id>/cliente/CadastrarRemedios.xhtml</to-view-id>
+            <to-view-id>/owner/CadastrarRemedios.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>                   
 
@@ -154,14 +170,17 @@
         <navigation-case>
             <from-outcome>cartao</from-outcome>
             <to-view-id>/cliente/CadastrarCartao</to-view-id>
-        </navigation-case>                               
-                                       
+        </navigation-case>                                          
     </navigation-rule>
                        
     <navigation-rule>
         <from-view-id>/cliente/ComprarRemedio.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>confirmarCompra</from-outcome>
+            <from-outcome>compraCompleta</from-outcome>
+            <to-view-id>/cliente/CompraCompleta.xhtml</to-view-id>
+        </navigation-case> 
+        <navigation-case>
+            <from-outcome>compraCompleta</from-outcome>
             <to-view-id>/cliente/CompraCompleta.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>

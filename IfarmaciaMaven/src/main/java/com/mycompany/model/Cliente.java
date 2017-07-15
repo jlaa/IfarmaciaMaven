@@ -6,6 +6,11 @@
 package com.mycompany.model;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +42,7 @@ public class Cliente implements Serializable {
     private String nome;
 
     @NotBlank
-    @Size(min = 6, max = 20)
+    @Size(min = 6)
     @Column(name = "TXT_SENHA", nullable = false)
     private String senha;
 
@@ -75,11 +80,34 @@ public class Cliente implements Serializable {
             })
     private List<Farmacia> farmacia;
 
+    /*@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_OWNER",insertable = false, updatable = false)
+    private Owner onwer;*/
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartaoDeCredito> cartaos;
 
     @ManyToMany(mappedBy = "clientes")
     private List<Grupo> grupos;
+
+    @PrePersist
+    public void gerarHash() {
+        try {
+            gerarSal();
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            setSenha(sal + senha);
+            digest.update(senha.getBytes(Charset.forName("UTF-8")));
+            setSenha(Base64.getEncoder().encodeToString(digest.digest()));
+        } catch (NoSuchAlgorithmException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void gerarSal() throws NoSuchAlgorithmException {
+        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        byte[] randomBytes = new byte[32];
+        secureRandom.nextBytes(randomBytes);
+        setSal(Base64.getEncoder().encodeToString(randomBytes));
+    }
 
     public Cliente() {
 
@@ -185,14 +213,6 @@ public class Cliente implements Serializable {
         return this.id;
     }
 
-    public List<Farmacia> getFarmacia() {
-        return farmacia;
-    }
-
-    public void setFarmacia(List<Farmacia> farmacia) {
-        this.farmacia = farmacia;
-    }
-
     public List<Grupo> getGrupos() {
         return grupos;
     }
@@ -219,7 +239,28 @@ public class Cliente implements Serializable {
     public void setSal(String sal) {
         this.sal = sal;
     }
-    
-    
 
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setCartaos(List<CartaoDeCredito> cartaos) {
+        this.cartaos = cartaos;
+    }
+
+    /*public Owner getOnwer() {
+        return onwer;
+    }
+
+    public void setOnwer(Owner onwer) {
+        this.onwer = onwer;
+    }*/
 }

@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -28,8 +31,12 @@ import javax.validation.ConstraintViolationException;
  * @author LucasPC
  */
 @Stateless
+@LocalBean
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class Aplicacao {
+
+    @Resource
+    private SessionContext sessionContext;
 
     @PersistenceContext(name = "com.mycompany_IfarmaciaMaven_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -39,6 +46,17 @@ public class Aplicacao {
     public boolean CadastrarCliente(Cliente cliente) {
         try {
             em.persist(cliente);
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
+
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean atualizarGrupo(Grupo grupo) {
+        try {
+            em.merge(grupo);
         } catch (Exception ex) {
             return false;
         }
@@ -69,18 +87,34 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void AlterarCliente(Cliente cliente) {
+    public void AlterarCliente(Cliente cliente
+    ) {
         em.merge(cliente);
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void AlterarRemedio(Remedio remedio) {
+    public void AlterarRemedio(Remedio remedio
+    ) {
         em.merge(remedio);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void excluirRemedio(Remedio remedio) {
+    public void excluirRemedio(Remedio remedio
+    ) {
         em.remove(em.merge(remedio));
+    }
+
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public Grupo getGrupo(String nome_grupo) {
+        Grupo grupo;
+        try {
+            TypedQuery<Grupo> query = em.createQuery("SELECT g from Grupo g WHERE g.nome like ?1", Grupo.class);
+            query.setParameter(1, nome_grupo);
+            grupo = query.getSingleResult();
+        } catch (Exception ex) {
+            return null;
+        }
+        return grupo;
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
@@ -120,7 +154,8 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public boolean validarCliente(String email, String senha) {
+    public boolean validarCliente(String email, String senha
+    ) {
         try {
             TypedQuery<Cliente> query = em.createQuery("SELECT c from Cliente c where c.email like ?1 and  c.senha like ?2", Cliente.class);
             query.setParameter(1, email);
@@ -137,12 +172,12 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Cliente getCliente(String email, String senha) {
+    public Cliente getCliente(String email
+    ) {
         Cliente cliente = null;
         try {
-            TypedQuery<Cliente> query = em.createQuery("SELECT c from Cliente c where c.email like ?1 and  c.senha like ?2", Cliente.class);
+            TypedQuery<Cliente> query = em.createQuery("SELECT c from Cliente c where c.email like ?1", Cliente.class);
             query.setParameter(1, email);
-            query.setParameter(2, senha);
             cliente = query.getSingleResult();
             if (cliente != null) {
                 return cliente;
@@ -155,7 +190,8 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Farmacia> getFarmacia(String nomeFarmacia, String nomeRemedio) {
+    public List<Farmacia> getFarmacia(String nomeFarmacia, String nomeRemedio
+    ) {
         List<Farmacia> farmacia = null;
         try {
             TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f,Remedio r where f.endereco.cidade  like ?1 and  r.nome like ?2", Farmacia.class);
@@ -169,7 +205,8 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Farmacia> pesquisaRemedio(String cidade, String nomeRemedio) {
+    public List<Farmacia> pesquisaRemedio(String cidade, String nomeRemedio
+    ) {
         List<Farmacia> farmacia = new ArrayList();
         List<Farmacia> temp = new ArrayList();
         try {
@@ -191,7 +228,8 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Remedio getRemedio(Long id) {
+    public Remedio getRemedio(Long id
+    ) {
         return em.find(Remedio.class, id);
     }
 

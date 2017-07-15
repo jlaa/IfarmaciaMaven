@@ -68,7 +68,7 @@ public class searchBean implements Serializable {
             }
 
         }
-        return "procurar";
+        return "searchLogado";
     }
 
     public String getNomeRemedio() {

@@ -7,6 +7,8 @@ package com.mycompany.controller;
 
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Cliente;
+import com.mycompany.model.Grupo;
+import com.mycompany.model.Papel;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +16,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.validator.constraints.Email;
@@ -27,6 +31,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @ManagedBean(name = "login")
 @SessionScoped
 public class loginBeans implements Serializable {
+
     @EJB
     private Aplicacao aplicacao;
     @NotEmpty(message = "O password não pode ser vazio")
@@ -36,6 +41,9 @@ public class loginBeans implements Serializable {
     @NotEmpty(message = "O email não pode ser vazio")
     @Email(message = "o email nao é válido")
     private String email;
+
+    private Cliente cliente;
+    private FacesContext facesContext;
 
     private String validacao;
 
@@ -48,13 +56,27 @@ public class loginBeans implements Serializable {
 
     public String validarUsuario() {
 
-        boolean logar = aplicacao.validarCliente(email, senha);
-        if (logar == true) {
-            Cliente cliente = aplicacao.getCliente(email, senha);
-            SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
-            return "sucessoLogin";
+        try {
+            facesContext = FacesContext.getCurrentInstance();
+            HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+            request.login(email, senha);
+            cliente = aplicacao.getCliente(email);
+            if (cliente.getGrupos().get(0).getNome().equals(Papel.OWNER)) {
+                SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
+                facesContext.getExternalContext().getSession(true);
+                return "sucessoLoginDono";
+            } else if (cliente.getGrupos().get(0).getNome().equals(Papel.CLIENTE)) {
+                SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
+                facesContext.getExternalContext().getSession(true);
+                return "sucessoLoginCliente";
+            }
+
+        } catch (Exception ex) {
+            return "falhaLogin";
         }
+
         return "falhaLogin";
+
     }
 
     public String getEmail() {

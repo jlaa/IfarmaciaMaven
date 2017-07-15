@@ -167,7 +167,7 @@ public class compraBean implements Serializable {
         }
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("remedioComprado");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("WELD_S#12");        
-        return "confirmarCompra";
+        return "compraCompleta";
     }
 
 }

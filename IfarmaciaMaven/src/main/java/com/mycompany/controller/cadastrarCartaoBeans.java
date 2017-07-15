@@ -128,7 +128,7 @@ public class cadastrarCartaoBeans {
         cartao.setCliente(cliente);
         cliente.setCartao(cartao);
         aplicacao.inserirCartao(cliente);
-        return "Index";
+        return "sucessoCartao";
     }
 
     public List<String> listaBandeiraCartao() {

@@ -12,10 +12,12 @@ com\mycompany\model\Endereco_.class
 com\mycompany\model\Farmacia.class
 com\mycompany\model\Aplicacao.class
 com\mycompany\model\FormaDePagamento_.class
+com\mycompany\controller\LoginInterceptador.class
 com\mycompany\controller\farmRegisterBean.class
 com\mycompany\model\SingletonEntityManagerFactory.class
 com\mycompany\model\ValidaEstados.class
 com\mycompany\model\CartaoDeCredito.class
+com\mycompany\model\Owner.class
 com\mycompany\model\Entrega.class
 com\mycompany\model\Grupo.class
 com\mycompany\model\ValidaBandeiraCartao.class
@@ -28,6 +30,7 @@ com\mycompany\model\ValidadorFormaPagamento.class
 com\mycompany\controller\searchBean.class
 com\mycompany\controller\remedioBeans.class
 com\mycompany\model\CompraTotal.class
+com\mycompany\model\Papel.class
 com\mycompany\controller\SingletonSession.class
 com\mycompany\model\CartaoDeCredito_.class
 com\mycompany\model\Farmacia_.class

@@ -114,9 +114,6 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
-   
-
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
@@ -137,4 +134,14 @@
     <session-config>
         <session-timeout>60</session-timeout>
     </session-config>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/faces/public/erro.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/faces/public/Login.xhtml</location>
+    </error-page>
+
 </web-app>

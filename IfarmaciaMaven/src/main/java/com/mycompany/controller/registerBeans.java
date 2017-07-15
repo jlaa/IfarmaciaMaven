@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Cliente;
+import com.mycompany.model.Grupo;
 import com.mycompany.model.ValidaEstados;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,7 @@ public class registerBeans implements Serializable {
     private String ocupacao;
 
     private List<String> estados = new ArrayList();
+    private List<String> ocupacaoes = new ArrayList();
     private String nome = "";
 
     /**
@@ -104,7 +106,10 @@ public class registerBeans implements Serializable {
         this.estados.add("SE");
         this.estados.add("SP");
         this.estados.add("TO");
-
+        
+        this.ocupacaoes.add("cliente");
+        this.ocupacaoes.add("owner");
+        
     }
 
     public String cadastrarCliente() {
@@ -114,7 +119,14 @@ public class registerBeans implements Serializable {
             cliente.AdicionarEndereco(rua, numero, bairo, cidade, estado);
             this.nome = primeiroNome + " " + segundoNome;
             cliente.adicionarInformaçõesCliente(nome, telefone, ocupacao);
-            boolean register = aplicacao.CadastrarCliente(cliente);
+            Grupo grupo=aplicacao.getGrupo(ocupacao);
+            List<Cliente> clientes= grupo.getClientes();
+            clientes.add(cliente);
+            grupo.setClientes(clientes);
+            List<Grupo> grupos = new ArrayList();
+            grupos.add(grupo);            
+            cliente.setGrupos(grupos);
+            boolean register=aplicacao.atualizarGrupo(grupo);
             if (register == true) {
                 return "sucessoRegister";
             }
@@ -234,5 +246,15 @@ public class registerBeans implements Serializable {
     public void setEstados(List<String> estados) {
         this.estados = estados;
     }
+
+    public List<String> getOcupacaoes() {
+        return ocupacaoes;
+    }
+
+    public void setOcupacaoes(List<String> ocupacaoes) {
+        this.ocupacaoes = ocupacaoes;
+    }
+    
+    
 
 }
