@@ -69,17 +69,15 @@
                             </p:column>  
 
                             <p:column  headerText="Desconto" >
-                                <p:inputText id="desconto#{index}"  value="#{donoFarmacia.desconto}" rendered="#{rem.desconto == null || rem.desconto==0}"/>
+                                <p:inputText id="desconto" value="#{donoFarmacia.desconto}" label="#{rem.desconto}"  rendered="#{rem.desconto == null || rem.desconto==0}"/>
                                 <p:commandButton value="Adicionar Desconto" update="adicionar" oncomplete="#{donoFarmacia.listarDesconto()}"  action="#{donoFarmacia.darDesconto(rem.id)}"  rendered="#{rem.desconto == null || rem.desconto==0}"  />
-                                <h:message for="desconto#{index}"/>
+                                <h:message for="desconto"/>
                                 <p:outputLabel  value="#{rem.desconto}%" rendered="#{rem.desconto > 0}"/>
                                 <br/>
-                                <p:commandButton value="Retirar Desconto" update="adicionar" oncomplete="#{donoFarmacia.listarDesconto()}"  action="#{donoFarmacia.tirarDesconto(rem.id)}" rendered="#{rem.desconto > 0}"   />
+                                <p:commandButton value="Retirar Desconto" update="adicionar"  oncomplete="#{donoFarmacia.listarDesconto()}"  action="#{donoFarmacia.tirarDesconto(rem.id)}" rendered="#{rem.desconto > 0}"   />
                             </p:column>
                         </p:dataTable>
                     </h:form>
-
-
                 </p:layoutUnit>
 
             </p:layout>

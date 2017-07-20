@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -92,18 +93,18 @@ public class farmRegisterBean implements Serializable {
 
     public String cadastrarFarmacia() {
         List<Cliente> clientes = new ArrayList();
-        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");       
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         if (cliente != null) {
             clientes.add(cliente);
             Farmacia farmacia = new Farmacia();
             farmacia.CadastrarFarmacia(nome);
             farmacia.InserirEndereco(rua, numero, bairro, cidade, estado);
-            farmacia.setClientes(clientes);
+            farmacia.setClientes(clientes);           
             SingletonSession.getInstance().setAttribute("farmacia", farmacia);
+
         }
         return "sucessoFarmacia";
     }
- 
 
     public String getNome() {
         return nome;

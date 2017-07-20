@@ -128,10 +128,7 @@ public class Remedio implements Serializable
     public String getNome(){
        return this.nome;
     }
-    
-  
-    
-    
+       
     public String getFaixaEtaria(){
        return this.faixaEtaria;
     }
@@ -178,6 +175,7 @@ public class Remedio implements Serializable
 
     public void setDesconto(Integer desconto) {
         this.desconto = desconto;
+        
     }
 
     

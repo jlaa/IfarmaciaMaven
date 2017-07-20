@@ -183,6 +183,8 @@ public class remedioBeans {
                 }
 
                 aplicacao.AlterarCliente(cliente);
+                SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

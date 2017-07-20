@@ -54,6 +54,7 @@ public class donoFarmaciaBeans implements Serializable {
             if (farmacias.get(i).getId() == (id_farmacia)) {
                 remedios = farmacias.get(i).getRemedios();
                 SingletonSession.getInstance().setAttribute("remediosOwner", remedios);
+
             }
         }
         return remedios;
@@ -65,9 +66,9 @@ public class donoFarmaciaBeans implements Serializable {
         aplicacao.AlterarRemedio(remedio);
         Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         Cliente aux = aplicacao.getCliente(cliente.getEmail());
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("clienteLogado");
-
         SingletonSession.getInstance().setAttribute("clienteLogado", aux);
+        Farmacia farmacia = remedio.getFarmacia().get(0);
+        SingletonSession.getInstance().setAttribute("remediosOwner", farmacia.getRemedios());
 
     }
 
@@ -79,11 +80,12 @@ public class donoFarmaciaBeans implements Serializable {
         Cliente aux = aplicacao.getCliente(cliente.getEmail());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("clienteLogado");
         SingletonSession.getInstance().setAttribute("clienteLogado", aux);
+        Farmacia farmacia = remedio.getFarmacia().get(0);
+        SingletonSession.getInstance().setAttribute("remediosOwner", farmacia.getRemedios());
     }
 
     public List<Remedio> getRemedios() {
-        farmacias=getFarmacia();        
-        remedios = farmacias.get(0).getRemedios();        
+        remedios = (List<Remedio>) SingletonSession.getInstance().getAttribute("remediosOwner");
         return remedios;
     }
 
@@ -114,11 +116,17 @@ public class donoFarmaciaBeans implements Serializable {
     public void setDesconto(Integer desconto) {
         if (this.desconto == null) {
             this.desconto = desconto;
+            if (descontos == null) {
+                descontos = new ArrayList();
+                descontos.add(this.desconto);
+            } else {
+                descontos.add(this.desconto);
+            }
         }
     }
 
     public Integer getDesconto() {
-        return desconto;
+        return null;
     }
 
     public List<Farmacia> getFarmacias() {
@@ -129,10 +137,7 @@ public class donoFarmaciaBeans implements Serializable {
         this.farmacias = farmacias;
     }
 
-    public List<Integer> getDescontos() {
-        listarDesconto();
-        return descontos;
-    }
+
 
     public void setDescontos(List<Integer> descontos) {
         this.descontos = descontos;

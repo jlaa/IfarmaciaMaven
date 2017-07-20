@@ -18,7 +18,7 @@
         </navigation-case>                         
         <navigation-case>
             <from-outcome>index</from-outcome>
-            <to-view-id>/public/Index.xhtml</to-view-id>
+            <to-view-id>Index.xhtml</to-view-id>
         </navigation-case>                         
     </navigation-rule>
     
@@ -86,7 +86,7 @@
         <from-view-id>/cliente/*</from-view-id>
         <navigation-case>
             <from-outcome>sair</from-outcome>
-            <to-view-id>/public/Index.xhtml</to-view-id>
+            <to-view-id>Index.xhtml</to-view-id>
         </navigation-case>        
         <navigation-case>
             <from-outcome>pedido</from-outcome>
@@ -148,7 +148,7 @@
         <from-view-id>/owner/*</from-view-id>
         <navigation-case>
             <from-outcome>sair</from-outcome>
-            <to-view-id>/public/Index.xhtml</to-view-id>
+            <to-view-id>Index.xhtml</to-view-id>
         </navigation-case>        
         <navigation-case>
             <from-outcome>cadastrarFarmacia</from-outcome>
