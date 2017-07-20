@@ -2,7 +2,7 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 
     <welcome-file-list>
-        <welcome-file>public/Index.xhtml</welcome-file>
+        <welcome-file>Index.xhtml</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -22,8 +22,8 @@
         <auth-method>FORM</auth-method>
         <realm-name>saltRealm</realm-name>
         <form-login-config>
-            <form-login-page>/faces/cliente/Login.xhtml</form-login-page>
-            <form-error-page>/faces/cliente/Login.xhtml</form-error-page>
+            <form-login-page>/public/Login.xhtml</form-login-page>
+            <form-error-page>/public/LoginError.xhtml</form-error-page>
         </form-login-config>
     </login-config>
     
@@ -32,7 +32,7 @@
         <web-resource-collection>
             <web-resource-name>Protected owner</web-resource-name>
             <description>Protected owner Area</description>
-            <url-pattern>/faces/owner/*</url-pattern>
+            <url-pattern>/owner/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>HEAD</http-method>
@@ -55,7 +55,7 @@
         <web-resource-collection>
             <web-resource-name>Protected Cliente Area</web-resource-name>
             <description>Protected Cliente Area</description>
-            <url-pattern>/faces/cliente/*</url-pattern>
+            <url-pattern>/cliente/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>HEAD</http-method>
@@ -78,28 +78,23 @@
         <web-resource-collection>
             <web-resource-name>Public Area</web-resource-name>
             <description>Public Area</description>
-            <url-pattern>/faces/public/*</url-pattern>
+            <url-pattern>/public/*</url-pattern>
             <http-method>GET</http-method>
-            <http-method>POST</http-method>
-            <http-method>HEAD</http-method>
-            <http-method>PUT</http-method>
-            <http-method>OPTIONS</http-method>
-            <http-method>TRACE</http-method>
-            <http-method>DELETE</http-method>            
-        </web-resource-collection> 
+            <http-method>POST</http-method>                   
+        </web-resource-collection>  
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>   
+        </user-data-constraint>
     </security-constraint>
     
-        <security-constraint>
+    <security-constraint>
         <display-name>Pg Aposentado</display-name>
         <web-resource-collection>
             <web-resource-name>Protected Aposentado Area</web-resource-name>
             <description>Protected Aposentado Area</description>
-            <url-pattern>/faces/aposentado/*</url-pattern>
+            <url-pattern>/aposentado/*</url-pattern>
             <http-method>GET</http-method>
-            <http-method>POST</http-method>
+            <http-method>POST</http-method>    
             <http-method>HEAD</http-method>
             <http-method>PUT</http-method>
             <http-method>OPTIONS</http-method>
@@ -114,34 +109,39 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>cupertino</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>cupertino</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
-    <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>cupertino</param-value>
-    </context-param>
-    <context-param>
-        <param-name>primefaces.FONT_AWESOME</param-name>
-        <param-value>true</param-value>
-    </context-param>
-    <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>cupertino</param-value>
-    </context-param>
-    <context-param>
-        <param-name>primefaces.FONT_AWESOME</param-name>
-        <param-value>true</param-value>
-    </context-param>
     <session-config>
         <session-timeout>60</session-timeout>
     </session-config>
     
     <error-page>
         <error-code>500</error-code>
-        <location>/faces/public/erro.xhtml</location>
+        <location>/public/erro.xhtml</location>
     </error-page>
     <error-page>
         <error-code>403</error-code>
-        <location>/faces/public/Login.xhtml</location>
+        <location>/public/LoginNotAuthorized.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/public/pagina_inexistente.xhtml</location>
     </error-page>
 
 </web-app>

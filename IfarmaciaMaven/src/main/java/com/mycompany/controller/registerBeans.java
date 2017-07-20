@@ -120,6 +120,7 @@ public class registerBeans implements Serializable {
             this.nome = primeiroNome + " " + segundoNome;
             cliente.adicionarInformaçõesCliente(nome, telefone, ocupacao);
             Grupo grupo=aplicacao.getGrupo(ocupacao);
+            
             List<Cliente> clientes= grupo.getClientes();
             clientes.add(cliente);
             grupo.setClientes(clientes);

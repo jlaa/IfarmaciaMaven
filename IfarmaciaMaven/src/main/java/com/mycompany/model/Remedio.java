@@ -33,6 +33,9 @@ public class Remedio implements Serializable
     
     @Column(name="TXT_FAIXA_ETARIA", nullable= false)
     private String faixaEtaria;
+    
+    @Column(name="TXT_DESCONTO")
+    private Integer desconto;
         
     @Column(name="DT_VALIDADE", nullable= false)
     @Temporal(TemporalType.DATE)
@@ -117,11 +120,16 @@ public class Remedio implements Serializable
     public double getPreco(){
        return this.preco;
     }
+   
+    public void setPreco(double preco){
+       this.preco = preco;
+    }
     
     public String getNome(){
        return this.nome;
     }
     
+  
     
     
     public String getFaixaEtaria(){
@@ -164,6 +172,15 @@ public class Remedio implements Serializable
         return id;
     }
 
+    public Integer getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(Integer desconto) {
+        this.desconto = desconto;
+    }
+
+    
     
     
     

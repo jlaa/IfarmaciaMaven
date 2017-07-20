@@ -6,6 +6,7 @@
 package com.mycompany.controller;
 
 import com.mycompany.model.Aplicacao;
+import com.mycompany.model.Cliente;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.Remedio;
 import java.io.Serializable;
@@ -48,9 +49,8 @@ public class searchBean implements Serializable {
     /**
      * Creates a new instance of searchBean
      */
-    public searchBean()
-    {
-       
+    public searchBean() {
+
     }
 
     public String pesquisaRemedio() {
@@ -60,15 +60,21 @@ public class searchBean implements Serializable {
         for (int i = 0; i < farmacias.size(); i++) {
             for (int j = 0; j < farmacias.get(i).getRemedios().size(); j++) {
                 if (farmacias.get(i).getRemedios().get(j).getNome().equals(nomeRemedio)) {
-                    remedios.add(farmacias.get(i).getRemedios().get(j));
-                    SingletonSession.getInstance().setAttribute("remedios", remedios);
-                    SingletonSession.getInstance().setAttribute("farmacias", farmacias);
+                    //se quantidade for zero não pode ser mostrado
+                    if (farmacias.get(i).getRemedios().get(j).getQuantidade() > 0) {
+                        remedios.add(farmacias.get(i).getRemedios().get(j));
+                        SingletonSession.getInstance().setAttribute("remedios", remedios);
+                        SingletonSession.getInstance().setAttribute("farmacias", farmacias);
+                    }
                 }
 
             }
 
         }
-        return "searchLogado";
+        if ((Cliente) SingletonSession.getInstance().getAttribute("clienteLogado") == null) {
+            return "procurarIndex";
+        }
+        return "procurar";
     }
 
     public String getNomeRemedio() {

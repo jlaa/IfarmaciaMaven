@@ -5,12 +5,18 @@
  */
 package com.mycompany.model;
 
+import static com.mycompany.model.Papel.APOSENTADO;
+import static com.mycompany.model.Papel.CLIENTE;
+import static com.mycompany.model.Papel.OWNER;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
+import javax.ejb.EJBAccessException;
 import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -32,6 +38,7 @@ import javax.validation.ConstraintViolationException;
  */
 @Stateless
 @LocalBean
+@DeclareRoles({APOSENTADO, OWNER, CLIENTE})
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class Aplicacao {
 
@@ -63,45 +70,64 @@ public class Aplicacao {
         return true;
 
     }
+    
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean CadastrarFarmacia(Farmacia farmacia) {
-        try {
-            em.persist(farmacia);
-        } catch (Exception ex) {
-            return false;
+        if (sessionContext.isCallerInRole(OWNER)) {
+            try {
+                em.persist(farmacia);
+            } catch (Exception ex) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new EJBAccessException();
         }
-        return true;
 
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean inserirCartao(Cliente cliente) {
-        try {
-            em.merge(cliente);
-        } catch (Exception ex) {
-            return false;
+        if (sessionContext.isCallerInRole(CLIENTE)) {
+
+            try {
+                em.merge(cliente);
+            } catch (Exception ex) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new EJBAccessException();
         }
-        return true;
-
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void AlterarCliente(Cliente cliente
-    ) {
-        em.merge(cliente);
+    public void AlterarCliente(Cliente cliente) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(OWNER)) {
+            em.merge(cliente);
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void AlterarRemedio(Remedio remedio
-    ) {
-        em.merge(remedio);
+    public void AlterarRemedio(Remedio remedio) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(OWNER)) {
+            em.merge(remedio);
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void excluirRemedio(Remedio remedio
-    ) {
-        em.remove(em.merge(remedio));
+    public void excluirRemedio(Remedio remedio) {
+        //GENTE SERA QUE CLIENTE PODE EXCLUIR MESMO ?
+        if (sessionContext.isCallerInRole(OWNER)) {
+            em.remove(em.merge(remedio));
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
@@ -115,47 +141,82 @@ public class Aplicacao {
             return null;
         }
         return grupo;
+
+    }
+
+    
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<String> listaNomeFarmacia() {
+        if (sessionContext.isCallerInRole(CLIENTE)) {
+
+            List<String> farmacia;
+            try {
+                TypedQuery<String> query = em.createQuery("SELECT distinct f.endereco.cidade from Farmacia f", String.class);
+                farmacia = query.getResultList();
+            } catch (Exception ex) {
+                return null;
+            }
+            return farmacia;
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<String> listaFarmacia() {
-        List<String> farmacia;
-        try {
-            TypedQuery<String> query = em.createQuery("SELECT distinct f.endereco.cidade from Farmacia f", String.class);
-            farmacia = query.getResultList();
-        } catch (Exception ex) {
-            return null;
+    public List<Farmacia> listaTodasFarmacias() {
+        if (sessionContext.isCallerInRole(OWNER)) {
+
+            List<Farmacia> farmacia;
+            try {
+                TypedQuery<Farmacia> query = em.createQuery("SELECT distinct f from Farmacia f", Farmacia.class);
+                farmacia = query.getResultList();
+            } catch (Exception ex) {
+                return null;
+            }
+            return farmacia;
+        } else {
+            throw new EJBAccessException();
         }
-        return farmacia;
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<String> listaRemedio() {
-        List<String> remedio;
-        try {
-            TypedQuery<String> query = em.createQuery("SELECT distinct r.nome from Remedio r", String.class);
-            remedio = query.getResultList();
-        } catch (Exception ex) {
-            return null;
+        if (sessionContext.isCallerInRole(CLIENTE)) {
+
+            List<String> remedio;
+            try {
+                TypedQuery<String> query = em.createQuery("SELECT distinct r.nome from Remedio r", String.class);
+                remedio = query.getResultList();
+            } catch (Exception ex) {
+                return null;
+            }
+            return remedio;
+        } else {
+            throw new EJBAccessException();
         }
-        return remedio;
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<String> listaFileName() {
-        List<String> string;
-        try {
-            TypedQuery<String> query = em.createQuery("SELECT f.filename from Farmacia f", String.class);
-            string = query.getResultList();
-        } catch (Exception ex) {
-            return null;
+        //lembrar disso pois só quem ta podendo listarFileName é owner caso eu precisse de uma lista
+        //em cliente depois 
+        if (sessionContext.isCallerInRole(OWNER)) {
+
+            List<String> string;
+            try {
+                TypedQuery<String> query = em.createQuery("SELECT f.filename from Farmacia f", String.class);
+                string = query.getResultList();
+            } catch (Exception ex) {
+                return null;
+            }
+            return string;
+        } else {
+            throw new EJBAccessException();
         }
-        return string;
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public boolean validarCliente(String email, String senha
-    ) {
+    public boolean validarCliente(String email, String senha) {
         try {
             TypedQuery<Cliente> query = em.createQuery("SELECT c from Cliente c where c.email like ?1 and  c.senha like ?2", Cliente.class);
             query.setParameter(1, email);
@@ -172,8 +233,7 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Cliente getCliente(String email
-    ) {
+    public Cliente getCliente(String email) {
         Cliente cliente = null;
         try {
             TypedQuery<Cliente> query = em.createQuery("SELECT c from Cliente c where c.email like ?1", Cliente.class);
@@ -190,23 +250,7 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Farmacia> getFarmacia(String nomeFarmacia, String nomeRemedio
-    ) {
-        List<Farmacia> farmacia = null;
-        try {
-            TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f,Remedio r where f.endereco.cidade  like ?1 and  r.nome like ?2", Farmacia.class);
-            query.setParameter(1, nomeFarmacia);
-            query.setParameter(2, nomeRemedio);
-            farmacia = query.getResultList();
-        } catch (Exception ex) {
-            return farmacia;
-        }
-        return farmacia;
-    }
-
-    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Farmacia> pesquisaRemedio(String cidade, String nomeRemedio
-    ) {
+    public List<Farmacia> pesquisaRemedio(String cidade, String nomeRemedio) {
         List<Farmacia> farmacia = new ArrayList();
         List<Farmacia> temp = new ArrayList();
         try {
@@ -228,338 +272,13 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Remedio getRemedio(Long id
-    ) {
-        return em.find(Remedio.class, id);
+    public Remedio getRemedio(Long id) {
+        if (sessionContext.isCallerInRole(OWNER) || sessionContext.isCallerInRole(CLIENTE)) {
+
+            return em.find(Remedio.class, id);
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
-//    public boolean CadastrarCliente(Cliente cliente) {
-//
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        logger = Logger.getGlobal();
-//        logger.setLevel(Level.INFO);
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            try {
-//                em.persist(cliente);
-//            } catch (ConstraintViolationException e) {
-//
-//                Logger.getGlobal().info(e.getMessage());
-//
-//                Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-//                if (logger.isLoggable(Level.INFO)) {
-//                    for (ConstraintViolation violation : constraintViolations) {
-//                        Logger.getGlobal().log(Level.INFO, "{0}.{1}: {2}", new Object[]{violation.getRootBeanClass(), violation.getPropertyPath(), violation.getMessage()});
-//                    }
-//                }
-//                return false;
-//            }
-//            et.commit();
-//        } catch (Exception ex) {
-//
-//            ex.printStackTrace();
-//
-//            if (et != null) {
-//                et.rollback();
-//                return false;
-//            }
-//            return false;
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return true;
-//    }
-//    public Cliente getCliente(String email, String senha) {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        Cliente cliente = null;
-//
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            TypedQuery<Cliente> query = em.createQuery("SELECT c from Cliente c where c.email like ?1 and  c.senha like ?2", Cliente.class);
-//            query.setParameter(1, email);
-//            query.setParameter(2, senha);
-//            cliente = query.getSingleResult();
-//            et.commit();
-//            if (cliente != null) {
-//                return cliente;
-//            }
-//
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return cliente;
-//
-//    }
-//    public void inserirCartao(Cliente cliente) {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//
-//        try {
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            try {
-//                em.merge(cliente);
-//            } catch (ConstraintViolationException e) {
-//                Logger.getGlobal().info(e.getMessage());
-//
-//                Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-//                if (logger.isLoggable(Level.INFO)) {
-//                    for (ConstraintViolation violation : constraintViolations) {
-//                        Logger.getGlobal().log(Level.INFO, "{0}.{1}: {2}", new Object[]{violation.getRootBeanClass(), violation.getPropertyPath(), violation.getMessage()});
-//                    }
-//                }
-//            }
-//            et.commit();
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
-//    public void AlterarCliente(String bairro, String cidade, String estado,
-//            String numero, String rua, String nome, String ocupacao, String telefone,
-//            Cliente cliente) {
-//
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        cliente.AdicionarEndereco(rua, numero, bairro, cidade, estado);
-//        cliente.setNome(nome);
-//        cliente.setOcupacao(ocupacao);
-//        cliente.setTelefone(telefone);
-//        try {
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            try {
-//                em.merge(cliente);
-//                et.commit();
-//            } catch (ConstraintViolationException e) {
-//                Logger.getGlobal().info(e.getMessage());
-//
-//                Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-//                if (logger.isLoggable(Level.INFO)) {
-//                    for (ConstraintViolation violation : constraintViolations) {
-//                        Logger.getGlobal().log(Level.INFO, "{0}.{1}: {2}", new Object[]{violation.getRootBeanClass(), violation.getPropertyPath(), violation.getMessage()});
-//                    }
-//                }
-//            }
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
-//    public void CadastrarFarmacia(Farmacia farmacia) {
-//
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            em.persist(farmacia);
-//            et.commit();
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
-//    public List<Farmacia> getFarmacia(String nomeFarmacia, String nomeRemedio) {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        List<Farmacia> farmacia = null;
-//
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f,Remedio r where f.endereco.cidade  like ?1 and  r.nome like ?2", Farmacia.class);
-//            query.setParameter(1, nomeFarmacia);
-//            query.setParameter(2, nomeRemedio);
-//            farmacia = query.getResultList();
-//            et.commit();
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return farmacia;
-//    }
-//    public List<Farmacia> listaFarmacia() {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        List<Farmacia> farmacia = null;
-//
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f", Farmacia.class);
-//            farmacia = query.getResultList();
-//            try {
-//                et.commit();
-//            } catch (ConstraintViolationException ex) {
-//
-//                Logger.getGlobal().info(ex.getMessage());
-//
-//                Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
-//                if (logger.isLoggable(Level.INFO)) {
-//                    for (ConstraintViolation violation : constraintViolations) {
-//                        Logger.getGlobal().log(Level.INFO, "{0}.{1}: {2}", new Object[]{violation.getRootBeanClass(), violation.getPropertyPath(), violation.getMessage()});
-//                    }
-//                }
-//
-//            }
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return farmacia;
-//    }
-//    public List<Farmacia> pesquisaRemedio(String cidade, String nomeRemedio) {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        List<Farmacia> farmacias = new ArrayList();
-//        List<Farmacia> temp;
-//
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            TypedQuery<Farmacia> query = em.createQuery("SELECT f from Farmacia f where f.endereco.cidade like ?1", Farmacia.class);
-//            query.setParameter(1, cidade);
-//            temp = query.getResultList();
-//            for (int i = 0; i < temp.size(); i++) {
-//
-//                for (int j = 0; j < temp.get(i).getRemedios().size(); j++) {
-//                    if (temp.get(i).getRemedios().get(j).getNome().equals(nomeRemedio)) {
-//                        farmacias.add(temp.get(i));
-//                    }
-//                }
-//            }
-//            et.commit();
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return farmacias;
-//    }
-//    public List<Remedio> listaRemedio() {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        List<Remedio> remedio = null;
-//
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            TypedQuery<Remedio> query = em.createQuery("SELECT r from Remedio r", Remedio.class);
-//            remedio = query.getResultList();
-//            et.commit();
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return remedio;
-//    }
-//    public List<String> listaFileName() {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        List<String> string = null;
-//
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            TypedQuery<String> query = em.createQuery("SELECT f.filename from Farmacia f", String.class);
-//            string = query.getResultList();
-//            et.commit();
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return string;
-//    }
-//    public Remedio getRemedio(Long id) {
-//        EntityManager em = null;
-//        EntityTransaction et = null;
-//        Remedio remedio = null;
-//        try {
-//
-//            em = emf.createEntityManager();
-//            et = em.getTransaction();
-//            et.begin();
-//            remedio = em.find(Remedio.class, id);
-//            et.commit();
-//        } catch (Exception ex) {
-//            if (et != null) {
-//                et.rollback();
-//            }
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//        return remedio;
-//    }
 }

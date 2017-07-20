@@ -24,8 +24,8 @@
                 <p:layoutUnit  position="north" size="100" resizable="true" closable="true" collapsible="true">
                     <h:outputText value="#{login.retornaValidacao()}" />
                     <h:form>
-                        <p:commandLink action="alterarUsuario" value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
-                        <p:commandLink action="#{login.logout()}" value="  Sair  " style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink action="alterarUsuario"  value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink action="#{login.logout()}"  value="  Sair  " style="font-size: smaller; text-decoration: none"/>
                         <p:menubar style="border-style: none;">
                             <p:menuitem value="#{carrinhoBeans.pegaPrecos}" id="carrinhoMenu" action="carrinho" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
                             </p:menuitem>
@@ -37,9 +37,9 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home" icon="fa fa-home" action="indexLogado"/>
+                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                                <p:menuitem value="Solicitar Pedido" action="pedido" icon="fa fa-envelope-o"/>
+                                <p:menuitem value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
                             </p:submenu>
 
                         </p:menu>

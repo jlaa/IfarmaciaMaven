@@ -57,7 +57,7 @@ public class pedidoBeans {
     
     public List<String> getCidades() {
 
-        List<String> farmacias = aplicacao.listaFarmacia();      
+        List<String> farmacias = aplicacao.listaNomeFarmacia();      
         return farmacias;
     }
 

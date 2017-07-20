@@ -13,7 +13,7 @@
     <class>com.mycompany.model.Remedio</class>
     <class>com.mycompany.model.Grupo</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
-    <shared-cache-mode>ALL</shared-cache-mode>
+    <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
     <properties>
       <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default"/>
       <property name="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default"/>

@@ -20,10 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.HttpHeaders;
 
-/**
- *
- * @author MASC
- */
+
 @Interceptor
 public class LoginInterceptador {
 

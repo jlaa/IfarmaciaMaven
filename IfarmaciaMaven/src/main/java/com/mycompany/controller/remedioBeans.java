@@ -6,6 +6,7 @@
 package com.mycompany.controller;
 
 import com.mycompany.model.Aplicacao;
+import com.mycompany.model.Cliente;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.Remedio;
 import com.mycompany.model.SingletonEntityManagerFactory;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import org.json.simple.JSONArray;
@@ -35,6 +37,7 @@ import org.json.simple.parser.JSONParser;
 @Named(value = "remedioBeans")
 @RequestScoped
 public class remedioBeans {
+
     @EJB
     private Aplicacao aplicacao;
     private String nome_remedio;
@@ -120,11 +123,13 @@ public class remedioBeans {
     public String inserirRemedio() {
         JSONParser parser = new JSONParser();
         List<Remedio> remedios = new ArrayList();
-        Farmacia farmacia = (Farmacia) SingletonSession.getInstance().getAttribute("farmacia");        
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        List<Cliente> clientes = new ArrayList();
+        Farmacia farmacia = (Farmacia) SingletonSession.getInstance().getAttribute("farmacia");
         if (farmacia != null) {
             try {
-                filename=filename.substring(8);
-                Object obj = parser.parse(new FileReader(filename));        
+                filename = filename.substring(8);
+                Object obj = parser.parse(new FileReader(filename));
                 JSONArray jsonArray = (JSONArray) obj;
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
@@ -151,10 +156,10 @@ public class remedioBeans {
                     remedios.add(remedio);
                 }
                 List<String> filenames = new ArrayList();
-                filenames=aplicacao.listaFileName();
-                
+                filenames = aplicacao.listaFileName();
+
                 int indice = filename.indexOf("main");
-                
+
                 if (filenames.isEmpty()) {
                     farmacia.setFilename(filename);
                 } else {
@@ -162,7 +167,22 @@ public class remedioBeans {
                 }
                 farmacia.setFilename(filename);
                 farmacia.setRemedios(remedios);
-                aplicacao.CadastrarFarmacia(farmacia);
+                List<Farmacia> farmacias = aplicacao.listaTodasFarmacias();
+                if (farmacias.isEmpty()) {
+                    farmacias = new ArrayList();
+                    farmacias.add(farmacia);
+                    cliente.setFarmacia(farmacias);
+                    clientes.add(cliente);
+                    farmacia.setClientes(clientes);
+
+                } else {
+                    farmacias.add(farmacia);
+                    cliente.setFarmacia(farmacias);
+                    clientes.add(cliente);
+                    farmacia.setClientes(clientes);
+                }
+
+                aplicacao.AlterarCliente(cliente);
             } catch (Exception e) {
                 e.printStackTrace();
             }

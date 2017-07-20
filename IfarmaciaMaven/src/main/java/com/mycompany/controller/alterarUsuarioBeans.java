@@ -93,7 +93,7 @@ public class alterarUsuarioBeans implements Serializable {
         cliente.setOcupacao(ocupacao);
         cliente.setTelefone(telefone);        
         aplicacao.AlterarCliente(cliente);
-
+        
         return "sucessoAlterar";
     }
 

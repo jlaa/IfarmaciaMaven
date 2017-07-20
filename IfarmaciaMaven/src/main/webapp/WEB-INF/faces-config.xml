@@ -23,10 +23,18 @@
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>/public/Index.xhtml</from-view-id>
+        <from-view-id>Index.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>procurar</from-outcome>
+            <from-outcome>procurarIndex</from-outcome>
             <to-view-id>/public/Search.xhtml</to-view-id>
+        </navigation-case>                         
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/public/Login.xhtml</to-view-id>
+        </navigation-case>                         
+        <navigation-case>
+            <from-outcome>register</from-outcome>
+            <to-view-id>/public/Register.xhtml</to-view-id>
         </navigation-case>                         
     </navigation-rule>
     
@@ -107,6 +115,13 @@
             <to-view-id>/cliente/SearchLogado.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>    
+    <navigation-rule>
+        <from-view-id>/cliente/Pedido.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>procurar</from-outcome>
+            <to-view-id>/cliente/SearchLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>    
           
     
     <navigation-rule>
@@ -117,7 +132,7 @@
         </navigation-case>                            
         <navigation-case>
             <from-outcome>sucessoAlterar</from-outcome>
-            <to-view-id>/cliente/IndexLogadox.xhtml</to-view-id>
+            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>                   
     
@@ -139,12 +154,28 @@
             <from-outcome>cadastrarFarmacia</from-outcome>
             <to-view-id>/owner/CadastroFarmacia.xhtml</to-view-id>
         </navigation-case>                              
+        <navigation-case>
+            <from-outcome>alterarUsuarioOwner</from-outcome>
+            <to-view-id>/owner/AlterarUsuario.xhtml</to-view-id>
+        </navigation-case>                              
+        <navigation-case>
+            <from-outcome>indexOwner</from-outcome>
+            <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
+        </navigation-case>                              
     </navigation-rule>                            
 
     <navigation-rule>
         <from-view-id>/owner/CadastrarRemedios.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>sucessoRemedio</from-outcome>
+            <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>        
+               
+    <navigation-rule>
+        <from-view-id>/owner/AlterarUsuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>sucessoAlterar</from-outcome>
             <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>                   
@@ -154,6 +185,14 @@
         <navigation-case>
             <from-outcome>sucessoFarmacia</from-outcome>
             <to-view-id>/owner/CadastrarRemedios.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>                   
+    <navigation-rule>
+        
+        <from-view-id>/owner/IndexOwner.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>buscarFarmacia</from-outcome>
+            <to-view-id>/owner/DetalharFarmacia.xhtml</to-view-id>
         </navigation-case>                               
     </navigation-rule>                   
 

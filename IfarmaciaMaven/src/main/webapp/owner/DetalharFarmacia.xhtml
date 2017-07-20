@@ -52,22 +52,36 @@
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                 </p:layoutUnit>
-                <p:layoutUnit position="center" size="100" closable="true" collapsible="true">
+                <p:layoutUnit id="principal" position="center">
+                    <h:form id="adicionar">
+                        <p:dataTable  id="table" var="rem" style="border-style: none;" rowIndexVar="index" value="#{donoFarmacia.remedios}">  
+                            <p:column headerText="Indice">
+                                <p:outputLabel value="#{index +1}" />
+                            </p:column>
+                            <p:column headerText="Remédio">
+                                <p:outputLabel value="#{rem.nome}" />
+                            </p:column>
+                            <p:column id="preco" headerText="Preço">
+                                <p:outputLabel id="precoC" value="#{rem.preco - ((rem.preco * rem.desconto)/100 )}R$"  />
+                            </p:column>
+                            <p:column headerText="Quantidade">
+                                <p:outputLabel value="#{rem.quantidade}" />
+                            </p:column>  
 
-                    <h1>Bem vindo!!</h1>
-
-                    <p:dataTable rowIndexVar="index" var="farm"  style="border-style: none;" value="#{donoFarmacia.farmacia}">  
-
-                        <p:column headerText="Nome da Farmácia">
-                            <h:form>
-                                <p:commandLink value="#{farm.nome}" action="#{donoFarmacia.setRemedios(farm.id)}" />
-                            </h:form>
-                        </p:column>
-
-                    </p:dataTable>
+                            <p:column  headerText="Desconto" >
+                                <p:inputText id="desconto#{index}"  value="#{donoFarmacia.desconto}" rendered="#{rem.desconto == null || rem.desconto==0}"/>
+                                <p:commandButton value="Adicionar Desconto" update="adicionar" oncomplete="#{donoFarmacia.listarDesconto()}"  action="#{donoFarmacia.darDesconto(rem.id)}"  rendered="#{rem.desconto == null || rem.desconto==0}"  />
+                                <h:message for="desconto#{index}"/>
+                                <p:outputLabel  value="#{rem.desconto}%" rendered="#{rem.desconto > 0}"/>
+                                <br/>
+                                <p:commandButton value="Retirar Desconto" update="adicionar" oncomplete="#{donoFarmacia.listarDesconto()}"  action="#{donoFarmacia.tirarDesconto(rem.id)}" rendered="#{rem.desconto > 0}"   />
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
 
 
                 </p:layoutUnit>
+
             </p:layout>
 
         </h:body>

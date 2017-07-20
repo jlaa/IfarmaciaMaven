@@ -156,17 +156,12 @@ public class compraBean implements Serializable {
         for (int i = 0; i < tamanho; i++) {
             Remedio remedioBanco = aplicacao.getRemedio(remedios.get(i).getId());
             //o que vai ser alterado é o do banco
+            remedioBanco.diminuiEstoque(remedios.get(i).getQuantidade());
+            aplicacao.AlterarRemedio(remedioBanco);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("remedioComprado");
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("WELD_S#12");
 
-            boolean tirarEstoque = remedioBanco.diminuiEstoque(remedios.get(i).getQuantidade());
-            if (tirarEstoque) {
-                aplicacao.AlterarRemedio(remedioBanco);
-            } else {
-                aplicacao.AlterarRemedio(remedioBanco);
-                aplicacao.excluirRemedio(remedioBanco);
-            }
         }
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("remedioComprado");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("WELD_S#12");        
         return "compraCompleta";
     }
 

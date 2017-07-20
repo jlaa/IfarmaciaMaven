@@ -20,7 +20,7 @@
 
             <p:layout fullPage="true">           
 
-               <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
                     <h:outputText value="#{login.retornaValidacao()}"/>
                     <h:form>
                         <p:commandLink action="login"  value=" Logar " style="font-size: smaller; text-decoration: none; " />
@@ -32,7 +32,7 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem action="index" ajax="false" value="Home" icon="fa fa-home"/>                            
+                                <p:menuitem action="index" value="Home" icon="fa fa-home"/>                            
                             </p:submenu>
                         </p:menu>
                     </h:form>
@@ -42,22 +42,9 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit id="principal" position="center">
-
-                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;" value="#{searchBean.remedios}">  
-
-                        <p:column headerText="Remédio">
-                            <h:outputText value="#{rem.nome}" />
-                        </p:column>
-
-                        <p:column headerText="Preço">
-                            <h:outputText value="#{rem.preco}R$" />
-                        </p:column>
-                        <p:column headerText="Farmacia">
-                            <h:outputText value="#{searchBean.farmacias.get(index).nome}" />
-                        </p:column>                      
-                    </p:dataTable>
-
-
+    
+                    <h1>Desculpe Algum erro inesperado aconteceu</h1>
+                    <p:commandButton action="index" value="Voltar a página Inicial"/>
                 </p:layoutUnit>
 
             </p:layout>

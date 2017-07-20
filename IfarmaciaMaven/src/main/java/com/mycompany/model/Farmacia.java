@@ -143,6 +143,11 @@ public class Farmacia implements Serializable{
         this.cliente = cliente;
     }
     
+    public long getId()
+    {
+        return this.id_farmacia;
+    }
+    
     
   
     

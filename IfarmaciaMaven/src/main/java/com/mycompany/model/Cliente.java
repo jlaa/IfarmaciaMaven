@@ -59,6 +59,7 @@ public class Cliente implements Serializable {
     @NotBlank
     @Size(max = 20)
     @Column(name = "TXT_LOGIN", nullable = false, unique = true)
+    
     private String login;
 
     @Column(name = "TXT_SAL", nullable = true)
@@ -236,6 +237,16 @@ public class Cliente implements Serializable {
         return sal;
     }
 
+    public List<Farmacia> getFarmacia() {
+        return farmacia;
+    }
+    
+    public void setFarmacia(List<Farmacia> farmacia)
+    {
+        this.farmacia =  farmacia;
+    }
+    
+
     public void setSal(String sal) {
         this.sal = sal;
     }
@@ -255,7 +266,7 @@ public class Cliente implements Serializable {
     public void setCartaos(List<CartaoDeCredito> cartaos) {
         this.cartaos = cartaos;
     }
-
+    
     /*public Owner getOnwer() {
         return onwer;
     }
