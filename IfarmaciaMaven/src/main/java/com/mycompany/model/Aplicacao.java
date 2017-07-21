@@ -169,7 +169,7 @@ public class Aplicacao {
 
             List<Farmacia> farmacia;
             try {
-                TypedQuery<Farmacia> query = em.createQuery("SELECT distinct f from Farmacia f", Farmacia.class);
+                TypedQuery<Farmacia> query = em.createQuery("SELECT distinct f from Farmacia f ", Farmacia.class);
                 farmacia = query.getResultList();
             } catch (Exception ex) {
                 return null;
@@ -186,7 +186,7 @@ public class Aplicacao {
 
             List<String> remedio;
             try {
-                TypedQuery<String> query = em.createQuery("SELECT distinct r.nome from Remedio r", String.class);
+                TypedQuery<String> query = em.createQuery("SELECT distinct r.nome from Remedio r where r.quantidade > 0 ", String.class);
                 remedio = query.getResultList();
             } catch (Exception ex) {
                 return null;

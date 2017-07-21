@@ -83,7 +83,7 @@ public class Remedio implements Serializable
     }
     
     public boolean diminuiEstoque(long decremento){
-        if((quantidade - decremento) <= 0)
+        if((quantidade - decremento) < 0)
         {
             return false;
         }

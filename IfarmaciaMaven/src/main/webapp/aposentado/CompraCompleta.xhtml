@@ -59,14 +59,11 @@
                 <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
                     <p:menu>
                         <p:submenu label="Menu">
-                            <p:menuitem value="Home" icon="fa fa-home" url="Index.xhtml"/>
+                            <p:menuitem ajax="false" value="Home" icon="fa fa-home" url="Index.xhtml"/>
 
-                            <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
+                            <p:menuitem ajax="false" value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
 
-                            <p:menuitem value="Contato" url="Contato.xhtml" icon="fa fa-phone"/>
-
-                            <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" icon="fa fa-save"/>
-                        </p:submenu>
+                       </p:submenu>
 
                     </p:menu>
                 </p:layoutUnit>
@@ -79,7 +76,7 @@
                     <h:form id="geral"> 
                         <div style="text-align: center;">
                             <h:outputText value="Compra Realizada seu pedido chegará em instantes" /><br />
-                            <p:commandButton value="Voltar a Página Inicial" action="voltarInicio"/>
+                            <p:commandButton ajax="false" value="Voltar a Página Inicial" action="voltarInicio"/>
                         </div>
                     </h:form>
                 </p:layoutUnit>

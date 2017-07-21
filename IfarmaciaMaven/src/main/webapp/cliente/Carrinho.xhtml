@@ -88,7 +88,7 @@
                     </p:dataTable>
                     <h:form>
                         <p:commandButton ajax="false" value="Comprar Remédios" update="growl" action="#{carrinhoBeans.comprarRemedio()}" />
-                        <p:growl id="growl" />
+                        <p:growl id="growl" sticky="true" />  
                     </h:form>
                     <p:outputLabel value="Preço Total:"/>
                     <br/>

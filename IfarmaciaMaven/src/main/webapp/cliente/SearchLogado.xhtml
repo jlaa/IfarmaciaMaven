@@ -58,7 +58,14 @@
 
                 <p:layoutUnit id="principal" position="center">
 
-                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;" value="#{searchBean.remedios}">  
+                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;"
+                                 value="#{searchBean.remedios}"
+                                 rows="10"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                 {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                 {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">  
 
                         <p:column headerText="Remédio">
                             <h:outputText value="#{rem.nome}" />

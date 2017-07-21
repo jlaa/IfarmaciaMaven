@@ -58,7 +58,14 @@
 
                 <p:layoutUnit id="principal" position="center">
 
-                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;" value="#{searchBean.remedios}">  
+                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;" 
+                                 value="#{searchBean.remedios}"
+                                 rows="10"
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                 {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                 {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">  
 
                         <p:column headerText="Remédio">
                             <h:outputText value="#{rem.nome}" />
@@ -67,8 +74,8 @@
                         <p:column headerText="Preço">
                             <h:outputText value="#{rem.preco - ((rem.preco * rem.desconto)/100 )}R$"/>
                         </p:column>
-                         <p:column headerText="Desconto">
-                             <h:outputText value="#{rem.desconto}%" />
+                        <p:column headerText="Desconto">
+                            <h:outputText value="#{rem.desconto}%" />
                         </p:column>
                         <p:column headerText="Farmacia">
                             <h:outputText value="#{searchBean.farmacias.get(index).nome}" />

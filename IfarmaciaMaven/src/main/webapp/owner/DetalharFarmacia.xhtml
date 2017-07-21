@@ -62,7 +62,14 @@
                 </p:layoutUnit>
                 <p:layoutUnit id="principal" position="center">
                     <h:form id="adicionar">
-                        <p:dataTable  id="table" var="rem" style="border-style: none;" rowIndexVar="index" value="#{donoFarmacia.remedios}">  
+                        <p:dataTable  id="table" var="rem" style="border-style: none;" 
+                                      rowIndexVar="index" value="#{donoFarmacia.remedios}"
+                                      rows="10"
+                                      paginator="true"
+                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                      {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                      {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15">  
                             <p:column headerText="Indice">
                                 <p:outputLabel value="#{index +1}" />
                             </p:column>

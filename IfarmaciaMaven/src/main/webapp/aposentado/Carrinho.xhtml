@@ -31,7 +31,7 @@
                     <h:form>
                         <p:commandLink ajax="false" action="alterarUsuario"  value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
                         <p:commandLink ajax="false" action="#{login.logout()}"  value="  Sair  " style="font-size: smaller; text-decoration: none"/>
-                        
+
                     </h:form>
                 </p:layoutUnit>             
 
@@ -67,8 +67,8 @@
                         <p:column headerText="Preço">
                             <h:outputText value="#{rem.preco - ((rem.preco * rem.desconto)/100 )}R$"/>
                         </p:column>
-                         <p:column headerText="Desconto">
-                             <h:outputText value="#{rem.desconto}%" />
+                        <p:column headerText="Desconto">
+                            <h:outputText value="#{rem.desconto}%" />
                         </p:column>
 
 
@@ -89,7 +89,8 @@
                         </p:column>
                     </p:dataTable>
                     <h:form>
-                        <p:commandButton value="Comprar Remédios" action="#{carrinhoBeans.comprarRemedio()}" />
+                        <p:commandButton ajax="false" value="Comprar Remédios" update="growl" action="#{carrinhoBeans.comprarRemedio()}" />
+                        <p:growl id="growl" sticky="true" />   
                     </h:form>
                     <p:outputLabel value="Preço Total:"/>
                     <br/>
