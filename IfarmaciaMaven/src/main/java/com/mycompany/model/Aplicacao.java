@@ -89,7 +89,7 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean inserirCartao(Cliente cliente) {
-        if (sessionContext.isCallerInRole(CLIENTE)) {
+        if (sessionContext.isCallerInRole(CLIENTE)||sessionContext.isCallerInRole(APOSENTADO)) {
 
             try {
                 em.merge(cliente);
@@ -104,7 +104,8 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void AlterarCliente(Cliente cliente) {
-        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(OWNER)) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(OWNER)
+                ||sessionContext.isCallerInRole(APOSENTADO)) {
             em.merge(cliente);
         } else {
             throw new EJBAccessException();
@@ -113,7 +114,8 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void AlterarRemedio(Remedio remedio) {
-        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(OWNER)) {
+        if (sessionContext.isCallerInRole(CLIENTE) ||sessionContext.isCallerInRole(APOSENTADO) 
+                || sessionContext.isCallerInRole(OWNER)) {
             em.merge(remedio);
         } else {
             throw new EJBAccessException();
@@ -122,7 +124,6 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void excluirRemedio(Remedio remedio) {
-        //GENTE SERA QUE CLIENTE PODE EXCLUIR MESMO ?
         if (sessionContext.isCallerInRole(OWNER)) {
             em.remove(em.merge(remedio));
         } else {
@@ -147,7 +148,7 @@ public class Aplicacao {
     
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<String> listaNomeFarmacia() {
-        if (sessionContext.isCallerInRole(CLIENTE)) {
+        if (sessionContext.isCallerInRole(CLIENTE)||sessionContext.isCallerInRole(APOSENTADO)) {
 
             List<String> farmacia;
             try {
@@ -181,7 +182,7 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<String> listaRemedio() {
-        if (sessionContext.isCallerInRole(CLIENTE)) {
+        if (sessionContext.isCallerInRole(CLIENTE)||sessionContext.isCallerInRole(APOSENTADO)) {
 
             List<String> remedio;
             try {
@@ -273,8 +274,8 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public Remedio getRemedio(Long id) {
-        if (sessionContext.isCallerInRole(OWNER) || sessionContext.isCallerInRole(CLIENTE)) {
-
+        if (sessionContext.isCallerInRole(OWNER) || sessionContext.isCallerInRole(CLIENTE) 
+                ||sessionContext.isCallerInRole(APOSENTADO)) {
             return em.find(Remedio.class, id);
         } else {
             throw new EJBAccessException();

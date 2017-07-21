@@ -21,7 +21,7 @@
                         text-align:center;
                     }
                 </style>
-                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
+                <h:outputStylesheet library="css" name="paginas.css"/>
             </f:facet>
         </h:head>
 
@@ -29,11 +29,19 @@
 
             <p:layout fullPage="true" >
 
-                <p:layoutUnit  position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit  position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao()== 'Convidado'}">
+                    <h:outputText value="#{login.retornaValidacao()}"/>
+                    <h:form>
+                        <p:commandLink ajax="false" action="login" value=" Logar " style="font-size: smaller; text-decoration: none; " />
+                        <p:commandLink ajax="false" action="register"  value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao() != 'Convidado'}">
                     <h:outputText value="#{login.retornaValidacao()}" />
                     <h:form>
-                        <p:commandLink action="alterarUsuarioOwner" value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
-                        <p:commandLink action="#{login.logout()}" value="  Sair  " style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink ajax="false" action="alterarUsuarioOwner" value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink ajax="false" action="#{login.logout()}" value="  Sair  " style="font-size: smaller; text-decoration: none"/>
                     </h:form>
                 </p:layoutUnit>              
 
@@ -41,9 +49,9 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home" icon="fa fa-home" action="indexOwner"/>
+                                <p:menuitem ajax="false" value="Home" icon="fa fa-home" action="indexOwner"/>
 
-                                <p:menuitem value="Cadastrar Farmacia" action="cadastrarFarmacia" icon="fa fa-save"/>
+                                <p:menuitem ajax="false" value="Cadastrar Farmacia" action="cadastrarFarmacia" icon="fa fa-save"/>
                             </p:submenu>
 
                         </p:menu>
@@ -60,7 +68,7 @@
 
                         <p:column headerText="Nome da Farmácia">
                             <h:form>
-                                <p:commandLink value="#{farm.nome}" action="#{donoFarmacia.setRemedios(farm.id)}" />
+                                <p:commandLink value="#{farm.nome}" ajax="false" action="#{donoFarmacia.setRemedios(farm.id)}" />
                             </h:form>
                         </p:column>
 

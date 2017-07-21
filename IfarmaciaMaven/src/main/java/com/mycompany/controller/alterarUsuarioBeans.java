@@ -66,14 +66,13 @@ public class alterarUsuarioBeans implements Serializable {
     @NotEmpty(message = "O bairro não pode ser vazio")
     @Size(max = 100, message = "o tamanho maximo é 100 para o bairro")
     private String bairo;
-    @NotEmpty(message = "A ocupação não pode ser vazia")
-    @Size(max = 25, message = "o tamanho maximo é 25 para a ocupação")
-    private String ocupacao;
+
     private String nome = "";
     
     List<CartaoDeCredito> cartoes;
     
     List<String> nomecartoes;
+    CartaoDeCredito cartao ;
     
    
 
@@ -90,7 +89,6 @@ public class alterarUsuarioBeans implements Serializable {
         nome = primeiroNome + " " + segundoNome;
         cliente.AdicionarEndereco(rua, numero, bairo, cidade, estado);
         cliente.setNome(nome);
-        cliente.setOcupacao(ocupacao);
         cliente.setTelefone(telefone);        
         aplicacao.AlterarCliente(cliente);
         
@@ -243,18 +241,6 @@ public class alterarUsuarioBeans implements Serializable {
         this.bairo = bairo;
     }
 
-    public String getOcupacao() {
-
-        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
-        if (cliente != null) {
-            return cliente.getOcupacao();
-        }
-        return this.ocupacao;
-    }
-
-    public void setOcupacao(String ocupacao) {
-        this.ocupacao = ocupacao;
-    }
 
     public String getConfirmarSenha() {
 
@@ -279,5 +265,9 @@ public class alterarUsuarioBeans implements Serializable {
         }
         return nomecartoes;
     }
+
+   
+    
+    
 
 }

@@ -109,6 +109,7 @@ public class registerBeans implements Serializable {
         
         this.ocupacaoes.add("cliente");
         this.ocupacaoes.add("owner");
+        this.ocupacaoes.add("aposentado");
         
     }
 

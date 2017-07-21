@@ -12,23 +12,28 @@
                 <title>iFarm</title>
                 <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
 
-                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
+                <h:outputStylesheet library="css" name="paginas.css"/>
             </f:facet>
         </h:head>
 
         <h:body style="background-image: url('images/wp1931605.jpg');">
 
             <p:layout fullPage="true">
-
-
-
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit  position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao()== 'Convidado'}">
                     <h:outputText value="#{login.retornaValidacao()}"/>
                     <h:form>
-                        <p:commandLink action="login" value=" Logar " style="font-size: smaller; text-decoration: none; " />
-                        <p:commandLink action="register"  value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink ajax="false" action="login" value=" Logar " style="font-size: smaller; text-decoration: none; " />
+                        <p:commandLink ajax="false" action="register"  value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
                     </h:form>
                 </p:layoutUnit>
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao() != 'Convidado'}">
+                    <h:outputText value="#{login.retornaValidacao()}" />
+                    <h:form>
+                        <p:commandLink ajax="false" action="alterarUsuarioOwner" value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink ajax="false" action="#{login.logout()}" value="  Sair  " style="font-size: smaller; text-decoration: none"/>
+                    </h:form>
+                </p:layoutUnit> 
 
                 <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
                     <h:form>

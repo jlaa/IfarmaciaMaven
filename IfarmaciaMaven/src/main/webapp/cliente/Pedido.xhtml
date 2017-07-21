@@ -12,33 +12,39 @@
                 <title>iFarm</title>
                 <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
 
-                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
+                <h:outputStylesheet library="css" name="paginas.css"/>
             </f:facet>
         </h:head>
 
         <h:body style="background-image: url('images/wp1931605.jpg');">
 
             <p:layout fullPage="true">
-
-                <p:layoutUnit  position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit  position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao()== 'Convidado'}">
+                    <h:outputText value="#{login.retornaValidacao()}"/>
+                    <h:form>
+                        <p:commandLink ajax="false" action="login" value=" Logar " style="font-size: smaller; text-decoration: none; " />
+                        <p:commandLink ajax="false" action="register"  value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao() != 'Convidado'}">
                     <h:outputText value="#{login.retornaValidacao()}" />
                     <h:form>
-                        <p:commandLink action="alterarUsuario"  value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
-                        <p:commandLink action="#{login.logout()}"  value="  Sair  " style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink ajax="false" action="alterarUsuario"  value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink ajax="false" action="#{login.logout()}"  value="  Sair  " style="font-size: smaller; text-decoration: none"/>
                         <p:menubar style="border-style: none;">
-                            <p:menuitem value="#{carrinhoBeans.pegaPrecos}"  id="carrinhoMenu" action="carrinho" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
+                            <p:menuitem value="#{carrinhoBeans.pegaPrecos}" ajax="false"  id="carrinhoMenu" action="carrinho" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
                             </p:menuitem>
                         </p:menubar>
                     </h:form>
-                </p:layoutUnit>              
+                </p:layoutUnit>                
 
                 <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
+                                <p:menuitem ajax="false" value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                                <p:menuitem value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
+                                <p:menuitem ajax="false" value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
                             </p:submenu>
 
                         </p:menu>
@@ -71,7 +77,7 @@
                         </p:selectOneMenu>
                         <br />
                         <br />
-                        <p:commandButton  value="Pedir agora" action="#{searchBean.pesquisaRemedio()}" />
+                        <p:commandButton ajax="false" value="Pedir agora" action="#{searchBean.pesquisaRemedio()}" />
                     </h:form>
                 </p:layoutUnit>
 

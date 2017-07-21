@@ -18,12 +18,36 @@
         </navigation-case>                         
         <navigation-case>
             <from-outcome>index</from-outcome>
-            <to-view-id>Index.xhtml</to-view-id>
+            <to-view-id>public/Index.xhtml</to-view-id>
+        </navigation-case>                         
+        <navigation-case>
+            <from-outcome>sair</from-outcome>
+            <to-view-id>public/Index.xhtml</to-view-id>
         </navigation-case>                         
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>Index.xhtml</from-view-id>
+        <from-view-id>/public/LoginNotAuthorized</from-view-id>                                
+        <navigation-case>
+            <from-outcome>sucessoLoginCliente</from-outcome>
+            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>sucessoLoginDono</from-outcome>
+            <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>sucessoLoginAposentado</from-outcome>
+            <to-view-id>/aposentado/IndexLogado.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>falhaLogin</from-outcome>
+            <to-view-id>/public/LoginError.xhtml</to-view-id>
+        </navigation-case>                           
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>public/Index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>procurarIndex</from-outcome>
             <to-view-id>/public/Search.xhtml</to-view-id>
@@ -47,6 +71,10 @@
         <navigation-case>
             <from-outcome>sucessoLoginDono</from-outcome>
             <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>sucessoLoginAposentado</from-outcome>
+            <to-view-id>/aposentado/IndexLogado.xhtml</to-view-id>
         </navigation-case>        
         <navigation-case>
             <from-outcome>falhaLogin</from-outcome>
@@ -63,6 +91,10 @@
         <navigation-case>
             <from-outcome>sucessoLoginDono</from-outcome>
             <to-view-id>/owner/IndexOwner.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>sucessoLoginAposentado</from-outcome>
+            <to-view-id>/aposentado/IndexLogado.xhtml</to-view-id>
         </navigation-case>        
         <navigation-case>
             <from-outcome>falhaLogin</from-outcome>
@@ -82,73 +114,12 @@
         </navigation-case>                            
     </navigation-rule> 
     
-    <navigation-rule>
-        <from-view-id>/cliente/*</from-view-id>
-        <navigation-case>
-            <from-outcome>sair</from-outcome>
-            <to-view-id>Index.xhtml</to-view-id>
-        </navigation-case>        
-        <navigation-case>
-            <from-outcome>pedido</from-outcome>
-            <to-view-id>/cliente/Pedido.xhtml</to-view-id>
-        </navigation-case>                      
-        <navigation-case>
-            <from-outcome>indexLogado</from-outcome>
-            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
-        </navigation-case>                        
-        <navigation-case>
-            <from-outcome>alterarUsuario</from-outcome>
-            <to-view-id>/cliente/AlterarUsuario.xhtml</to-view-id>
-        </navigation-case>                      
-        <navigation-case>
-            <from-outcome>carrinho</from-outcome>
-            <to-view-id>/cliente/Carrinho.xhtml</to-view-id>
-        </navigation-case>                      
-    </navigation-rule>
-           
-    
-    
-    <navigation-rule>
-        <from-view-id>/cliente/IndexLogado.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>procurar</from-outcome>
-            <to-view-id>/cliente/SearchLogado.xhtml</to-view-id>
-        </navigation-case>                               
-    </navigation-rule>    
-    <navigation-rule>
-        <from-view-id>/cliente/Pedido.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>procurar</from-outcome>
-            <to-view-id>/cliente/SearchLogado.xhtml</to-view-id>
-        </navigation-case>                               
-    </navigation-rule>    
-          
-    
-    <navigation-rule>
-        <from-view-id>/cliente/AlterarUsuario.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>cartao</from-outcome>
-            <to-view-id>/cliente/CadastrarCartao.xhtml</to-view-id>
-        </navigation-case>                            
-        <navigation-case>
-            <from-outcome>sucessoAlterar</from-outcome>
-            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
-        </navigation-case>                               
-    </navigation-rule>                   
-    
-    <navigation-rule>
-        <from-view-id>/cliente/CadastrarCartao.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>sucessoCartao</from-outcome>
-            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
-        </navigation-case>                               
-    </navigation-rule>     
     
     <navigation-rule>
         <from-view-id>/owner/*</from-view-id>
         <navigation-case>
             <from-outcome>sair</from-outcome>
-            <to-view-id>Index.xhtml</to-view-id>
+            <to-view-id>public/Index.xhtml</to-view-id>
         </navigation-case>        
         <navigation-case>
             <from-outcome>cadastrarFarmacia</from-outcome>
@@ -186,15 +157,39 @@
             <from-outcome>sucessoFarmacia</from-outcome>
             <to-view-id>/owner/CadastrarRemedios.xhtml</to-view-id>
         </navigation-case>                               
-    </navigation-rule>                   
-    <navigation-rule>
-        
+    </navigation-rule>                      
+    
+    <navigation-rule> 
         <from-view-id>/owner/IndexOwner.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>buscarFarmacia</from-outcome>
             <to-view-id>/owner/DetalharFarmacia.xhtml</to-view-id>
         </navigation-case>                               
-    </navigation-rule>                   
+    </navigation-rule>  
+    
+    <navigation-rule>
+        <from-view-id>/cliente/*</from-view-id>
+        <navigation-case>
+            <from-outcome>sair</from-outcome>
+            <to-view-id>public/Index.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>pedido</from-outcome>
+            <to-view-id>/cliente/Pedido.xhtml</to-view-id>
+        </navigation-case>                      
+        <navigation-case>
+            <from-outcome>indexLogado</from-outcome>
+            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
+        </navigation-case>                        
+        <navigation-case>
+            <from-outcome>alterarUsuario</from-outcome>
+            <to-view-id>/cliente/AlterarUsuario.xhtml</to-view-id>
+        </navigation-case>                      
+        <navigation-case>
+            <from-outcome>carrinho</from-outcome>
+            <to-view-id>/cliente/Carrinho.xhtml</to-view-id>
+        </navigation-case>                      
+    </navigation-rule>                 
 
     <navigation-rule>
         <from-view-id>/cliente/Carrinho.xhtml</from-view-id>
@@ -250,6 +245,159 @@
             <from-outcome>failCarrinho</from-outcome>
             <to-view-id>/cliente/SearchLogado.xhtml</to-view-id>
         </navigation-case>                               
+    </navigation-rule>     
+    
+    <navigation-rule>
+        <from-view-id>/cliente/IndexLogado.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>procurar</from-outcome>
+            <to-view-id>/cliente/SearchLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>    
+    <navigation-rule>
+        <from-view-id>/cliente/Pedido.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>procurar</from-outcome>
+            <to-view-id>/cliente/SearchLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>    
+          
+    
+    <navigation-rule>
+        <from-view-id>/cliente/AlterarUsuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cartao</from-outcome>
+            <to-view-id>/cliente/CadastrarCartao.xhtml</to-view-id>
+        </navigation-case>                            
+        <navigation-case>
+            <from-outcome>sucessoAlterar</from-outcome>
+            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
+        </navigation-case>                               
     </navigation-rule>                   
+    
+    <navigation-rule>
+        <from-view-id>/cliente/CadastrarCartao.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>sucessoCartao</from-outcome>
+            <to-view-id>/cliente/IndexLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>     
+    
+    <navigation-rule>
+        <from-view-id>/aposentado/*</from-view-id>
+        <navigation-case>
+            <from-outcome>sair</from-outcome>
+            <to-view-id>/public/Index.xhtml</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>pedido</from-outcome>
+            <to-view-id>/aposentado/Pedido.xhtml</to-view-id>
+        </navigation-case>                      
+        <navigation-case>
+            <from-outcome>indexLogado</from-outcome>
+            <to-view-id>/aposentado/IndexLogado.xhtml</to-view-id>
+        </navigation-case>                        
+        <navigation-case>
+            <from-outcome>alterarUsuario</from-outcome>
+            <to-view-id>/aposentado/AlterarUsuario.xhtml</to-view-id>
+        </navigation-case>                      
+        <navigation-case>
+            <from-outcome>carrinho</from-outcome>
+            <to-view-id>/aposentado/Carrinho.xhtml</to-view-id>
+        </navigation-case>                      
+    </navigation-rule>                 
+
+    <navigation-rule>
+        <from-view-id>/aposentado/Carrinho.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>excluirCarrinho</from-outcome>
+            <to-view-id>/aposentado/Carrinho.xhtml</to-view-id>
+        </navigation-case>                               
+        <navigation-case>
+            <from-outcome>comprarRemedio</from-outcome>
+            <to-view-id>/aposentado/ComprarRemedio.xhtml</to-view-id>
+        </navigation-case>                               
+        <navigation-case>
+            <from-outcome>cartao</from-outcome>
+            <to-view-id>/aposentado/CadastrarCartao</to-view-id>
+        </navigation-case>                                          
+    </navigation-rule>
+                       
+    <navigation-rule>
+        <from-view-id>/aposentado/ComprarRemedio.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>compraCompleta</from-outcome>
+            <to-view-id>/aposentado/CompraCompleta.xhtml</to-view-id>
+        </navigation-case> 
+        <navigation-case>
+            <from-outcome>compraCompleta</from-outcome>
+            <to-view-id>/aposentado/CompraCompleta.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>
+                       
+    <navigation-rule>
+        <from-view-id>/aposentado/CompraCompleta.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>voltarInicio</from-outcome>
+            <to-view-id>/aposentado/IndexLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>               
+        
+    <navigation-rule>
+        <from-view-id>/aposentado/Pedido.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>searchLogado</from-outcome>
+            <to-view-id>/aposentado/SearchLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule> 
+                      
+    <navigation-rule>
+        <from-view-id>/aposentado/SearchLogado.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>sucessoCarrinho</from-outcome>
+            <to-view-id>/aposentado/Carrinho.xhtml</to-view-id>
+        </navigation-case>                               
+        <navigation-case>
+            <from-outcome>failCarrinho</from-outcome>
+            <to-view-id>/aposentado/SearchLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>     
+    
+    <navigation-rule>
+        <from-view-id>/aposentado/IndexLogado.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>procurar</from-outcome>
+            <to-view-id>/aposentado/SearchLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>    
+    <navigation-rule>
+        <from-view-id>/aposentado/Pedido.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>procurar</from-outcome>
+            <to-view-id>/aposentado/SearchLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>    
+          
+    
+    <navigation-rule>
+        <from-view-id>/aposentado/AlterarUsuario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cartao</from-outcome>
+            <to-view-id>/aposentado/CadastrarCartao.xhtml</to-view-id>
+        </navigation-case>                            
+        <navigation-case>
+            <from-outcome>sucessoAlterar</from-outcome>
+            <to-view-id>/aposentado/IndexLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>                   
+    
+    <navigation-rule>
+        <from-view-id>/aposentado/CadastrarCartao.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>sucessoCartao</from-outcome>
+            <to-view-id>/aposentado/IndexLogado.xhtml</to-view-id>
+        </navigation-case>                               
+    </navigation-rule>     
+            
 
 </faces-config>

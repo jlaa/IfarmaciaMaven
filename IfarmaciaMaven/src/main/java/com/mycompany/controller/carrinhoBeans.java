@@ -14,6 +14,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -30,6 +32,7 @@ public class carrinhoBeans implements Serializable {
     private String nomeDaFarmacia;
     private List<Remedio> remedioComprado = new ArrayList();
     private double total;
+    private FacesContext facesContext;
 
     /**
      * Creates a new instance of carrinhoBeans
@@ -124,14 +127,21 @@ public class carrinhoBeans implements Serializable {
 
     public String comprarRemedio() {
         Cliente cliente = (Cliente) (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
-        String retorno ;
-        if(cliente.getCartaos().isEmpty())
-        {
-            retorno = "cartao";
-            return retorno;
-        }else
-        {
-            retorno = "comprarRemedio";
+        String retorno;
+        List<Remedio> remedio = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
+        if (remedio == null||remedio.isEmpty()) {
+            
+            retorno = null;
+            facesContext = FacesContext.getCurrentInstance();
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Não há remédios no carrinho", null);
+            facesContext.addMessage(null, message);
+        } else {
+            if (cliente.getCartaos().isEmpty()) {
+                retorno = "cartao";
+                return retorno;
+            } else {
+                retorno = "comprarRemedio";
+            }
         }
         return retorno;
     }
@@ -146,6 +156,19 @@ public class carrinhoBeans implements Serializable {
         if (remediosTemp != null) {
             for (int i = 0; i < remediosTemp.size(); i++) {
                 total = total + (remediosTemp.get(i).getQuantidade() * remediosTemp.get(i).getPreco());
+            }
+        }
+        return total;
+    }
+
+    public double getPegaPrecosDesconto() {
+        total = 0;
+        List<Remedio> remediosTemp = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
+        if (remediosTemp != null) {
+            for (int i = 0; i < remediosTemp.size(); i++) {
+                double preco = remediosTemp.get(i).getPreco()
+                        - ((remediosTemp.get(i).getPreco() * remediosTemp.get(i).getDesconto()) / 100);
+                total = total + (remediosTemp.get(i).getQuantidade() * preco);
             }
         }
         return total;

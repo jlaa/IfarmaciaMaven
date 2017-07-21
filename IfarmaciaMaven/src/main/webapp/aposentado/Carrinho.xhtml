@@ -12,7 +12,7 @@
                 <title>iFarm</title>
                 <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
 
-                <link href="css/paginas.css" rel="stylesheet" type="text/css" />
+                <h:outputStylesheet library="css" name="paginas.css"/>
             </f:facet>
         </h:head>
 
@@ -20,31 +20,34 @@
 
             <p:layout fullPage="true">
 
-                <p:layoutUnit rendered="#{login.retornaValidacao() != 'Convidado'}" position="north" size="100" resizable="true" closable="true" collapsible="true">
+                <p:layoutUnit  position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao()== 'Convidado'}">
                     <h:outputText value="#{login.retornaValidacao()}"/>
-                    <p:link href="AlterarUsuario.xhtml" value="  Alterar Usuario   " rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
+                    <p:commandLink ajax="false" action="login" value=" Logar " style="font-size: smaller; text-decoration: none; " />
+                    <p:commandLink ajax="false" action="register"  value=" Cadastrar-se" style="font-size: smaller; text-decoration: none"/>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true" rendered="#{login.retornaValidacao() != 'Convidado'}">
+                    <h:outputText value="#{login.retornaValidacao()}" />
                     <h:form>
-                        <h:commandLink action="#{login.logout()}" value="  Sair  "  rendered="#{login.retornaValidacao() != 'Convidado'}" style="font-size: smaller; text-decoration: none"/>
-                    </h:form>                   
-                    <p:menubar style="border-style: none;">
-                        <p:menuitem value="#{carrinhoBeans.pegaPrecos}" id="carrinhoMenu" url="clientes/Carrinho.xhtml" icon="fa fa-shopping-cart" style="position: absolute; right: 4px;">
-                        </p:menuitem>
-                    </p:menubar>
-                </p:layoutUnit>              
+                        <p:commandLink ajax="false" action="alterarUsuario"  value="  Alterar Usuario   "  style="font-size: smaller; text-decoration: none"/>
+                        <p:commandLink ajax="false" action="#{login.logout()}"  value="  Sair  " style="font-size: smaller; text-decoration: none"/>
+                        
+                    </h:form>
+                </p:layoutUnit>             
 
                 <p:layoutUnit position="west" size="175" header="Bem Vindo" collapsible="true">
-                    <p:menu>
-                        <p:submenu label="Menu">
-                            <p:menuitem value="Home" icon="fa fa-home" url="IndexLogado.xhtml"/>
+                    <h:form>
+                        <p:menu>
+                            <p:submenu label="Menu">
+                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                            <p:menuitem value="Solicitar Pedido" url="Pedido.xhtml" icon="fa fa-envelope-o"/>
+                                <p:menuitem value="Solicitar Pedido" action="pedido" icon="fa fa-envelope-o"/>
+                            </p:submenu>
 
-                            <p:menuitem value="Cadastrar Farmacia" url="CadastroFarmacia.xhtml" icon="fa fa-save"/>
-                        </p:submenu>
-
-                    </p:menu>
+                        </p:menu>
+                    </h:form>
                 </p:layoutUnit>
-                
+
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
 
                 </p:layoutUnit>
@@ -62,7 +65,10 @@
                         </p:column>
 
                         <p:column headerText="Preço">
-                            <h:outputText value="#{rem.preco}R$" />
+                            <h:outputText value="#{rem.preco - ((rem.preco * rem.desconto)/100 )}R$"/>
+                        </p:column>
+                         <p:column headerText="Desconto">
+                             <h:outputText value="#{rem.desconto}%" />
                         </p:column>
 
 
@@ -83,11 +89,11 @@
                         </p:column>
                     </p:dataTable>
                     <h:form>
-                        <p:commandButton value="Comprar Remédios" action="#{carrinhoBeans.comprarRemedio()}" ajax="false"/>
+                        <p:commandButton value="Comprar Remédios" action="#{carrinhoBeans.comprarRemedio()}" />
                     </h:form>
                     <p:outputLabel value="Preço Total:"/>
                     <br/>
-                    <p:outputLabel id="total" value="#{carrinhoBeans.pegaPrecos}R$">
+                    <p:outputLabel id="total" value="#{carrinhoBeans.pegaPrecosDesconto}R$">
                         <f:convertNumber pattern=".99" />
                     </p:outputLabel>
                 </p:layoutUnit>

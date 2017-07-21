@@ -59,6 +59,7 @@ public class loginBeans implements Serializable {
         try {
             facesContext = FacesContext.getCurrentInstance();
             HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+
             request.login(email, senha);
             cliente = aplicacao.getCliente(email);
             if (cliente.getGrupos().get(0).getNome().equals(Papel.OWNER)) {
@@ -69,9 +70,13 @@ public class loginBeans implements Serializable {
                 SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
                 facesContext.getExternalContext().getSession(true);
                 return "sucessoLoginCliente";
+            } else if (cliente.getGrupos().get(0).getNome().equals(Papel.APOSENTADO)) {
+                SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
+                facesContext.getExternalContext().getSession(true);
+                return "sucessoLoginAposentado";
             }
 
-        } catch (Exception ex) {
+        } catch (ServletException ex) {
             return "falhaLogin";
         }
 
@@ -113,9 +118,12 @@ public class loginBeans implements Serializable {
         this.validacao = validacao;
     }
 
-    public String logout() {
+    public String logout() throws ServletException {
+        FacesContext fc = FacesContext.getCurrentInstance();
 
         SingletonSession.getInstance().encerrarSessao();
+        HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
+        request.logout();
         return "sair";
     }
 
