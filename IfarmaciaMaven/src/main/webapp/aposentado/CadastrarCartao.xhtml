@@ -42,9 +42,9 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
+                                <p:menuitem ajax="false" value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                                <p:menuitem value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
+                                <p:menuitem ajax="false" value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
                             </p:submenu>
 
                         </p:menu>
@@ -84,7 +84,7 @@
                                 <h:message for="cartao" />
                                 <br />
                                 <br />
-                                <p:commandButton  action="#{cadastrarCartaoBeans.cadastrarCartao()}" value="Enviar" update="geral"/>
+                                <p:commandButton ajax="false" action="#{cadastrarCartaoBeans.cadastrarCartao()}" value="Enviar" update="geral"/>
                             </p:column>
                         </p:panelGrid>
                     </h:form>

@@ -43,9 +43,9 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
+                                <p:menuitem ajax="false" value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                                <p:menuitem value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
+                                <p:menuitem ajax="false" value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
                             </p:submenu>
 
                         </p:menu>
@@ -57,7 +57,7 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit id="principal" position="center">
-
+                    <h:form id="geral">
                     <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;" 
                                  value="#{searchBean.remedios}"
                                  rows="10"
@@ -80,13 +80,14 @@
                         <p:column headerText="Farmacia">
                             <h:outputText value="#{searchBean.farmacias.get(index).nome}" />
                         </p:column>  
+                        <p:growl id="growl" sticky="true" />
                         <p:column >
                             <h:form>
-                                <p:commandButton value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho(rem.id)}"/>
+                                <p:commandButton update="geral growl" ajax="false" value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho(rem.id)}"/>
                             </h:form>
                         </p:column>
                     </p:dataTable>
-
+                    </h:form>
 
                 </p:layoutUnit>
 

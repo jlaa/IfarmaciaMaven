@@ -60,28 +60,29 @@
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                 </p:layoutUnit>
-                <p:layoutUnit position="center" size="100" closable="true" collapsible="true">
+                <p:layoutUnit position="center"  closable="true" collapsible="true">
+                        <h1>Bem vindo!!</h1>
+                        <p:dataTable rowIndexVar="index" var="farm"  style="border-style: none;" 
+                                     value="#{donoFarmacia.farmacia}"
+                                     rows="10"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                     {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                     {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">  
 
-                    <h1>Bem vindo!!</h1>
+                            <p:column headerText="Nome da Farmácia">
+                                <h:form>
+                                    <p:commandLink update="geral" value="#{farm.nome}" ajax="false" action="#{donoFarmacia.setRemedios(farm.id)}" />
+                                </h:form>
+                            </p:column>
+                            <p:column headerText="Excluir Farmacia">
+                                <h:form>                                    
+                                    <p:commandButton  value="Excluir" ajax="false" action="#{donoFarmacia.removeFarmacia(farm.id)}" />
+                                </h:form>
+                            </p:column>
 
-                    <p:dataTable rowIndexVar="index" var="farm"  style="border-style: none;" 
-                                 value="#{donoFarmacia.farmacia}"
-                                 rows="10"
-                                 paginator="true"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
-                                 {PreviousPageLink} {PageLinks} {NextPageLink} 
-                                 {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">  
-
-                        <p:column headerText="Nome da Farmácia">
-                            <h:form>
-                                <p:commandLink value="#{farm.nome}" ajax="false" action="#{donoFarmacia.setRemedios(farm.id)}" />
-                            </h:form>
-                        </p:column>
-
-                    </p:dataTable>
-
-
+                        </p:dataTable>
                 </p:layoutUnit>
             </p:layout>
 

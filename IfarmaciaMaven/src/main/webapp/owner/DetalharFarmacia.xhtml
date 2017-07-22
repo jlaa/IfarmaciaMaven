@@ -91,6 +91,10 @@
                                 <br/>
                                 <p:commandButton ajax="false" value="Retirar Desconto" update="adicionar"  oncomplete="#{donoFarmacia.listarDesconto()}"  action="#{donoFarmacia.tirarDesconto(rem.id)}" rendered="#{rem.desconto > 0}"   />
                             </p:column>
+
+                            <p:column  headerText="Excluir" >
+                                <p:commandButton ajax="false" value="Excluir" update="adicionar" action="#{donoFarmacia.removeRemedio(rem.id)}" />
+                            </p:column>
                         </p:dataTable>
                     </h:form>
                 </p:layoutUnit>

@@ -7,9 +7,7 @@ package com.mycompany.controller;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Cliente;
@@ -20,7 +18,6 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -84,6 +81,42 @@ public class donoFarmaciaBeans implements Serializable {
         SingletonSession.getInstance().setAttribute("remediosOwner", farmacia.getRemedios());
     }
 
+    public void removeRemedio(Long id) {
+        Remedio remedio = aplicacao.getRemedio(id);
+        remedios = (List<Remedio>) SingletonSession.getInstance().getAttribute("remediosOwner");
+        for(int i=0;i<remedios.size();i++)
+        {
+            if(remedios.get(i).getId().equals(remedio.getId()))
+            {
+                remedios.remove(i);
+            }
+        }
+        aplicacao.excluirRemedio(remedio);
+        SingletonSession.getInstance().setAttribute("remediosOwner", remedios);
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        Cliente aux = aplicacao.getCliente(cliente.getEmail());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("clienteLogado");
+        SingletonSession.getInstance().setAttribute("clienteLogado", aux);
+    }    
+    
+    public void removeFarmacia(Long id) {
+        Farmacia farmacia = aplicacao.getFarmacia(id);
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");        
+        farmacias = cliente.getFarmacia();
+        for(int i=0;i<farmacias.size();i++)
+        {
+            if(farmacias.get(i).getId()==farmacia.getId())
+            {
+                farmacias.remove(i);
+            }
+        }
+        aplicacao.excluirFarmacia(farmacia);
+        cliente.setFarmacia(farmacias);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("clienteLogado");
+        SingletonSession.getInstance().setAttribute("clienteLogado", cliente);
+    }    
+  
+
     public List<Remedio> getRemedios() {
         remedios = (List<Remedio>) SingletonSession.getInstance().getAttribute("remediosOwner");
         return remedios;
@@ -136,8 +169,6 @@ public class donoFarmaciaBeans implements Serializable {
     public void setFarmacias(List<Farmacia> farmacias) {
         this.farmacias = farmacias;
     }
-
-
 
     public void setDescontos(List<Integer> descontos) {
         this.descontos = descontos;

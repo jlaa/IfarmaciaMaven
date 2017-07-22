@@ -27,6 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Named(value = "alterarUsuario")
 @RequestScoped
 public class alterarUsuarioBeans implements Serializable {
+
     @EJB
     private Aplicacao aplicacao;
     @NotEmpty(message = "O username não pode ser vazio")
@@ -68,13 +69,11 @@ public class alterarUsuarioBeans implements Serializable {
     private String bairo;
 
     private String nome = "";
-    
+
     List<CartaoDeCredito> cartoes;
-    
+
     List<String> nomecartoes;
-    CartaoDeCredito cartao ;
-    
-   
+    CartaoDeCredito cartao;
 
     /**
      * Creates a new instance of loginBeans
@@ -84,14 +83,14 @@ public class alterarUsuarioBeans implements Serializable {
     }
 
     public String alterarUsuario() {
-        
+
         Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         nome = primeiroNome + " " + segundoNome;
         cliente.AdicionarEndereco(rua, numero, bairo, cidade, estado);
         cliente.setNome(nome);
-        cliente.setTelefone(telefone);        
+        cliente.setTelefone(telefone);
         aplicacao.AlterarCliente(cliente);
-        
+
         return "sucessoAlterar";
     }
 
@@ -241,7 +240,6 @@ public class alterarUsuarioBeans implements Serializable {
         this.bairo = bairo;
     }
 
-
     public String getConfirmarSenha() {
 
         Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
@@ -254,20 +252,28 @@ public class alterarUsuarioBeans implements Serializable {
     public void setConfirmarSenha(String confirmarSenha) {
         this.confirmarSenha = confirmarSenha;
     }
-    
-    public List<String> getNomeCartoes(){
-        
+
+    public List<String> getNomeCartoes() {
+
         Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         cartoes = cliente.getCartaos();
-        nomecartoes= new ArrayList();
-        for(int i = 0; i<cartoes.size(); i++){
+        nomecartoes = new ArrayList();
+        for (int i = 0; i < cartoes.size(); i++) {
             nomecartoes.add(cartoes.get(i).getBandeira());
         }
         return nomecartoes;
     }
 
-   
+    public List<CartaoDeCredito> getCartoes() {
+        Cliente cliente = (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
+        cartoes = cliente.getCartaos();
+        return cartoes;
+    }
     
-    
+    public void alterarCartao(Long id_cartao)
+    {
+        CartaoDeCredito cartao = aplicacao.getCartao(id_cartao);
+        aplicacao.atualizarCartao(cartao);
+    }
 
 }

@@ -9,7 +9,6 @@ import com.mycompany.model.Aplicacao;
 import com.mycompany.model.Farmacia;
 import com.mycompany.model.ValidaEstados;
 import com.mycompany.model.Cliente;
-import com.mycompany.model.Owner;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

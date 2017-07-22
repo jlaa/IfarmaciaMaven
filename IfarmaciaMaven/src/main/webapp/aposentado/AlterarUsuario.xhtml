@@ -42,9 +42,9 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
+                                <p:menuitem ajax="false" value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                                <p:menuitem value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
+                                <p:menuitem ajax="false" value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
                             </p:submenu>
 
                         </p:menu>
@@ -89,9 +89,9 @@
                                 <h:message for="numero" />
                                 <br />
                                 <br />                                                       
-                                <p:commandButton  update="geral" value="Alterar" action="#{alterarUsuario.alterarUsuario()}"/>
+                                <p:commandButton ajax="false" update="geral" value="Alterar" action="#{alterarUsuario.alterarUsuario()}"/>
 
-                                <p:commandButton  value="Cadastrar Cartão" action="cartao" />
+                                <p:commandButton ajax="false" value="Cadastrar Cartão" action="cartao" />
                             </p:column>
 
                             <p:column>
@@ -113,17 +113,44 @@
                                 <h:message for="bairro" />
                                 <br />
                                 <br />
-                                <h:outputText value="Cartões" rendered="#{alterarUsuario.nomeCartoes != null}"/>
-                                <br/>
-                                <p:selectOneMenu id="cartoes" value="#" style="width:150px">
-                                    <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                    <f:selectItems value="#{alterarUsuario.nomeCartoes}"  >
-                                    </f:selectItems>                                    
-                                </p:selectOneMenu>
                             </p:column>
                         </p:panelGrid>
-                 
+                        <br/>
                     </h:form>
+
+                    <p:outputLabel value="Dados dos cartões" rendered="#{not empty alterarUsuario.cartoes}"/>
+                    <h:form id="car">
+
+                        <p:panelGrid columns="2" layout="grid" style="border-style: none;" 
+                                     rendered="#{not empty alterarUsuario.cartoes}">
+                            <ui:repeat value="#{alterarUsuario.cartoes}" var="cartoes">
+                                <p:column>
+                                    <h:outputText  value="Bandeira Cartao "/><br />
+                                    <p:inputText readonly="true"   id="bandeira" value="#{cartoes.bandeira}" />
+                                    <br />
+                                    <h:message for="bandeira" />
+                                    <br />
+                                    <br />                                   
+                                    <h:outputText  value="Número do Cartão"/><br />
+                                    <p:inputText readonly="true"  id="numero_cartao" value="#{cartoes.numero_cartao}" />
+                                    <br />
+                                    <h:message for="numero_cartao" /> 
+                                    <br/>
+                                    <h:outputText  value="Data de Validade"/><br />
+                                    <p:calendar mask="99/99/99" mindate="#{cadastrarCartaoBeans.today}" id="data_validade" value="#{cartoes.dataExpiracao.time}" >
+                                    </p:calendar>
+                                    <br />
+                                    <h:message for="data_validade" /> 
+                                    <br/>
+                                    <p:commandButton ajax="false" update="car" value="Alterar Cartão" action="#{alterarUsuario.alterarCartao(cartoes.id_cartao)}" />
+                                    <br/>
+                                    <br/>
+                                </p:column> 
+                            </ui:repeat>
+
+                        </p:panelGrid>
+                    </h:form>
+
 
                 </p:layoutUnit>
 

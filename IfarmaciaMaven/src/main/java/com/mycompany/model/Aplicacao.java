@@ -70,7 +70,21 @@ public class Aplicacao {
         return true;
 
     }
-    
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public boolean atualizarCartao(CartaoDeCredito cartao) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)) {
+            try {
+                em.merge(cartao);
+            } catch (Exception ex) {
+                return false;
+            }
+            return true;
+        } else {
+            throw new EJBAccessException();
+        }
+
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public boolean CadastrarFarmacia(Farmacia farmacia) {
@@ -88,9 +102,8 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public boolean inserirCartao(Cliente cliente) {
-        if (sessionContext.isCallerInRole(CLIENTE)||sessionContext.isCallerInRole(APOSENTADO)) {
-
+    public boolean inserirCartao(Cliente cliente    ) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)) {
             try {
                 em.merge(cliente);
             } catch (Exception ex) {
@@ -103,9 +116,9 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void AlterarCliente(Cliente cliente) {
+    public void AlterarCliente(Cliente cliente    ) {
         if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(OWNER)
-                ||sessionContext.isCallerInRole(APOSENTADO)) {
+                || sessionContext.isCallerInRole(APOSENTADO)) {
             em.merge(cliente);
         } else {
             throw new EJBAccessException();
@@ -113,8 +126,8 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void AlterarRemedio(Remedio remedio) {
-        if (sessionContext.isCallerInRole(CLIENTE) ||sessionContext.isCallerInRole(APOSENTADO) 
+    public void AlterarRemedio(Remedio remedio    ) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)
                 || sessionContext.isCallerInRole(OWNER)) {
             em.merge(remedio);
         } else {
@@ -123,16 +136,24 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void excluirRemedio(Remedio remedio) {
+    public void excluirRemedio(Remedio remedio    ) {
         if (sessionContext.isCallerInRole(OWNER)) {
             em.remove(em.merge(remedio));
         } else {
             throw new EJBAccessException();
         }
     }
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void excluirFarmacia(Farmacia farmacia) {
+        if (sessionContext.isCallerInRole(OWNER)) {
+            em.remove(em.merge(farmacia));
+        } else {
+            throw new EJBAccessException();
+        }
+    }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Grupo getGrupo(String nome_grupo) {
+    public Grupo getGrupo(String nome_grupo    ) {
         Grupo grupo;
         try {
             TypedQuery<Grupo> query = em.createQuery("SELECT g from Grupo g WHERE g.nome like ?1", Grupo.class);
@@ -145,10 +166,9 @@ public class Aplicacao {
 
     }
 
-    
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<String> listaNomeFarmacia() {
-        if (sessionContext.isCallerInRole(CLIENTE)||sessionContext.isCallerInRole(APOSENTADO)) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)) {
 
             List<String> farmacia;
             try {
@@ -182,7 +202,7 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<String> listaRemedio() {
-        if (sessionContext.isCallerInRole(CLIENTE)||sessionContext.isCallerInRole(APOSENTADO)) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)) {
 
             List<String> remedio;
             try {
@@ -217,23 +237,6 @@ public class Aplicacao {
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public boolean validarCliente(String email, String senha) {
-        try {
-            TypedQuery<Cliente> query = em.createQuery("SELECT c from Cliente c where c.email like ?1 and  c.senha like ?2", Cliente.class);
-            query.setParameter(1, email);
-            query.setParameter(2, senha);
-            Cliente cliente = query.getSingleResult();
-            if (cliente != null) {
-                return true;
-            }
-        } catch (Exception ex) {
-            return false;
-        }
-        return false;
-
-    }
-
-    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public Cliente getCliente(String email) {
         Cliente cliente = null;
         try {
@@ -248,6 +251,49 @@ public class Aplicacao {
         }
         return cliente;
 
+    }
+
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public CartaoDeCredito getCartao(Long id_cartao) {
+        if (sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)) {
+
+            CartaoDeCredito cartao = em.find(CartaoDeCredito.class, id_cartao);
+            return cartao;
+        } else {
+            throw new EJBAccessException();
+        }
+    }
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<Remedio> getRemedios(Long id_farmacia) {
+        if (sessionContext.isCallerInRole(OWNER)
+                ||sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)) {
+
+            Farmacia farmacia = em.find(Farmacia.class, id_farmacia);
+            return farmacia.getRemedios();
+        } else {
+            throw new EJBAccessException();
+        }
+    }
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public Farmacia getFarmacia(Long id_farmacia) {
+        if (sessionContext.isCallerInRole(OWNER)
+                ||sessionContext.isCallerInRole(CLIENTE) || sessionContext.isCallerInRole(APOSENTADO)) {
+
+            Farmacia farmacia = em.find(Farmacia.class, id_farmacia);
+            return farmacia;
+        } else {
+            throw new EJBAccessException();
+        }
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void alterarFarmacia(Long id_farmacia) {
+        if (sessionContext.isCallerInRole(OWNER)         ) {
+
+
+        } else {
+            throw new EJBAccessException();
+        }
     }
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
@@ -274,8 +320,8 @@ public class Aplicacao {
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public Remedio getRemedio(Long id) {
-        if (sessionContext.isCallerInRole(OWNER) || sessionContext.isCallerInRole(CLIENTE) 
-                ||sessionContext.isCallerInRole(APOSENTADO)) {
+        if (sessionContext.isCallerInRole(OWNER) || sessionContext.isCallerInRole(CLIENTE)
+                || sessionContext.isCallerInRole(APOSENTADO)) {
             return em.find(Remedio.class, id);
         } else {
             throw new EJBAccessException();

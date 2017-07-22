@@ -77,6 +77,9 @@ public class carrinhoBeans implements Serializable {
                 remedio.setQuantidade(1);
                 remedioComprado.add(remedio);
                 SingletonSession.getInstance().setAttribute("remedioComprado", remedioComprado);
+                facesContext = FacesContext.getCurrentInstance();
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Esse remédio já foi colocado no carrinho", null);
+                facesContext.addMessage(null, message);
                 break;
             } else {
                 //dizer que esse item já foi adicionado
@@ -129,8 +132,8 @@ public class carrinhoBeans implements Serializable {
         Cliente cliente = (Cliente) (Cliente) SingletonSession.getInstance().getAttribute("clienteLogado");
         String retorno;
         List<Remedio> remedio = (List<Remedio>) SingletonSession.getInstance().getAttribute("remedioComprado");
-        if (remedio == null||remedio.isEmpty()) {
-            
+        if (remedio == null || remedio.isEmpty()) {
+
             retorno = null;
             facesContext = FacesContext.getCurrentInstance();
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Não há remédios no carrinho", null);

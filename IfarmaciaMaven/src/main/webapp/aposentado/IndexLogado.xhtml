@@ -51,9 +51,9 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
+                                <p:menuitem ajax="false" value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                                <p:menuitem value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
+                                <p:menuitem ajax="false" value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
                             </p:submenu>
 
                         </p:menu>
@@ -74,7 +74,7 @@
                         <h:outputText value="Nome do remedio: "/><br />
                         <p:inputText value="#{searchBean.nomeRemedio}" placeholder = "Remedio" /><br></br>
 
-                        <p:commandButton action="#{searchBean.pesquisaRemedio()}" value="Pesquisar" id="botao" icon="fa fa-search"/>
+                        <p:commandButton ajax="false" action="#{searchBean.pesquisaRemedio()}" value="Pesquisar" id="botao" icon="fa fa-search"/>
 
                     </h:form>
 

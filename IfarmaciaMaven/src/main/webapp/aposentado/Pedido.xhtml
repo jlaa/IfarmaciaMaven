@@ -43,9 +43,9 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="Menu">
-                                <p:menuitem value="Home"  icon="fa fa-home" action="indexLogado"/>
+                                <p:menuitem ajax="false" value="Home"  icon="fa fa-home" action="indexLogado"/>
 
-                                <p:menuitem value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
+                                <p:menuitem ajax="false" value="Solicitar Pedido"  action="pedido" icon="fa fa-envelope-o"/>
                             </p:submenu>
 
                         </p:menu>
@@ -78,7 +78,7 @@
                         </p:selectOneMenu>
                         <br />
                         <br />
-                        <p:commandButton  value="Pedir agora" action="#{searchBean.pesquisaRemedio()}" />
+                        <p:commandButton ajax="false"  value="Pedir agora" action="#{searchBean.pesquisaRemedio()}" />
                     </h:form>
                 </p:layoutUnit>
 

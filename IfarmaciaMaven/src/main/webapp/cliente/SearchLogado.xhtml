@@ -57,36 +57,35 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit id="principal" position="center">
+                    <h:form id="geral">
+                        <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;"
+                                     value="#{searchBean.remedios}"
+                                     rows="10"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
+                                     {PreviousPageLink} {PageLinks} {NextPageLink} 
+                                     {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">  
 
-                    <p:dataTable rowIndexVar="index" var="rem" style="border-style: none;"
-                                 value="#{searchBean.remedios}"
-                                 rows="10"
-                                 paginator="true"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} 
-                                 {PreviousPageLink} {PageLinks} {NextPageLink} 
-                                 {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">  
+                            <p:column headerText="Remédio">
+                                <h:outputText value="#{rem.nome}" />
+                            </p:column>
 
-                        <p:column headerText="Remédio">
-                            <h:outputText value="#{rem.nome}" />
-                        </p:column>
+                            <p:column headerText="Preço">
+                                <h:outputText value="#{rem.preco}R$" />
+                            </p:column>
+                            <p:column headerText="Farmacia">
+                                <h:outputText value="#{searchBean.farmacias.get(index).nome}" />
+                            </p:column>
 
-                        <p:column headerText="Preço">
-                            <h:outputText value="#{rem.preco}R$" />
-                        </p:column>
-                        <p:column headerText="Farmacia">
-                            <h:outputText value="#{searchBean.farmacias.get(index).nome}" />
-                        </p:column>
-
-
-                        <p:column >
-                            <h:form>
-                                <p:commandButton ajax="false" value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho(rem.id)}"/>
-                            </h:form>
-                        </p:column>
-                    </p:dataTable>
-
-
+                            <p:growl id="growl" sticky="true" />
+                            <p:column >
+                                <h:form>
+                                    <p:commandButton ajax="false" update="geral growl" value="Adicionar ao carrinho" action="#{carrinhoBeans.adicionarAoCarrinho(rem.id)}"/>
+                                </h:form>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
                 </p:layoutUnit>
 
             </p:layout>
